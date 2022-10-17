@@ -13,6 +13,7 @@ frame_limiter = pygame.time.Clock()
 test_level = LevelRenderer(screen, settings.level0)
 keys_pressed = []
 player = test_level.get_player()
+testenemy = test_level.get_enemies().sprites()[0]
 
 SPRITE_NEXT = pygame.USEREVENT + 1
 
@@ -26,6 +27,11 @@ while run:
         if next_event.type == SPRITE_NEXT:
             for sprite in test_level.get_animations().sprites():
                 sprite.next(0)
+
+    #x_e_mov = testenemy.move_int
+    if testenemy.edge_detect == True:   # Supposed to reverse movement direction if edge_detect == True
+        testenemy.move_int = testenemy.move_int * -1
+    testenemy.move_x(testenemy.move_int,test_level.solids)
 
     player_init_pos = (player.rect.x, player.rect.y) # Grabbing the initial position of the player in the frame.
     keys_pressed = pygame.key.get_pressed()  # Array of bools accessed with the pygame key constants.

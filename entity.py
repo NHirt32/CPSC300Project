@@ -12,40 +12,40 @@ class Entity(animation.Animation):
     # Checks if the entity is touching the passed group beneath the entity.
     def touching_ground(self, group):
         self.rect.y += 1
-        if pygame.sprite.spritecollideany(self, group) != None:
+        if pygame.sprite.spritecollideany(self, group) != None: # If the entity is 1 pixel from touching a floor
             self.rect.y -= 1
             return True
-        else:
+        else: # If the entity is not 1 pixel from touching a floor
             self.rect.y -= 1
             return False
 
     # Checks if the entity is touching the passed group to the right of the entity.
     def touching_right(self, group):
         self.rect.x += 1
-        if pygame.sprite.spritecollideany(self, group) != None:
+        if pygame.sprite.spritecollideany(self, group) != None: # If the entity is 1 pixel from touching a wall on the right
             self.rect.x -= 1
             return True
-        else:
+        else:   # If entity is not 1 pixel from touching a wall on the right
             self.rect.x -= 1
             return False
 
     # Checks if the entity is touching the passed group to the left of the entity.
     def touching_left(self, group):
         self.rect.x -= 1
-        if pygame.sprite.spritecollideany(self, group) != None:
+        if pygame.sprite.spritecollideany(self, group) != None: # If the entity is 1 pixel from touching a wall on the left
             self.rect.x += 1
             return True
-        else:
+        else:   # If the entity is not 1 pixel from touching a wall on the left
             self.rect.x += 1
             return False
 
     # Checks if the entity is touching the passed group above the entity.
     def touching_roof(self, group):
         self.rect.y -= 1
-        if pygame.sprite.spritecollideany(self, group) != None:
+        if pygame.sprite.spritecollideany(self, group) != None: # If the entity is 1 pixel from touching a ceiling
             self.rect.y += 1
             return True
-        else:
+        else:   # If the entity is not 1 pixel from touching a ceiling
             self.rect.y -= 1
             return False
 

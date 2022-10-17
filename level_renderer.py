@@ -4,6 +4,7 @@ from settings import *
 from tile import *
 from player import *
 from animation import *
+from enemy import *
 
 
 class LevelRenderer:
@@ -30,8 +31,13 @@ class LevelRenderer:
                 # Add cases here for different tiles.
                 if level_layout[row][col] == "P":
                     player1 = Player(position)
-                    player1.add(self.players)
+                    player1.add(self.players)   #Adds player1 to renderer group
                     player1.add(self.animations)
+
+                elif level_layout[row][col] == 'E':
+                    enemy1 = Enemy(position)
+                    enemy1.add(self.enemies)
+
 
                 elif level_layout[row][col] == "T":
 
