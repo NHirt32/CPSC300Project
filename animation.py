@@ -2,6 +2,7 @@ import pygame
 import tile
 import settings
 
+
 class Animation(tile.Tile):
     def __init__(self, frames, pos):
         tile.Tile.__init__(self, frames[0][0], pos)
@@ -14,12 +15,12 @@ class Animation(tile.Tile):
         # animations with file paths in measurable orders
         self.direction = 0
 
-    #Flips to the next frame of the specified direction
+    # Flips to the next frame of the specified direction
     def next(self, direction):
 
         if direction == self.direction:
             self.image = pygame.image.load(self.frames[self.direction][self.current_frame])
-            if(self.current_frame < (len(self.frames[self.direction]) - 1)):
+            if (self.current_frame < (len(self.frames[self.direction]) - 1)):
                 self.current_frame += 1
             else:
                 self.current_frame = 0

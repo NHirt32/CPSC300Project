@@ -4,6 +4,8 @@ from settings import *
 from tile import *
 from player import *
 from animation import *
+
+
 class LevelRenderer:
     def __init__(self, screen, level_layout):
         self.animations = pygame.sprite.Group()
@@ -23,7 +25,7 @@ class LevelRenderer:
         for row in range(0, len(level_layout)):
             for col in range(0, len(level_layout[row])):
 
-                position = ((col * settings.tile_size),(row * settings.tile_size))
+                position = ((col * settings.tile_size), (row * settings.tile_size))
 
                 # Add cases here for different tiles.
                 if level_layout[row][col] == "P":
@@ -61,22 +63,23 @@ class LevelRenderer:
                     paper_block.add(self.solids)
 
                 elif level_layout[row][col] == "A":
-                    animation_test = Animation([["assets/red_cross.png","assets/blue_cross.png"], ["assets/birds.png"]], position)
+                    animation_test = Animation(
+                        [["assets/red_cross.png", "assets/blue_cross.png"], ["assets/birds.png"]], position)
                     animation_test.add(self.solids)
                     animation_test.add(self.animations)
 
         # Need to move the camera over the player at the start, otherwise there may be an awkward offset
         init = (self.players.sprites()[0].rect.x, self.players.sprites()[0].rect.y)
 
-        #The offset is reversed with its tuples, can simply use update to draw them
+        # The offset is reversed with its tuples, can simply use update to draw them
         self.update((settings.screen_width / 2, settings.screen_height / 2), init)
 
     # Draws everything to the screen with appropriate offset.
-    def update(self, init_pos,final_pos):
+    def update(self, init_pos, final_pos):
         # Intended to be physical distance that the player moved this frame,
         # stored as a tuple, (x,y).
         # Since directions are flipped, need to multiply by -1.
-        change = (-1*(final_pos[0]-init_pos[0]),-1*(final_pos[1]-init_pos[1]))
+        change = (-1 * (final_pos[0] - init_pos[0]), -1 * (final_pos[1] - init_pos[1]))
 
         # For all groups within a level, the change must be calculated.
         # any further group must be factored in here, though I doubt we will
@@ -90,8 +93,8 @@ class LevelRenderer:
 
         for element in back_elements:
             # Needs to use the center value for each rect coord, otherwise the camera possesses a small offset
-            element.rect.centerx += ((change[0])*self.background_speed)
-            element.rect.centery += ((change[1])*self.background_speed)
+            element.rect.centerx += ((change[0]) * self.background_speed)
+            element.rect.centery += ((change[1]) * self.background_speed)
 
         for group in self.all_tiles:
             sprites = group.sprites()
@@ -99,7 +102,7 @@ class LevelRenderer:
                 sprite.rect.centerx += change[0]
                 sprite.rect.centery += change[1]
 
-        self.screen.fill("white") # This is a temporary background.
+        self.screen.fill("white")  # This is a temporary background.
 
         # Drawing all sprites in the group to screen.
         self.backgrounds.draw(self.screen)
