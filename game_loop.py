@@ -29,7 +29,7 @@ while run:
                 sprite.next(0)
 
     #x_e_mov = testenemy.move_int
-    if testenemy.edge_detect == True:   # Supposed to reverse movement direction if edge_detect == True
+    if testenemy.edge_detect(test_level.solids) == True:   # Supposed to reverse movement direction if edge_detect == True
         testenemy.move_int = testenemy.move_int * -1
     testenemy.move_x(testenemy.move_int,test_level.solids)
 
