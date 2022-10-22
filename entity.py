@@ -1,7 +1,7 @@
 import pygame
 import tile
 import animation
-from settings import *
+from settings import *  
 
 class Entity(animation.Animation):
     # frames is a list of lists of strings. The strings are filepaths, each list of strings is an animation set

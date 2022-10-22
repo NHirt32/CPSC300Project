@@ -8,6 +8,7 @@ from enemy import *
 
 
 class LevelRenderer:
+
     def __init__(self, screen, level_layout):
         self.animations = pygame.sprite.Group()
         self.players = pygame.sprite.Group()
@@ -37,6 +38,7 @@ class LevelRenderer:
                 elif level_layout[row][col] == 'E':
                     enemy1 = Enemy(position)
                     enemy1.add(self.enemies)
+                    #enemy1.add(self.solids)
 
 
                 elif level_layout[row][col] == "T":
