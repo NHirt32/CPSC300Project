@@ -59,7 +59,7 @@ class LevelRenderer:
                     large_80_40_background.add(self.backgrounds)
 
                 elif level_layout[row][col] == "X":
-                    paper_block = Tile("assets/paper_block.png", position)
+                    paper_block = Tile("assets/test.png", position)
                     paper_block.add(self.solids)
 
                 elif level_layout[row][col] == "A":

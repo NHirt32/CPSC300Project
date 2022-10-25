@@ -32,7 +32,7 @@ while run:
     # Uses the fact that true is one and false is 0 to evaluate the direction to move.
     # Neatly handles contradictory input cases.
     x_mov = keys_pressed[pygame.K_d] - keys_pressed[pygame.K_a]
-    y_mov = keys_pressed[pygame.K_s] - keys_pressed[pygame.K_w]
+    y_mov = keys_pressed[pygame.K_s] - keys_pressed[pygame.K_SPACE]
 
     player.move_x(x_mov,test_level.solids)
     if y_mov == -1 and player.touching_ground(test_level.solids): # -1 is up for y
