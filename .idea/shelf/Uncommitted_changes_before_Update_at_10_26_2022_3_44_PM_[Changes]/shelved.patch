@@ -1,0 +1,123 @@
+Index: player.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import pygame\r\nimport tile\r\nimport entity\r\nfrom settings import *\r\n\r\n\r\nclass Player(entity.Entity):\r\n    def __init__(self, pos):\r\n        entity.Entity.__init__(self, [[\"assets/player.png\", \"assets/red_player.png\"]], pos)\r\n        self.speed = 10\r\n        self.boing = 0  # Also known as upward momentum.\r\n        self.dive = 0  # downward momentum\r\n        self.right_momentum = 0\r\n        self.left_momentum = 0\r\n        self.gravity = 100  # defines max fall speed\r\n        self.jump_power = 20  # defines max jump power\r\n\r\n    # Applies upward shift if the player still has momentum, basically speeding up the jump to a point.\r\n    # Resets momentum if a roof is hit.\r\n    def jump(self, group):\r\n        if self.boing != 0 and not (self.touching_roof(group)):\r\n            self.v_move_y(-1, self.boing, group)\r\n            self.boing -= 1\r\n        else:\r\n            self.boing = 0\r\n\r\n    # Applies downward shift if momentum has run out, basically speeding up gravity to a point.\r\n    def fall(self, group):\r\n        if self.boing == 0 and not (self.touching_ground(group)):\r\n            self.v_move_y(1, self.dive, group)\r\n            if (self.dive != self.gravity):\r\n                self.dive += 1\r\n        else:\r\n            self.dive = 0\r\n\r\n    # Checks if the player collided with the passed group. This should\r\n    # not be a group that collisions are forbidden with by move_y(), move_x() and v_mov_y()\r\n    def collided_with(self, group):\r\n        if pygame.sprite.spritecollideany(self, group) != None:\r\n            return True\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/player.py b/player.py
+--- a/player.py	(revision 81cdeb00d1f96f46d6347bf9c4a899aa15c7526d)
++++ b/player.py	(date 1666824122733)
+@@ -14,16 +14,41 @@
+         self.left_momentum = 0
+         self.gravity = 100  # defines max fall speed
+         self.jump_power = 20  # defines max jump power
++        self.can_jump = True
++        self.wall_jump_cooldown = 30 # In frames of the game.
++
++    # Does all the movement associated with the player
++    def movement_handler(self, x_direction, y_direction, collision_group):
++        self.move_x(x_direction, collision_group)
++        self.jump(y_direction, collision_group)
++        self.fall(collision_group)
++
++    # Uses the passed input to determine if a jump, or walljump, should occur, handles the cooldown associated
++    # with a walljump, and actually does the jump.
++    def jump(self, y_mov, group):
++
++        # Normal jump from the ground case detection
++        if y_mov == -1 and self.touching_ground(group):  # -1 is up for y
++            self.boing = self.jump_power
+ 
+-    # Applies upward shift if the player still has momentum, basically speeding up the jump to a point.
+-    # Resets momentum if a roof is hit.
+-    def jump(self, group):
++        # Wall jump case detection
++        elif y_mov == -1 and (self.touching_left(group) or self.touching_right(group)) and \
++                (self.wall_jump_cooldown == 0) and not \
++                self.touching_ground(group):
++            self.boing = self.jump_power
++            self.wall_jump_cooldown = 30
++
++        # Actually processing a jump
+         if self.boing != 0 and not (self.touching_roof(group)):
+             self.v_move_y(-1, self.boing, group)
+             self.boing -= 1
+         else:
+             self.boing = 0
+ 
++        # Dealing with the player cooldown
++        if self.wall_jump_cooldown != 0:
++            self.wall_jump_cooldown -= 1
++
+     # Applies downward shift if momentum has run out, basically speeding up gravity to a point.
+     def fall(self, group):
+         if self.boing == 0 and not (self.touching_ground(group)):
+Index: settings.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import level_generator\r\n\r\ntile_size = 192\r\nscreen_width = 8 * tile_size\r\nscreen_height = 5 * tile_size\r\nmax_frames = 60\r\n\r\nlevel0 = level_generator.get_level(3)\r\n\r\n\r\n\r\n# level0 = [\r\n#    \"B0000000000000000000000000000000000000000000000000000000\",a\r\n#    \"00000000000000000000000000000000000000000000000000000000\",\r\n#    \"00000000000000000000000000000000000000000000000000000000\",\r\n#    \"00000000000000000000000000000000000000000000000000000000\",\r\n#    \"00000000000000000000000000000000000000000000000000000000\",\r\n#    \"00000000000000000000000000000000000000000000000000000000\",\r\n#    \"00000000000000000000000000000000000000000000000000000000\",\r\n#    \"00000000000000000000000000000000000000000000000000000000\",\r\n#    \"00000000000000000000000000A00000000000000000000000000000\",\r\n#    \"00000000000000000000000000000000000000000000000000000000\",\r\n#    \"00000000000000000000000000P00000000000000000000000000000\",\r\n#    \"00000000000000000000000000000000000000000000000000000000\",\r\n#    \"0000000000000000000000CTTTTTTTH0000000000000000000000000\",\r\n#    \"0000000000000000000000LXXXXXXXR0000000000000000000000000\",\r\n#    \"0000000000000000000000LXXXXXXXR0000000000000000000000000\",\r\n#    \"0000000000000000000000LXXXXXXXR0000000000000000000000000\",\r\n#    \"0000000000000000000000LXXXXXXXR0000000000000000000000000\",\r\n#    \"0000000000000000000000LXXXXXXXR0000000000000000000000000\",\r\n#    \"0000000000000000000000LXXXXXXXR0000000000000000000000000\",\r\n#    \"0000000000000000000000LXXXXXXXR0000000000000000000000000\",w\r\n#    \"0000000000000000000000LXXXXXXXR0000000000000000000000000\",\r\n#    \"0000000000000000000000LXXXXXXXR0000000000000000000000000\"\r\n#    ]
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/settings.py b/settings.py
+--- a/settings.py	(revision 81cdeb00d1f96f46d6347bf9c4a899aa15c7526d)
++++ b/settings.py	(date 1666820874156)
+@@ -1,11 +1,11 @@
+ import level_generator
+-
++import random
+ tile_size = 192
+ screen_width = 8 * tile_size
+ screen_height = 5 * tile_size
+ max_frames = 60
+ 
+-level0 = level_generator.get_level(3)
++level0 = level_generator.get_level(random.randint(1, 5))
+ 
+ 
+ 
+Index: game_loop.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import pygame\r\nfrom settings import *\r\nfrom tile import *\r\nfrom player import *\r\nfrom level_renderer import *\r\n\r\npygame.init()\r\n\r\nrun = True\r\nscreen = pygame.display.set_mode((screen_width, screen_height))\r\n\r\nframe_limiter = pygame.time.Clock()\r\ntest_level = LevelRenderer(screen, settings.level0)\r\nkeys_pressed = []\r\nplayer = test_level.get_player()\r\n\r\nSPRITE_NEXT = pygame.USEREVENT + 1\r\n\r\npygame.time.set_timer(SPRITE_NEXT, 100, 0)\r\nwhile run:\r\n    # Pygame event handling.\r\n    events = pygame.event.get()\r\n    for next_event in events:\r\n        if next_event.type == pygame.QUIT:\r\n            run = False\r\n        if next_event.type == SPRITE_NEXT:\r\n            for sprite in test_level.get_animations().sprites():\r\n                sprite.next(0)\r\n\r\n    player_init_pos = (player.rect.x, player.rect.y) # Grabbing the initial position of the player in the frame.\r\n    keys_pressed = pygame.key.get_pressed()  # Array of bools accessed with the pygame key constants.\r\n    # Uses the fact that true is one and false is 0 to evaluate the direction to move.\r\n    # Neatly handles contradictory input cases.\r\n    x_mov = keys_pressed[pygame.K_d] - keys_pressed[pygame.K_a]\r\n    y_mov = keys_pressed[pygame.K_s] - keys_pressed[pygame.K_SPACE]\r\n\r\n    player.move_x(x_mov,test_level.solids)\r\n    if y_mov == -1 and player.touching_ground(test_level.solids): # -1 is up for y\r\n        player.boing = player.jump_power\r\n    player.jump(test_level.solids)\r\n    player.fall(test_level.solids)\r\n    player_fin_pos = (player.rect.x, player.rect.y) # Grabbing the final position of the player in the frame.\r\n    test_level.update(player_init_pos,player_fin_pos) # The level_renderer can go draw everything.\r\n    frame_limiter.tick(max_frames) # Capping the frames for consistent behaviour.\r\n    pygame.display.update()\r\n\r\npygame.display.quit()
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/game_loop.py b/game_loop.py
+--- a/game_loop.py	(revision 81cdeb00d1f96f46d6347bf9c4a899aa15c7526d)
++++ b/game_loop.py	(date 1666824122741)
+@@ -15,6 +15,7 @@
+ player = test_level.get_player()
+ 
+ SPRITE_NEXT = pygame.USEREVENT + 1
++WALL_JUMP_COOLDOWN = pygame.USEREVENT + 2
+ 
+ pygame.time.set_timer(SPRITE_NEXT, 100, 0)
+ while run:
+@@ -26,20 +27,19 @@
+         if next_event.type == SPRITE_NEXT:
+             for sprite in test_level.get_animations().sprites():
+                 sprite.next(0)
++        if next_event.type == WALL_JUMP_COOLDOWN:
++            player.can_jump = True
+ 
+-    player_init_pos = (player.rect.x, player.rect.y) # Grabbing the initial position of the player in the frame.
+     keys_pressed = pygame.key.get_pressed()  # Array of bools accessed with the pygame key constants.
+     # Uses the fact that true is one and false is 0 to evaluate the direction to move.
+     # Neatly handles contradictory input cases.
+     x_mov = keys_pressed[pygame.K_d] - keys_pressed[pygame.K_a]
+     y_mov = keys_pressed[pygame.K_s] - keys_pressed[pygame.K_SPACE]
+ 
+-    player.move_x(x_mov,test_level.solids)
+-    if y_mov == -1 and player.touching_ground(test_level.solids): # -1 is up for y
+-        player.boing = player.jump_power
+-    player.jump(test_level.solids)
+-    player.fall(test_level.solids)
++    player_init_pos = (player.rect.x, player.rect.y)  # Grabbing the initial position of the player in the frame.
++    player.movement_handler(x_mov, y_mov, test_level.solids) # Player Movement Processed
+     player_fin_pos = (player.rect.x, player.rect.y) # Grabbing the final position of the player in the frame.
++
+     test_level.update(player_init_pos,player_fin_pos) # The level_renderer can go draw everything.
+     frame_limiter.tick(max_frames) # Capping the frames for consistent behaviour.
+     pygame.display.update()

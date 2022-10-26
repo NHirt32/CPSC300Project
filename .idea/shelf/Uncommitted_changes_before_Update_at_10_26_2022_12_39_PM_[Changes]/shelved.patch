@@ -1,0 +1,137 @@
+Index: settings.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>tile_size = 64\r\nscreen_width = 16 * tile_size\r\nscreen_height = 12 * tile_size\r\nmax_frames = 60\r\n\r\nlevel0 = [\r\n    \"B0000000000000000000000000000000000000000000000000000000\",\r\n    \"00000000000000000000000000000000000000000000000000000000\",\r\n    \"00000000000000000000000000000000000000000000000000000000\",\r\n    \"00000000000000000000000000000000000000000000000000000000\",\r\n    \"00000000000000000000000000000000000000000000000000000000\",\r\n    \"00000000000000000000000000000000000000000000000000000000\",\r\n    \"00000000000000000000000000000000000000000000000000000000\",\r\n    \"00000000000000000000000000000000000000000000000000000000\",\r\n    \"00000000000000000000000000A00000000000000000000000000000\",\r\n    \"00000000000000000000000000000000000000000000000000000000\",\r\n    \"00000000000000000000000000P00000000000000000000000000000\",\r\n    \"00000000000000000000000000000000000000000000000000000000\",\r\n    \"0000000000000000000000CTTTTTTTH0000000000000000000000000\",\r\n    \"0000000000000000000000LXXXXXXXR0000000000000000000000000\",\r\n    \"0000000000000000000000LXXXXXXXR0000000000000000000000000\",\r\n    \"0000000000000000000000LXXXXXXXR0000000000000000000000000\",\r\n    \"0000000000000000000000LXXXXXXXR0000000000000000000000000\",\r\n    \"0000000000000000000000LXXXXXXXR0000000000000000000000000\",\r\n    \"0000000000000000000000LXXXXXXXR0000000000000000000000000\",\r\n    \"0000000000000000000000LXXXXXXXR0000000000000000000000000\",\r\n    \"0000000000000000000000LXXXXXXXR0000000000000000000000000\",\r\n    \"0000000000000000000000LXXXXXXXR0000000000000000000000000\"\r\n    ]
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/settings.py b/settings.py
+--- a/settings.py	(revision 7dc65acca4d5eda23a6537d7fb8274fa1d5f3b86)
++++ b/settings.py	(date 1666063174942)
+@@ -2,28 +2,29 @@
+ screen_width = 16 * tile_size
+ screen_height = 12 * tile_size
+ max_frames = 60
++# Need to add animation transition intervals, in milliseconds
+ 
+ level0 = [
+-    "B0000000000000000000000000000000000000000000000000000000",
+-    "00000000000000000000000000000000000000000000000000000000",
+-    "00000000000000000000000000000000000000000000000000000000",
+-    "00000000000000000000000000000000000000000000000000000000",
+-    "00000000000000000000000000000000000000000000000000000000",
+-    "00000000000000000000000000000000000000000000000000000000",
+-    "00000000000000000000000000000000000000000000000000000000",
+-    "00000000000000000000000000000000000000000000000000000000",
+-    "00000000000000000000000000A00000000000000000000000000000",
+-    "00000000000000000000000000000000000000000000000000000000",
+-    "00000000000000000000000000P00000000000000000000000000000",
+-    "00000000000000000000000000000000000000000000000000000000",
+-    "0000000000000000000000CTTTTTTTH0000000000000000000000000",
+-    "0000000000000000000000LXXXXXXXR0000000000000000000000000",
+-    "0000000000000000000000LXXXXXXXR0000000000000000000000000",
+-    "0000000000000000000000LXXXXXXXR0000000000000000000000000",
+-    "0000000000000000000000LXXXXXXXR0000000000000000000000000",
+-    "0000000000000000000000LXXXXXXXR0000000000000000000000000",
+-    "0000000000000000000000LXXXXXXXR0000000000000000000000000",
+-    "0000000000000000000000LXXXXXXXR0000000000000000000000000",
+-    "0000000000000000000000LXXXXXXXR0000000000000000000000000",
+-    "0000000000000000000000LXXXXXXXR0000000000000000000000000"
++"B0000000000000000000000000000000000000000000000000000000",
++"00000000000000000000000000000000000000000000000000000000",
++"00000000000000000000000000000000000000000000000000000000",
++"00000000000000000000000000000000000000000000000000000000",
++"00000000000000000000000000000000000000000000000000000000",
++"00000000000000000000000000000000000000000000000000000000",
++"00000000000000000000000000000000000000000000000000000000",
++"00000000000000000000000000000000000000000000000000000000",
++"00000000000000000000000000000000000000000000000000000000",
++"00000000000000000000000000000000000000000000000000000000",
++"00000000000000000000000000P00000000000000000000000000000",
++"00000000000000000000000000000000000000000000000000000000",
++"0000000000000000000000CTTTTTTTH0000000000000000000000000",
++"0000000000000000000000L0000000R0000000000000000000000000",
++"0000000000000000000000L0000000R0000000000000000000000000",
++"0000000000000000000000L0000000R0000000000000000000000000",
++"0000000000000000000000L0000000R0000000000000000000000000",
++"0000000000000000000000L0000000R0000000000000000000000000",
++"0000000000000000000000L0000000R0000000000000000000000000",
++"0000000000000000000000L0000000R0000000000000000000000000",
++"0000000000000000000000L0000000R0000000000000000000000000",
++"0000000000000000000000L0000000R0000000000000000000000000"
+     ]
+\ No newline at end of file
+Index: game_loop.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import pygame\r\nfrom settings import *\r\nfrom tile import *\r\nfrom player import *\r\nfrom level_renderer import *\r\n\r\npygame.init()\r\n\r\nrun = True\r\nscreen = pygame.display.set_mode((screen_width, screen_height))\r\n\r\nframe_limiter = pygame.time.Clock()\r\ntest_level = LevelRenderer(screen, settings.level0)\r\nkeys_pressed = []\r\nplayer = test_level.get_player()\r\n\r\nSPRITE_NEXT = pygame.USEREVENT + 1\r\n\r\npygame.time.set_timer(SPRITE_NEXT, 100, 0)\r\nwhile run:\r\n    # Pygame event handling.\r\n    events = pygame.event.get()\r\n    for next_event in events:\r\n        if next_event.type == pygame.QUIT:\r\n            run = False\r\n        if next_event.type == SPRITE_NEXT:\r\n            for sprite in test_level.get_animations().sprites():\r\n                sprite.next(0)\r\n\r\n    player_init_pos = (player.rect.x, player.rect.y) # Grabbing the initial position of the player in the frame.\r\n    keys_pressed = pygame.key.get_pressed()  # Array of bools accessed with the pygame key constants.\r\n    # Uses the fact that true is one and false is 0 to evaluate the direction to move.\r\n    # Neatly handles contradictory input cases.\r\n    x_mov = keys_pressed[pygame.K_d] - keys_pressed[pygame.K_a]\r\n    y_mov = keys_pressed[pygame.K_s] - keys_pressed[pygame.K_w]\r\n\r\n    player.move_x(x_mov,test_level.solids)\r\n    if y_mov == -1 and player.touching_ground(test_level.solids): # -1 is up for y\r\n        player.boing = player.jump_power\r\n    player.jump(test_level.solids)\r\n    player.fall(test_level.solids)\r\n    player_fin_pos = (player.rect.x, player.rect.y) # Grabbing the final position of the player in the frame.\r\n    test_level.update(player_init_pos,player_fin_pos) # The level_renderer can go draw everything.\r\n    frame_limiter.tick(max_frames) # Capping the frames for consistent behaviour.\r\n    pygame.display.update()\r\n\r\npygame.display.quit()
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/game_loop.py b/game_loop.py
+--- a/game_loop.py	(revision 7dc65acca4d5eda23a6537d7fb8274fa1d5f3b86)
++++ b/game_loop.py	(date 1666063191818)
+@@ -16,7 +16,7 @@
+ 
+ SPRITE_NEXT = pygame.USEREVENT + 1
+ 
+-pygame.time.set_timer(SPRITE_NEXT, 100, 0)
++pygame.time.set_timer(SPRITE_NEXT, 1000, 0)
+ while run:
+     # Pygame event handling.
+     events = pygame.event.get()
+@@ -31,7 +31,10 @@
+     keys_pressed = pygame.key.get_pressed()  # Array of bools accessed with the pygame key constants.
+     # Uses the fact that true is one and false is 0 to evaluate the direction to move.
+     # Neatly handles contradictory input cases.
++
++    # + is right, - is left
+     x_mov = keys_pressed[pygame.K_d] - keys_pressed[pygame.K_a]
++    # + is down, and - is up
+     y_mov = keys_pressed[pygame.K_s] - keys_pressed[pygame.K_w]
+ 
+     player.move_x(x_mov,test_level.solids)
+@@ -39,8 +42,10 @@
+         player.boing = player.jump_power
+     player.jump(test_level.solids)
+     player.fall(test_level.solids)
++
+     player_fin_pos = (player.rect.x, player.rect.y) # Grabbing the final position of the player in the frame.
+     test_level.update(player_init_pos,player_fin_pos) # The level_renderer can go draw everything.
++
+     frame_limiter.tick(max_frames) # Capping the frames for consistent behaviour.
+     pygame.display.update()
+ 
+Index: .idea/.name
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>settings.py
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.name b/.idea/.name
+--- a/.idea/.name	(revision 7dc65acca4d5eda23a6537d7fb8274fa1d5f3b86)
++++ b/.idea/.name	(date 1666062988122)
+@@ -1,1 +1,1 @@
+-settings.py
+\ No newline at end of file
++game_loop.py
+\ No newline at end of file
+Index: level_renderer.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import pygame\r\nimport settings\r\nfrom settings import *\r\nfrom tile import *\r\nfrom player import *\r\nfrom animation import *\r\nclass LevelRenderer:\r\n    def __init__(self, screen, level_layout):\r\n        self.animations = pygame.sprite.Group()\r\n        self.players = pygame.sprite.Group()\r\n        self.solids = pygame.sprite.Group()\r\n        self.enemies = pygame.sprite.Group()\r\n        self.backgrounds = pygame.sprite.Group()\r\n        self.screen = screen\r\n        self.level_layout = level_layout\r\n        self.background_speed = 0.1\r\n\r\n        # Add any further sprite groups that need camera offset into this array.\r\n        # The order of drawing is from left to right.\r\n        self.all_tiles = [self.backgrounds, self.solids, self.enemies, self.players]\r\n\r\n        # Drawing the layout to the screen\r\n        for row in range(0, len(level_layout)):\r\n            for col in range(0, len(level_layout[row])):\r\n\r\n                position = ((col * settings.tile_size),(row * settings.tile_size))\r\n\r\n                # Add cases here for different tiles.\r\n                if level_layout[row][col] == \"P\":\r\n                    player1 = Player(position)\r\n                    player1.add(self.players)\r\n                    player1.add(self.animations)\r\n\r\n                elif level_layout[row][col] == \"T\":\r\n\r\n                    outline_top = Tile(\"assets/outline_top.png\", position)\r\n                    outline_top.add(self.solids)\r\n\r\n                elif level_layout[row][col] == \"L\":\r\n                    r_outline_left = Tile(\"assets/r_outline_left.png\", position)\r\n                    r_outline_left.add(self.solids)\r\n\r\n                elif level_layout[row][col] == \"C\":\r\n                    outcorner_topleft = Tile(\"assets/outcorner_topleft.png\", position)\r\n                    outcorner_topleft.add(self.solids)\r\n\r\n                elif level_layout[row][col] == \"H\":\r\n                    corner_topright = Tile(\"assets/corner_topright.png\", position)\r\n                    corner_topright.add(self.solids)\r\n\r\n                elif level_layout[row][col] == \"R\":\r\n                    line_right = Tile(\"assets/line_right.png\", position)\r\n                    line_right.add(self.solids)\r\n\r\n                elif level_layout[row][col] == \"B\":\r\n                    large_80_40_background = Tile(\"assets/large_80_40_background.png\", position)\r\n                    large_80_40_background.add(self.backgrounds)\r\n\r\n                elif level_layout[row][col] == \"X\":\r\n                    paper_block = Tile(\"assets/paper_block.png\", position)\r\n                    paper_block.add(self.solids)\r\n\r\n                elif level_layout[row][col] == \"A\":\r\n                    animation_test = Animation([[\"assets/red_cross.png\",\"assets/blue_cross.png\"], [\"assets/birds.png\"]], position)\r\n                    animation_test.add(self.solids)\r\n                    animation_test.add(self.animations)\r\n\r\n        # Need to move the camera over the player at the start, otherwise there may be an awkward offset\r\n        init = (self.players.sprites()[0].rect.x, self.players.sprites()[0].rect.y)\r\n\r\n        #The offset is reversed with its tuples, can simply use update to draw them\r\n        self.update((settings.screen_width / 2, settings.screen_height / 2), init)\r\n\r\n    # Draws everything to the screen with appropriate offset.\r\n    def update(self, init_pos,final_pos):\r\n        # Intended to be physical distance that the player moved this frame,\r\n        # stored as a tuple, (x,y).\r\n        # Since directions are flipped, need to multiply by -1.\r\n        change = (-1*(final_pos[0]-init_pos[0]),-1*(final_pos[1]-init_pos[1]))\r\n\r\n        # For all groups within a level, the change must be calculated.\r\n        # any further group must be factored in here, though I doubt we will\r\n        # need more than that. Just add subsequent groups into the all_tiles array.\r\n        # We could make the background a little dynamic,\r\n        # perhaps make it move at 1/2 the rate of everything else for a perceived depth.\r\n\r\n        self.screen.fill(\"white\")\r\n\r\n        back_elements = self.backgrounds.sprites()\r\n\r\n        for element in back_elements:\r\n            # Needs to use the center value for each rect coord, otherwise the camera possesses a small offset\r\n            element.rect.centerx += ((change[0])*self.background_speed)\r\n            element.rect.centery += ((change[1])*self.background_speed)\r\n\r\n        for group in self.all_tiles:\r\n            sprites = group.sprites()\r\n            for sprite in sprites:\r\n                sprite.rect.centerx += change[0]\r\n                sprite.rect.centery += change[1]\r\n\r\n        self.screen.fill(\"white\") # This is a temporary background.\r\n\r\n        # Drawing all sprites in the group to screen.\r\n        self.backgrounds.draw(self.screen)\r\n        self.solids.draw(self.screen)\r\n        self.enemies.draw(self.screen)\r\n        self.players.draw(self.screen)\r\n\r\n    def set_players(self, players):\r\n        self.players = players\r\n\r\n    def set_solids(self, solids):\r\n        self.solids = solids\r\n\r\n    def set_enemies(self, enemies):\r\n        self.enemies = enemies\r\n\r\n    def set_screen(self, screen):\r\n        self.screen = screen\r\n\r\n    def set_level_layout(self, level_layout):\r\n        self.level_layout = level_layout\r\n\r\n    def set_background_speed(self, background_speed):\r\n        self.background_speed = background_speed\r\n\r\n    def set_animations(self, animations):\r\n        self.animations = animations\r\n\r\n    # returns the players group\r\n    def get_players(self):\r\n        return self.players\r\n\r\n    def get_solids(self):\r\n        return self.solids\r\n\r\n    def get_enemies(self):\r\n        return self.enemies\r\n\r\n    def get_screen(self):\r\n        return self.screen\r\n\r\n    def get_level_layout(self):\r\n        return self.level_layout\r\n\r\n    def get_background_speed(self):\r\n        return self.background_speed\r\n\r\n    # returns the first player sprite in players group\r\n    def get_player(self):\r\n        return self.players.sprites()[0]\r\n\r\n    # returns a group of the animations\r\n    def get_animations(self):\r\n        return self.animations
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/level_renderer.py b/level_renderer.py
+--- a/level_renderer.py	(revision 7dc65acca4d5eda23a6537d7fb8274fa1d5f3b86)
++++ b/level_renderer.py	(date 1666044602454)
+@@ -32,7 +32,6 @@
+                     player1.add(self.animations)
+ 
+                 elif level_layout[row][col] == "T":
+-
+                     outline_top = Tile("assets/outline_top.png", position)
+                     outline_top.add(self.solids)
+ 
