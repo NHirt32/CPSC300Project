@@ -33,6 +33,11 @@ class Player(entity.Entity):
         else:
             self.dive = 0
 
+    #def Update(self, pygame.sprite.Group()):
+    #    if(LevelRenderer.solids):
+    #        print("\nTest")
+
+
     # Checks if the player collided with the passed group. This should
     # not be a group that collisions are forbidden with by move_y(), move_x() and v_mov_y()
     def collided_with(self, group):
