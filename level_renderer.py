@@ -5,7 +5,7 @@ from tile import *
 from player import *
 from animation import *
 from enemy import *
-
+import random
 
 class LevelRenderer:
 
@@ -35,11 +35,11 @@ class LevelRenderer:
                     player1.add(self.players)   #Adds player1 to renderer group
                     player1.add(self.animations)
 
-                elif level_layout[row][col] == 'E':
+                elif level_layout[row][col] == '0':
+
                     enemy1 = Enemy(position)
                     enemy1.add(self.enemies)
                     #enemy1.add(self.solids)
-
 
                 elif level_layout[row][col] == "T":
 

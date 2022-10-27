@@ -6,6 +6,8 @@ from level_renderer import *
 
 pygame.init()
 
+gameOver = False; #Going to use this for encasing game in loop, when player touches enemy/hazard it is set to True
+#enemy_group = pygame.sprite.Group() #Group of sprites used to hold multiple enemies
 run = True
 screen = pygame.display.set_mode((screen_width, screen_height))
 
@@ -13,9 +15,10 @@ frame_limiter = pygame.time.Clock()
 test_level = LevelRenderer(screen, settings.level0)
 keys_pressed = []
 player = test_level.get_player()
+testenemy = test_level.get_enemies().sprites()[0]
+testenemy1 = test_level.get_enemies().sprites()[1]
 
 SPRITE_NEXT = pygame.USEREVENT + 1
-WALL_JUMP_COOLDOWN = pygame.USEREVENT + 2
 
 pygame.time.set_timer(SPRITE_NEXT, 100, 0)
 while run:
@@ -27,8 +30,6 @@ while run:
         if next_event.type == SPRITE_NEXT:
             for sprite in test_level.get_animations().sprites():
                 sprite.next(0)
-        if next_event.type == WALL_JUMP_COOLDOWN:
-            player.can_jump = True
 
     keys_pressed = pygame.key.get_pressed()  # Array of bools accessed with the pygame key constants.
     # Uses the fact that true is one and false is 0 to evaluate the direction to move.
@@ -36,9 +37,18 @@ while run:
     x_mov = keys_pressed[pygame.K_d] - keys_pressed[pygame.K_a]
     y_mov = keys_pressed[pygame.K_s] - keys_pressed[pygame.K_SPACE]
 
+    for enemy in test_level.get_enemies().sprites():  # Initializes all enemies, currently turning around is broken
+        if (enemy.edge_detect(test_level.solids) == False):
+            enemy.move_x(testenemy.move_int, test_level.solids)
+        else:
+            enemy.move_int *= -1
+
     player_init_pos = (player.rect.x, player.rect.y)  # Grabbing the initial position of the player in the frame.
-    player.movement_handler(x_mov, y_mov, test_level.solids) # Player Movement Processed
+    player.update(x_mov, y_mov, test_level.solids) # Player Movement Processed
     player_fin_pos = (player.rect.x, player.rect.y) # Grabbing the final position of the player in the frame.
+
+    # if player.collided_with(testenemy):
+    #    gameOver = True
 
     test_level.update(player_init_pos,player_fin_pos) # The level_renderer can go draw everything.
     frame_limiter.tick(max_frames) # Capping the frames for consistent behaviour.

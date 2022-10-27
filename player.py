@@ -18,7 +18,7 @@ class Player(entity.Entity):
         self.wall_jump_cooldown = 30 # In frames of the game.
 
     # Does all the movement associated with the player
-    def movement_handler(self, x_direction, y_direction, collision_group):
+    def update(self, x_direction, y_direction, collision_group):
         self.move_x(x_direction, collision_group)
         self.jump(y_direction, collision_group)
         self.fall(collision_group)
@@ -57,11 +57,6 @@ class Player(entity.Entity):
                 self.dive += 1
         else:
             self.dive = 0
-
-    #def Update(self, pygame.sprite.Group()):
-    #    if(LevelRenderer.solids):
-    #        print("\nTest")
-
 
     # Checks if the player collided with the passed group. This should
     # not be a group that collisions are forbidden with by move_y(), move_x() and v_mov_y()
