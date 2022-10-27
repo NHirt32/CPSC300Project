@@ -5,7 +5,7 @@ screen_width = 8 * tile_size
 screen_height = 5 * tile_size
 max_frames = 60
 
-level0 = level_generator.get_level(random.randint(1, 5))
+level0 = level_generator.get_level(3)
 
 
 

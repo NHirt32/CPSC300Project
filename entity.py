@@ -46,7 +46,7 @@ class Entity(animation.Animation):
             self.rect.y += 1
             return True
         else:   # If the entity is not 1 pixel from touching a ceiling
-            self.rect.y -= 1
+            self.rect.y += 1
             return False
 
     # Checks if the entity collided with the passed group. This should

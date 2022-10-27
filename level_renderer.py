@@ -35,7 +35,7 @@ class LevelRenderer:
                     player1.add(self.players)   #Adds player1 to renderer group
                     player1.add(self.animations)
 
-                elif level_layout[row][col] == '0':
+                elif level_layout[row][col] == 'E':
 
                     enemy1 = Enemy(position)
                     enemy1.add(self.enemies)
@@ -93,7 +93,7 @@ class LevelRenderer:
         # any further group must be factored in here, though I doubt we will
         # need more than that. Just add subsequent groups into the all_tiles array.
         # We could make the background a little dynamic,
-        # perhaps make it move at 1/2 the rate of everything else for a perceived depth.
+        # perhaps make it move at fraction the rate of everything else for a perceived depth.
 
         self.screen.fill("white")
 

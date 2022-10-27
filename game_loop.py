@@ -15,8 +15,8 @@ frame_limiter = pygame.time.Clock()
 test_level = LevelRenderer(screen, settings.level0)
 keys_pressed = []
 player = test_level.get_player()
-testenemy = test_level.get_enemies().sprites()[0]
-testenemy1 = test_level.get_enemies().sprites()[1]
+#testenemy = test_level.get_enemies().sprites()[0]
+#testenemy1 = test_level.get_enemies().sprites()[1]
 
 SPRITE_NEXT = pygame.USEREVENT + 1
 
@@ -39,7 +39,7 @@ while run:
 
     for enemy in test_level.get_enemies().sprites():  # Initializes all enemies, currently turning around is broken
         if (enemy.edge_detect(test_level.solids) == False):
-            enemy.move_x(testenemy.move_int, test_level.solids)
+            enemy.move_x(enemy.move_int, test_level.solids)
         else:
             enemy.move_int *= -1
 
