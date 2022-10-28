@@ -6,7 +6,15 @@ import math
 
 class Player(entity.Entity):
     def __init__(self, pos):
-        entity.Entity.__init__(self, [["assets/player.png", "assets/red_player.png"]], pos)
+        entity.Entity.__init__(self,
+                [["assets/1_1.png","assets/1_2.png","assets/1_3.png","assets/1_2.png","assets/1_1.png"],
+                ["assets/2_1.png","assets/2_2.png","assets/2_3.png","assets/2_2.png","assets/2_1.png"],
+                ["assets/3_1.png","assets/1_1.png","assets/3_2.png","assets/1_1.png"],
+                ["assets/4_2.png","assets/2_1.png","assets/4_1.png","assets/2_1.png"],
+                ["assets/5_1.png"],["assets/6_1.png"],
+                ["assets/7_1.png","assets/7_2.png"],
+                ["assets/8_1.png","assets/8_2.png"]],
+                               pos)
         self.boing = 0  # Upward momentum.
         self.jump_power = 21  # Defines max jump power
         self.dive = 0  # Downward momentum
@@ -22,17 +30,30 @@ class Player(entity.Entity):
         self.wall_jump_vertical_momentum = 21 # Max wall jump vertical momentum
         self.can_jump = True
 
+        # Directions
+        self.STANDING_STILL_LEFT = 1
+        self.STANDING_STILL_RIGHT = 0
+        self.WALKING_RIGHT = 2
+        self.WALKING_LEFT = 3
+        self.JUMPING_LEFT = 5
+        self.JUMPING_RIGHT = 4
+        self.SLIDING_LEFT = 7
+        self.SLIDING_RIGHT = 6
+
     # Does all the movement associated with the player
     def update(self, x_direction, y_direction, collision_group):
-        self.vertical_handler(x_direction, y_direction, collision_group)
-        self.horizontal_handler(x_direction, collision_group)
+        t_left = self.touching_left(collision_group)
+        t_down = self.touching_ground(collision_group)
+        t_right = self.touching_right(collision_group)
+        t_up = self.touching_roof(collision_group)
+
+        self.vertical_handler(x_direction, y_direction, collision_group, t_left, t_down, t_right, t_up)
+        self.horizontal_handler(x_direction, collision_group, t_left, t_right)
+        self.update_direction(x_direction, y_direction, collision_group, t_left, t_down, t_right, t_up)
 
     # Handles all horizontal movement relating to the player. Takes a collision group
     # and the horizontal input data as arguments.
-    def horizontal_handler(self, x_mov, group):
-
-        t_left = self.touching_left(group)
-        t_right = self.touching_right(group)
+    def horizontal_handler(self, x_mov, group, t_left, t_right):
 
         # Tests for right input, adjusts momentum by the acceleration if not touching a wall
         if (x_mov == 1) and (self.sign(self.momentum) >= 0):
@@ -63,13 +84,7 @@ class Player(entity.Entity):
 
     # Handles all vertical movement relating to the player. Takes a collision group
     # and the vertical input data as arguments.
-    def vertical_handler(self,x_mov, y_mov, group):
-
-        t_left = self.touching_left(group)
-        t_down = self.touching_ground(group)
-        t_right = self.touching_right(group)
-        t_up = self.touching_roof(group)
-
+    def vertical_handler(self,x_mov, y_mov, group, t_left, t_down, t_right, t_up):
         # Disables the autojump
         if self.can_jump:
             # Normal or walljump case detection.
@@ -127,6 +142,23 @@ class Player(entity.Entity):
                     self.dive += 1
             else:
                 self.dive = 0
+
+    # Updates the player's direction variable, which controls which animations are shown.
+    def update_direction(self, x_mov, y_mov, group, t_left, t_down, t_right, t_up):
+        if (x_mov == 0) and t_down and (self.sign(self.momentum) == 1):
+            self.direction = self.STANDING_STILL_RIGHT
+        elif(x_mov == 0) and t_down and (self.sign(self.momentum) == -1):
+            self.direction = self.STANDING_STILL_LEFT
+        elif (x_mov == 1) and t_down and (self.sign(self.momentum) == 1):
+            self.direction = self.WALKING_RIGHT
+        elif (x_mov == -1) and t_down and (self.sign(self.momentum) == -1):
+            self.direction = self.WALKING_LEFT
+        elif (x_mov == -1) and t_down and (self.sign(self.momentum) == 1):
+            self.direction = self.WALKING_LEFT
+        elif (x_mov == 1) and t_down and (self.sign(self.momentum) == -1):
+            self.direction = self.WALKING_RIGHT
+
+
 
     # Checks if the player collided with the passed group. This should
     # not be a group that collisions are forbidden with by move_y(), move_x() and v_mov_y()

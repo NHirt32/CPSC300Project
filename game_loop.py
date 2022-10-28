@@ -20,7 +20,7 @@ player = test_level.get_player()
 
 SPRITE_NEXT = pygame.USEREVENT + 1
 
-pygame.time.set_timer(SPRITE_NEXT, 100, 0)
+pygame.time.set_timer(SPRITE_NEXT, 70, 0)
 while run:
     # Pygame event handling.
     events = pygame.event.get()
@@ -29,7 +29,7 @@ while run:
             run = False
         if next_event.type == SPRITE_NEXT:
             for sprite in test_level.get_animations().sprites():
-                sprite.next(0)
+                sprite.next(sprite.direction)
 
     keys_pressed = pygame.key.get_pressed()  # Array of bools accessed with the pygame key constants.
     # Uses the fact that true is one and false is 0 to evaluate the direction to move.
