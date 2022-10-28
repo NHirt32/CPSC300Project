@@ -9,19 +9,21 @@ import random
 
 class LevelRenderer:
 
-    def __init__(self, screen, level_layout):
+    def __init__(self, screen, level_layout, theme):
         self.animations = pygame.sprite.Group()
         self.players = pygame.sprite.Group()
         self.solids = pygame.sprite.Group()
         self.enemies = pygame.sprite.Group()
         self.backgrounds = pygame.sprite.Group()
+        self.non_solids = pygame.sprite.Group()
         self.screen = screen
         self.level_layout = level_layout
         self.background_speed = 0.1
+        self.theme = theme
 
         # Add any further sprite groups that need camera offset into this array.
         # The order of drawing is from left to right.
-        self.all_tiles = [self.backgrounds, self.solids, self.enemies, self.players]
+        self.all_tiles = [self.backgrounds, self.solids, self.non_solids, self.enemies, self.players]
 
         # Drawing the layout to the screen
         for row in range(0, len(level_layout)):
@@ -29,52 +31,24 @@ class LevelRenderer:
 
                 position = ((col * settings.tile_size), (row * settings.tile_size))
 
-                # Add cases here for different tiles.
-                if level_layout[row][col] == "P":
-                    player1 = Player(position)
-                    player1.add(self.players)   #Adds player1 to renderer group
-                    player1.add(self.animations)
+                # Add cases here for different types of tiles.
+                if level_layout[row][col] == 'P':
+                    self.draw_player(position,self.theme)
 
                 elif level_layout[row][col] == 'E':
+                    self.draw_enemy(position, self.theme)
 
-                    enemy1 = Enemy(position)
-                    enemy1.add(self.enemies)
-                    #enemy1.add(self.solids)
+                elif level_layout[row][col] == 'B':
+                    self.draw_background(position, self.theme)
 
-                elif level_layout[row][col] == "T":
+                elif level_layout[row][col] == 'X':
+                    self.draw_block(position, self.theme)
 
-                    outline_top = Tile("assets/outline_top.png", position)
-                    outline_top.add(self.solids)
+                elif level_layout[row][col] == 'N':
+                    self.draw_non_solid(position, self.theme)
 
-                elif level_layout[row][col] == "L":
-                    r_outline_left = Tile("assets/r_outline_left.png", position)
-                    r_outline_left.add(self.solids)
-
-                elif level_layout[row][col] == "C":
-                    outcorner_topleft = Tile("assets/outcorner_topleft.png", position)
-                    outcorner_topleft.add(self.solids)
-
-                elif level_layout[row][col] == "H":
-                    corner_topright = Tile("assets/corner_topright.png", position)
-                    corner_topright.add(self.solids)
-
-                elif level_layout[row][col] == "R":
-                    line_right = Tile("assets/line_right.png", position)
-                    line_right.add(self.solids)
-
-                elif level_layout[row][col] == "B":
-                    large_80_40_background = Tile("assets/large_80_40_background.png", position)
-                    large_80_40_background.add(self.backgrounds)
-
-                elif level_layout[row][col] == "X":
-                    paper_block = Tile("assets/test.png", position)
-                    paper_block.add(self.solids)
-
-                elif level_layout[row][col] == "A":
-                    animation_test = Animation(
-                        [["assets/red_cross.png", "assets/blue_cross.png"], ["assets/birds.png"]], position)
-                    animation_test.add(self.solids)
-                    animation_test.add(self.animations)
+                elif level_layout[row][col] == 'A':
+                    self.draw_non_solid_animation(position, self.theme)
 
         # Need to move the camera over the player at the start, otherwise there may be an awkward offset
         init = (self.players.sprites()[0].rect.x, self.players.sprites()[0].rect.y)
@@ -110,13 +84,50 @@ class LevelRenderer:
                 sprite.rect.centerx += change[0]
                 sprite.rect.centery += change[1]
 
-        self.screen.fill("white")  # This is a temporary background.
+        self.screen.fill("white")  # This shows when no background is present.
 
         # Drawing all sprites in the group to screen.
         self.backgrounds.draw(self.screen)
         self.solids.draw(self.screen)
+        self.non_solids.draw(self.screen)
         self.enemies.draw(self.screen)
         self.players.draw(self.screen)
+
+
+    # Handlers for the level renderer, looks at the theme of the level and chooses what version to draw
+    def draw_player(self, position, theme):
+        player1 = Player(position)
+        player1.add(self.players)  # Adds player1 to renderer group
+        player1.add(self.animations)
+    def draw_enemy(self, position, theme):
+        enemy1 = Enemy(position)
+        enemy1.add(self.enemies)
+        # enemy1.add(self.solids)
+    def draw_block(self, position, theme):
+        if theme == 0:
+            block = Tile("assets/paper_block.png", position)
+            block.add(self.solids)
+
+    def draw_block_animation(self, position, theme):
+        if theme == 0:
+            block = Tile("assets/paper_block.png", position)
+            block.add(self.solids)
+            block.add(self.animations)
+    def draw_background(self, position, theme):
+        if theme == 0:
+            background = Tile("assets/large_80_40_background.png",position)
+            background.add(self.backgrounds)
+
+    def draw_non_solid(self, position, theme):
+        if theme == 0:
+            non_solid = Tile("assets/red_cross.png", position)
+            non_solid.add(self.non_solids)
+
+    def draw_non_solid_animation(self, position, theme):
+        if theme == 0:
+            non_solid = Animation([["assets/red_cross.png", "assets/blue_cross"]], position)
+            non_solid.add(self.non_solids)
+            non_solid.add(self.animations)
 
     def set_players(self, players):
         self.players = players

@@ -12,7 +12,7 @@ run = True
 screen = pygame.display.set_mode((screen_width, screen_height))
 
 frame_limiter = pygame.time.Clock()
-test_level = LevelRenderer(screen, settings.level0)
+test_level = LevelRenderer(screen, settings.level0, 0) # for testing purposes, hard coded theme
 keys_pressed = []
 player = test_level.get_player()
 #testenemy = test_level.get_enemies().sprites()[0]
