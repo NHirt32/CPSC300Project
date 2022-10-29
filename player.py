@@ -145,19 +145,20 @@ class Player(entity.Entity):
 
     # Updates the player's direction variable, which controls which animations are shown.
     def update_direction(self, x_mov, y_mov, group, t_left, t_down, t_right, t_up):
-        if (x_mov == 0) and t_down and (self.sign(self.momentum) == 1):
-            self.direction = self.STANDING_STILL_RIGHT
-        elif(x_mov == 0) and t_down and (self.sign(self.momentum) == -1):
-            self.direction = self.STANDING_STILL_LEFT
-        elif (x_mov == 1) and t_down and (self.sign(self.momentum) == 1):
-            self.direction = self.WALKING_RIGHT
-        elif (x_mov == -1) and t_down and (self.sign(self.momentum) == -1):
-            self.direction = self.WALKING_LEFT
-        elif (x_mov == -1) and t_down and (self.sign(self.momentum) == 1):
-            self.direction = self.WALKING_LEFT
-        elif (x_mov == 1) and t_down and (self.sign(self.momentum) == -1):
-            self.direction = self.WALKING_RIGHT
 
+        m_direction = self.sign(self.momentum)
+        if (x_mov == 0) and t_down and (m_direction == 1):
+            self.direction = self.STANDING_STILL_RIGHT
+        elif(x_mov == 0) and t_down and (m_direction == -1):
+            self.direction = self.STANDING_STILL_LEFT
+        elif (x_mov == 1) and t_down and (m_direction == 1):
+            self.direction = self.WALKING_RIGHT
+        elif (x_mov == -1) and t_down and (m_direction == -1):
+            self.direction = self.WALKING_LEFT
+        elif (x_mov == -1) and t_down and (m_direction == 1):
+            self.direction = self.WALKING_LEFT
+        elif (x_mov == 1) and t_down and (m_direction == -1):
+            self.direction = self.WALKING_RIGHT
 
 
     # Checks if the player collided with the passed group. This should

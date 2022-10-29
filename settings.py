@@ -1,18 +1,26 @@
 import level_generator
 import random
-tile_size = 64
-screen_width = 16 * tile_size
-screen_height = 10 * tile_size
+
+
+screen_width = 1000
+screen_height = 800
 max_frames = 60
 
-
 level0 = [
-    "B0000000000000",
-    "00000000000000",
-    "00P00000000000",
-    "0XXXXXXXX000XX",
-    "0XXXXXXXX0E0XX",
-    "0XXXXXXXXXXXXX",
+    "B",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "0000000000000000000000000000000000000",
+    "0000000000000000000000000000000000000",
+    "000000000000000000000000000000P000000",
+    "000000000000000000000000XXXXXXXX000XX",
+    "000000000000000000000000XXXXXXXX0E0XX",
+    "000000000000000000000000XXXXXXXXXXXXX",
 ]
 
 # level0 = level_generator.get_level(3)

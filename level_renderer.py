@@ -21,6 +21,16 @@ class LevelRenderer:
         self.background_speed = 0.1
         self.theme = theme
 
+        # Tile size should be evenly divisible by all assets that
+        # are drawn using the fill() function in level renderer
+        if theme == 0:
+            tile_sizes = [128,192,256,320]
+            self.tile_size = random.choice(tile_sizes)
+
+        elif theme == 1:
+            tile_sizes = [192, 384, 576]
+            self.tile_size = random.choice(tile_sizes)
+
         # Add any further sprite groups that need camera offset into this array.
         # The order of drawing is from left to right.
         self.all_tiles = [self.backgrounds, self.solids, self.non_solids, self.enemies, self.players]
@@ -29,7 +39,7 @@ class LevelRenderer:
         for row in range(0, len(level_layout)):
             for col in range(0, len(level_layout[row])):
 
-                position = ((col * settings.tile_size), (row * settings.tile_size))
+                position = ((col * self.tile_size), (row * self.tile_size))
 
                 # Add cases here for different types of tiles.
                 if level_layout[row][col] == 'P':
@@ -43,6 +53,9 @@ class LevelRenderer:
 
                 elif level_layout[row][col] == 'X':
                     self.draw_block(position, self.theme)
+
+                elif level_layout[row][col] == 'Y':
+                    self.draw_block_animation(position, self.theme)
 
                 elif level_layout[row][col] == 'N':
                     self.draw_non_solid(position, self.theme)
@@ -94,25 +107,37 @@ class LevelRenderer:
         self.players.draw(self.screen)
 
 
-    # Handlers for the level renderer, looks at the theme of the level and chooses what version to draw
+    # Handlers for the level renderer, looks at the theme of the level and chooses what version to draw,
+    # adds the constructed group to be drawn.
     def draw_player(self, position, theme):
         player1 = Player(position)
         player1.add(self.players)  # Adds player1 to renderer group
         player1.add(self.animations)
+
     def draw_enemy(self, position, theme):
         enemy1 = Enemy(position)
         enemy1.add(self.enemies)
         # enemy1.add(self.solids)
+
     def draw_block(self, position, theme):
         if theme == 0:
-            block = Tile("assets/paper_block.png", position)
-            block.add(self.solids)
+            asset_size = 64
+            blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile", "assets/paper_block.png")
+            for block in blocks:
+                block.add(self.solids)
+
+        elif theme == 1:
+            asset_size = 192
+            blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile", "assets/test.png")
+            for block in blocks:
+                block.add(self.solids)
 
     def draw_block_animation(self, position, theme):
         if theme == 0:
-            block = Tile("assets/paper_block.png", position)
+            block = Animation([["assets/green_block.png", "assets/red_block.png"]], position)
             block.add(self.solids)
             block.add(self.animations)
+
     def draw_background(self, position, theme):
         if theme == 0:
             background = Tile("assets/large_80_40_background.png",position)
@@ -176,3 +201,44 @@ class LevelRenderer:
     # returns a group of the animations
     def get_animations(self):
         return self.animations
+
+    # This may be useful for resolving asset size conflicts, but I do not know if it will be needed.
+    # This function takes a lot of arguments, and should ideally be called from a draw handler.
+    # May have bugs. This function fills a space specified as h_space_size by v_space_size, with the top left
+    # of this area located at position, with the constructed object, determined by selector, with the given
+    # sprite_set, if applicable.
+    # h_space_size should be evenly divisible by h_asset_size, and v_space_size should be evenly divisible
+    # by v_asset_size
+    # This function can create a lot of sprite objects very quickly, please use it sparingly.
+    def fill(self, position, h_asset_size, v_asset_size, h_space_size, v_space_size, selector, sprite_set):
+        assets = []
+        h_counter = 0
+
+        if selector == "Enemy":
+            while h_counter < h_space_size:
+                v_counter = 0
+                while v_counter < v_space_size:
+                    enemy = Enemy((position[0] + h_counter, position[1] + v_counter))
+                    assets.append(enemy)
+                    v_counter += v_asset_size
+                h_counter += h_asset_size
+
+        elif selector == "Tile":
+            while h_counter < h_space_size:
+                v_counter = 0
+                while v_counter < v_space_size:
+                    block = Tile(sprite_set, (position[0] + h_counter, position[1] + v_counter))
+                    assets.append(block)
+                    v_counter += v_asset_size
+                h_counter += h_asset_size
+
+        elif selector == "Animation":
+            while h_counter < h_space_size:
+                v_counter = 0
+                while v_counter < v_space_size:
+                    animation = Animation(sprite_set, (position[0] + h_counter, position[1] + v_counter))
+                    assets.append(animation)
+                    v_counter += v_asset_size
+                h_counter += h_asset_size
+
+        return assets

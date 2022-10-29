@@ -3,7 +3,7 @@ from settings import *
 from tile import *
 from player import *
 from level_renderer import *
-
+import random
 pygame.init()
 
 gameOver = False; #Going to use this for encasing game in loop, when player touches enemy/hazard it is set to True
@@ -12,7 +12,9 @@ run = True
 screen = pygame.display.set_mode((screen_width, screen_height))
 
 frame_limiter = pygame.time.Clock()
-test_level = LevelRenderer(screen, settings.level0, 0) # for testing purposes, hard coded theme
+
+# For testing purposes, hard coded theme, and tile_size
+test_level = LevelRenderer(screen, level_generator.get_level(random.randint(1, 5)), random.randint(0, 1))
 keys_pressed = []
 player = test_level.get_player()
 #testenemy = test_level.get_enemies().sprites()[0]
