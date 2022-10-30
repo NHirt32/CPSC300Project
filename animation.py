@@ -20,7 +20,7 @@ class Animation(tile.Tile):
 
         if direction == self.direction:
             self.image = pygame.image.load(self.frames[self.direction][self.current_frame])
-            if (self.current_frame < (len(self.frames[self.direction]) - 1)):
+            if (self.current_frame < (len(self.frames[self.direction]) - 2)):
                 self.current_frame += 1
             else:
                 self.current_frame = 0
@@ -29,7 +29,7 @@ class Animation(tile.Tile):
             self.current_frame = 0
             self.direction = direction
             self.image = pygame.image.load(self.frames[direction][self.current_frame])
-            if (self.current_frame < (len(self.frames[self.direction]) - 1)):
+            if (self.current_frame < (len(self.frames[self.direction]) - 2)):
                 self.current_frame += 1
             else:
                 self.current_frame = 0
