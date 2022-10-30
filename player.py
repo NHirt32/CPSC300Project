@@ -15,12 +15,11 @@ class Player(entity.Entity):
                 ["assets/7_1.png","assets/7_2.png"],
                 ["assets/8_1.png","assets/8_2.png"]],
                                pos)
-        self.boing = 0  # Upward momentum.
         self.jump_power = 21  # Defines max jump power
-        self.dive = 0  # Downward momentum
-        self.gravity = 100  # Defines max fall speed
+        self.gravity = 100  # Defines max fall speed, must be negative.
         self.slide_speed = 4 # defines gravity when sliding down a wall
-        self.momentum = 0 # Used for non-wall jump related horizontal momentum
+        self.vertical_momentum = 0
+        self.horizontal_momentum = 0 # Used for non-wall jump related horizontal momentum
         self.speed = 15 # Max momentum. MUST BE EVENLY DIVISIBLE BY horizontal_acceleration
         self.horizontal_acceleration = 3
         self.wall_jump_cooldown = 20 # In frames of the game.
@@ -56,31 +55,31 @@ class Player(entity.Entity):
     def horizontal_handler(self, x_mov, group, t_left, t_right):
 
         # Tests for right input, adjusts momentum by the acceleration if not touching a wall
-        if (x_mov == 1) and (self.sign(self.momentum) >= 0):
+        if (x_mov == 1) and (self.sign(self.horizontal_momentum) >= 0):
             if not t_right:
-                if (abs(self.momentum) <= self.speed):
-                    self.momentum += self.horizontal_acceleration
+                if (abs(self.horizontal_momentum) <= self.speed):
+                    self.horizontal_momentum += self.horizontal_acceleration
             else:
-                self.momentum = 0
+                self.horizontal_momentum = 0
 
         # Tests for left input, adjusts momentum by the acceleration if not touching a wall
-        elif (x_mov == -1) and (self.sign(self.momentum) <= 0):
+        elif (x_mov == -1) and (self.sign(self.horizontal_momentum) <= 0):
             if not t_left:
-                if (abs(self.momentum) <= self.speed):
-                    self.momentum -= self.horizontal_acceleration
+                if (abs(self.horizontal_momentum) <= self.speed):
+                    self.horizontal_momentum -= self.horizontal_acceleration
             else:
-                self.momentum = 0
+                self.horizontal_momentum = 0
 
         # If no input, then reduce momentum
         else:
-            if self.momentum > 0:
-                if (self.momentum != 0):
-                    self.momentum -= self.horizontal_acceleration
-            elif self.momentum < 0:
-                if (self.momentum != 0):
-                    self.momentum += self.horizontal_acceleration
+            if self.horizontal_momentum > 0:
+                if (self.horizontal_momentum != 0):
+                    self.horizontal_momentum -= self.horizontal_acceleration
+            elif self.horizontal_momentum < 0:
+                if (self.horizontal_momentum != 0):
+                    self.horizontal_momentum += self.horizontal_acceleration
 
-        self.v_move_x(self.sign(self.momentum), abs(self.momentum), group)
+        self.v_move_x(self.sign(self.horizontal_momentum), abs(self.horizontal_momentum), group)
 
     # Handles all vertical movement relating to the player. Takes a collision group
     # and the vertical input data as arguments.
@@ -105,48 +104,50 @@ class Player(entity.Entity):
         if y_mov == 0:
             self.can_jump = True
 
-        # Processing the boing of a jump
-        if (self.boing != 0) and (not t_up):
-            self.v_move_y(-1, self.boing, group)
-            self.boing -= 1
-        else:
-            self.boing = 0
+        # Processing upward vertical momentum, like in the case of jump.
+        if (self.vertical_momentum > 0) and (not t_up):
+            self.v_move_y(-1, self.vertical_momentum, group)
+            self.vertical_momentum -= 1
+
+        # Makes sure that the player bounces off the roof, and does not stick to it.
+        if t_up:
+            self.vertical_momentum = -1
 
         # Dealing with the player cooldown
         if self.wall_jump_cooldown_counter != 0:
             self.wall_jump_cooldown_counter -= 1
 
-        #Process gravity
+        #Process downward vertical momentum
         self.gravity_handler(x_mov,group)
 
-    # Does mostly horizontal movement, but needs to factor in when sliding and when not sliding.
+    # Does mostly downward vertical movement, but needs to factor in when sliding and when not sliding.
     def gravity_handler(self, x_mov, group):
         # If sliding
         if ((self.touching_right(group) and (x_mov == 1)) or (self.touching_left(group) and (x_mov == -1))) and\
             (not self.touching_ground(group)):
-            if self.boing == 0:
-                self.v_move_y(1, self.dive, group)
-                if (self.dive <= self.slide_speed):
-                    self.dive += 1
+            if self.vertical_momentum <= 0:
+                self.v_move_y(1, abs(self.vertical_momentum), group)
+                if (abs(self.vertical_momentum) <= self.slide_speed):
+                    self.vertical_momentum -= 1
                 else:
-                    self.dive -= 1
-            else:
-                self.dive = 0
+                    self.vertical_momentum += 1
 
         # if falling
+        elif(not self.touching_ground(group)):
+            if self.vertical_momentum <= 0:
+                self.v_move_y(1, abs(self.vertical_momentum), group)
+                if (self.vertical_momentum <= self.gravity):
+                    self.vertical_momentum -= 1
+                else:
+                    self.vertical_momentum += 1
+
         else:
-            # Processing the dive of the player falling
-            if (self.boing == 0) and (not (self.touching_ground(group))):
-                self.v_move_y(1, self.dive, group)
-                if (self.dive != self.gravity):
-                    self.dive += 1
-            else:
-                self.dive = 0
+            self.vertical_momentum = 0
 
     # Updates the player's direction variable, which controls which animations are shown.
     def update_direction(self, x_mov, y_mov, group, t_left, t_down, t_right, t_up):
 
-        m_direction = self.sign(self.momentum)
+        m_direction = self.sign(self.horizontal_momentum)
         if (x_mov == 0) and t_down and (m_direction == 1):
             self.direction = self.STANDING_STILL_RIGHT
         elif(x_mov == 0) and t_down and (m_direction == -1):
@@ -160,7 +161,6 @@ class Player(entity.Entity):
         elif (x_mov == 1) and t_down and (m_direction == -1):
             self.direction = self.WALKING_RIGHT
 
-
     # Checks if the player collided with the passed group. This should
     # not be a group that collisions are forbidden with by move_y(), move_x() and v_mov_y()
     def collided_with(self, group):
@@ -168,20 +168,20 @@ class Player(entity.Entity):
             return True
 
     def jump(self):
-        self.boing = self.jump_power
+        self.vertical_momentum = self.jump_power
         self.can_jump = False
 
     # Makes conditions right for the player to wall jump left
     def wall_jump_l(self):
-        self.boing = self.wall_jump_vertical_momentum
-        self.momentum = -1 * self.wall_jump_horizontal_momentum
+        self.vertical_momentum = self.wall_jump_vertical_momentum
+        self.horizontal_momentum = -1 * self.wall_jump_horizontal_momentum
         self.wall_jump_cooldown_counter = self.wall_jump_cooldown
         self.can_jump = False
 
     # Makes conditions right for the player to wall jump right
     def wall_jump_r(self):
-        self.boing = self.wall_jump_vertical_momentum
-        self.momentum = self.wall_jump_horizontal_momentum
+        self.vertical_momentum = self.wall_jump_vertical_momentum
+        self.horizontal_momentum = self.wall_jump_horizontal_momentum
         self.wall_jump_cooldown_counter = self.wall_jump_cooldown
         self.can_jump = False
 
@@ -193,4 +193,3 @@ class Player(entity.Entity):
             return 0
         elif number < 0:
             return -1
-

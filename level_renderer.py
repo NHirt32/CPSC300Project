@@ -21,7 +21,7 @@ class LevelRenderer:
         self.background_speed = 0.1
         self.theme = theme
 
-        # Tile size should be evenly divisible by all assets that
+        # Remember, a chosen tile_size should be evenly divisible by all assets that
         # are drawn using the fill() function in level renderer
         if theme == 0:
             tile_sizes = [128,192,256,320]

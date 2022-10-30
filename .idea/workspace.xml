@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8c9c6286-66a9-4239-b4e7-b4166552cbbc" name="Changes" comment="Player animations still bugged, enemy direction change still bugged, pushed functionality of level renderer to handlers within the level_renderer class. Can now use the new theme variable to draw different types of the same functional tile.">
+    <list default="true" id="8c9c6286-66a9-4239-b4e7-b4166552cbbc" name="Changes" comment="Made the player vertical functions go off of only onne momentum variable, might be a couple bugs but should be mostly functional.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_loop.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_loop.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/level_renderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/level_renderer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/player.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tile.py" beforeDir="false" afterPath="$PROJECT_DIR$/tile.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +136,21 @@
       <option name="project" value="LOCAL" />
       <updated>1666991930802</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Added a fill() function, and pushed the tile_size functionality into the&#10;level renderer. This is to accommodate the potential difference in asset sizes that could potentially occur. Player animations still bugged, enemy direction change still bugged">
+      <created>1667001826569</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1667001826570</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Made the player vertical functions go off of only onne momentum variable, might be a couple bugs but should be mostly functional.">
+      <created>1667173553466</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1667173553466</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -192,6 +201,8 @@
     <MESSAGE value="Massive change to all of the player physics. Added acceleration, wall sliding, and horizontal momentum off a walljump." />
     <MESSAGE value="Some stuff for animation with the player, definitely has bugs." />
     <MESSAGE value="Player animations still bugged, enemy direction change still bugged, pushed functionality of level renderer to handlers within the level_renderer class. Can now use the new theme variable to draw different types of the same functional tile." />
-    <option name="LAST_COMMIT_MESSAGE" value="Player animations still bugged, enemy direction change still bugged, pushed functionality of level renderer to handlers within the level_renderer class. Can now use the new theme variable to draw different types of the same functional tile." />
+    <MESSAGE value="Added a fill() function, and pushed the tile_size functionality into the&#10;level renderer. This is to accommodate the potential difference in asset sizes that could potentially occur. Player animations still bugged, enemy direction change still bugged" />
+    <MESSAGE value="Made the player vertical functions go off of only onne momentum variable, might be a couple bugs but should be mostly functional." />
+    <option name="LAST_COMMIT_MESSAGE" value="Made the player vertical functions go off of only onne momentum variable, might be a couple bugs but should be mostly functional." />
   </component>
 </project>
