@@ -120,7 +120,7 @@ class LevelRenderer:
     def draw_enemy(self,enemyPic , position, theme):
         enemy1 = Enemy(enemyPic, position)
         enemy1.add(self.enemies)
-        # enemy1.add(self.solids)
+        #enemy1.add(self.solids)
 
     def draw_block(self, position, theme):
         if theme == 0:
