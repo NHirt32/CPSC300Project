@@ -11,7 +11,8 @@ class Player(entity.Entity):
                 ["assets/2_1.png","assets/2_2.png","assets/2_3.png","assets/2_2.png","assets/2_1.png"],
                 ["assets/3_1.png","assets/1_1.png","assets/3_2.png","assets/1_1.png"],
                 ["assets/4_2.png","assets/2_1.png","assets/4_1.png","assets/2_1.png"],
-                ["assets/5_1.png"],["assets/6_1.png"],
+                ["assets/5_1.png","assets/5_1.png","assets/5_1.png"],
+                ["assets/6_1.png","assets/6_1.png","assets/6_1.png"],
                 ["assets/7_1.png","assets/7_2.png"],
                 ["assets/8_1.png","assets/8_2.png"]],
                                pos)
@@ -46,7 +47,27 @@ class Player(entity.Entity):
         t_right = self.touching_right(collision_group)
         t_up = self.touching_roof(collision_group)
 
-        self.vertical_handler(x_direction, y_direction, collision_group, t_left, t_down, t_right, t_up)
+        # Disables the autojump
+        if self.can_jump:
+            # Normal or walljump case detection.
+            if (y_direction == -1) and t_down and (not t_up):  # -1 is up for y
+                self.jump()
+
+            # Detects if a walljump is possible
+            elif (y_direction == -1) and (self.wall_jump_cooldown_counter == 0) and (not t_down) and (not t_up):
+                # Detects a left wall jump
+                if (not t_left) and t_right:
+                    self.wall_jump_l()
+
+                # Detects a right wall jump
+                elif t_left and (not t_right):
+                    self.wall_jump_r()
+
+        # Checks if the player has let go of the jump key since the last jump.
+        if y_direction == 0:
+            self.can_jump = True
+
+        self.vertical_handler(x_direction, collision_group, t_up)
         self.horizontal_handler(x_direction, collision_group, t_left, t_right)
         self.update_direction(x_direction, y_direction, collision_group, t_left, t_down, t_right, t_up)
 
@@ -83,26 +104,7 @@ class Player(entity.Entity):
 
     # Handles all vertical movement relating to the player. Takes a collision group
     # and the vertical input data as arguments.
-    def vertical_handler(self,x_mov, y_mov, group, t_left, t_down, t_right, t_up):
-        # Disables the autojump
-        if self.can_jump:
-            # Normal or walljump case detection.
-            if (y_mov == -1) and t_down and (not t_up):  # -1 is up for y
-                self.jump()
-
-            # Detects if a walljump is possible
-            elif (y_mov == -1) and (self.wall_jump_cooldown_counter == 0) and (not t_down) and (not t_up):
-                # Detects a left wall jump
-                if (not t_left) and t_right:
-                    self.wall_jump_l()
-
-                # Detects a right wall jump
-                elif t_left and (not t_right):
-                    self.wall_jump_r()
-
-        # Checks if the player has let go of the jump key since the last jump.
-        if y_mov == 0:
-            self.can_jump = True
+    def vertical_handler(self,x_mov, group, t_up):
 
         # Processing upward vertical momentum, like in the case of jump.
         if (self.vertical_momentum > 0) and (not t_up):
@@ -148,24 +150,33 @@ class Player(entity.Entity):
     def update_direction(self, x_mov, y_mov, group, t_left, t_down, t_right, t_up):
 
         m_direction = self.sign(self.horizontal_momentum)
-        if (x_mov == 0) and t_down and (m_direction == 1):
-            self.direction = self.STANDING_STILL_RIGHT
-        elif(x_mov == 0) and t_down and (m_direction == -1):
-            self.direction = self.STANDING_STILL_LEFT
-        elif (x_mov == 1) and t_down and (m_direction == 1):
-            self.direction = self.WALKING_RIGHT
-        elif (x_mov == -1) and t_down and (m_direction == -1):
-            self.direction = self.WALKING_LEFT
-        elif (x_mov == -1) and t_down and (m_direction == 1):
-            self.direction = self.WALKING_LEFT
-        elif (x_mov == 1) and t_down and (m_direction == -1):
-            self.direction = self.WALKING_RIGHT
+        if t_down:
+            if m_direction != 0:
+                if m_direction == 1:
+                    if x_mov == 1:
+                        self.next_direction = self.WALKING_RIGHT
+                    else:
+                        self.next_direction = self.STANDING_STILL_RIGHT
+                elif m_direction == -1:
+                    if x_mov == -1:
+                        self.next_direction = self.WALKING_LEFT
+                    else:
+                        self.next_direction = self.STANDING_STILL_LEFT
+            else:
+                self.next_direction = self.direction
 
-    # Checks if the player collided with the passed group. This should
-    # not be a group that collisions are forbidden with by move_y(), move_x() and v_mov_y()
-    def collided_with(self, group):
-        if pygame.sprite.spritecollideany(self, group) != None:
-            return True
+        elif (not t_down) and self.vertical_momentum < 1:
+            if (self.direction == self.STANDING_STILL_LEFT) or (self.direction == self.WALKING_LEFT) \
+                or (self.direction == self.SLIDING_LEFT):
+                self.next_direction = self.STANDING_STILL_LEFT
+            elif (self.direction == self.STANDING_STILL_RIGHT) or (self.direction == self.WALKING_RIGHT) \
+                or (self.direction == self.SLIDING_RIGHT):
+                self.next_direction = self.SLIDING_RIGHT
+        elif (not t_down) and self.vertical_momentum >= 1:
+            if (self.direction == self.STANDING_STILL_LEFT) or (self.direction == self.WALKING_LEFT):
+                self.next_direction = self.JUMPING_LEFT
+            elif (self.direction == self.STANDING_STILL_RIGHT) or (self.direction == self.WALKING_RIGHT):
+                self.next_direction = self.JUMPING_RIGHT
 
     def jump(self):
         self.vertical_momentum = self.jump_power

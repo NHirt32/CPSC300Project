@@ -1,4 +1,6 @@
 import pygame
+
+import settings
 from settings import *
 from tile import *
 from player import *
@@ -14,7 +16,7 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 frame_limiter = pygame.time.Clock()
 
 # For testing purposes, hard coded theme, and tile_size
-test_level = LevelRenderer(screen, level_generator.get_level(random.randint(1, 5)), random.randint(0, 1))
+test_level = LevelRenderer(screen, settings.level0, 1)
 keys_pressed = []
 player = test_level.get_player()
 #testenemy = test_level.get_enemies().sprites()[0]
@@ -31,7 +33,7 @@ while run:
             run = False
         if next_event.type == SPRITE_NEXT:
             for sprite in test_level.get_animations().sprites():
-                sprite.next(sprite.direction)
+                sprite.next()
 
     keys_pressed = pygame.key.get_pressed()  # Array of bools accessed with the pygame key constants.
     # Uses the fact that true is one and false is 0 to evaluate the direction to move.
@@ -44,13 +46,14 @@ while run:
             enemy.move_x(enemy.move_int, test_level.solids)
         else:
             enemy.move_int *= -1
+            enemy.move_x(enemy.move_int, test_level.solids)
 
     player_init_pos = (player.rect.x, player.rect.y)  # Grabbing the initial position of the player in the frame.
     player.update(x_mov, y_mov, test_level.solids) # Player Movement Processed
     player_fin_pos = (player.rect.x, player.rect.y) # Grabbing the final position of the player in the frame.
 
-    # if player.collided_with(testenemy):
-    #    gameOver = True
+    if player.collided_with(test_level.enemies):
+        gameOver = True
 
     test_level.update(player_init_pos,player_fin_pos) # The level_renderer can go draw everything.
     frame_limiter.tick(max_frames) # Capping the frames for consistent behaviour.
