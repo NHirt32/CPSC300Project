@@ -3,8 +3,8 @@ import entity #Inherits functionality from entity
 
 class Enemy(entity.Entity):
 
-    def __init__(self, pos): # Constructor for generic enemy, jumping/gravity not currently defined
-        entity.Entity.__init__(self, [["assets/red_player.png"]], pos)
+    def __init__(self,enemyPic , pos): # Constructor for generic enemy, jumping/gravity not currently defined
+        entity.Entity.__init__(self, [[enemyPic]], pos)
         self.speed = 10
         self.boing = 0  # Also known as upward momentum.
         self.dive = 0  # downward momentum

@@ -16,7 +16,7 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 frame_limiter = pygame.time.Clock()
 
 # For testing purposes, hard coded theme, and tile_size
-test_level = LevelRenderer(screen, settings.level0, 1)
+test_level = LevelRenderer(screen, settings.level0, random.randint(0, 1))
 keys_pressed = []
 player = test_level.get_player()
 #testenemy = test_level.get_enemies().sprites()[0]
@@ -54,6 +54,7 @@ while run:
 
     if player.collided_with(test_level.enemies):
         gameOver = True
+        print(gameOver)
 
     test_level.update(player_init_pos,player_fin_pos) # The level_renderer can go draw everything.
     frame_limiter.tick(max_frames) # Capping the frames for consistent behaviour.

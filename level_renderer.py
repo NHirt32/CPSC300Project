@@ -28,7 +28,7 @@ class LevelRenderer:
             self.tile_size = random.choice(tile_sizes)
 
         elif theme == 1:
-            tile_sizes = [192,384]
+            tile_sizes = [192, 384]
             self.tile_size = random.choice(tile_sizes)
 
         # Add any further sprite groups that need camera offset into this array.
@@ -46,7 +46,10 @@ class LevelRenderer:
                     self.draw_player(position,self.theme)
 
                 elif level_layout[row][col] == 'E':
-                    self.draw_enemy(position, self.theme)
+                    self.draw_enemy("assets/red_player.png",position, self.theme)
+
+                elif level_layout[row][col] == 'F':
+                    self.draw_enemy("assets/birds.png",position, self.theme)
 
                 elif level_layout[row][col] == 'B':
                     self.draw_background(position, self.theme)
@@ -114,10 +117,10 @@ class LevelRenderer:
         player1.add(self.players)  # Adds player1 to renderer group
         player1.add(self.animations)
 
-    def draw_enemy(self, position, theme):
-        enemy1 = Enemy(position)
+    def draw_enemy(self,enemyPic , position, theme):
+        enemy1 = Enemy(enemyPic, position)
         enemy1.add(self.enemies)
-        # enemy1.add(self.solids)
+        #enemy1.add(self.solids)
 
     def draw_block(self, position, theme):
         if theme == 0:
