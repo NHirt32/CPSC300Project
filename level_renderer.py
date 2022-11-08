@@ -28,7 +28,7 @@ class LevelRenderer:
             self.tile_size = random.choice(tile_sizes)
 
         elif theme == 1:
-            tile_sizes = [192, 384, 576]
+            tile_sizes = [192]
             self.tile_size = random.choice(tile_sizes)
 
         # Add any further sprite groups that need camera offset into this array.

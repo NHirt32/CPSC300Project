@@ -5,7 +5,7 @@ class Enemy(entity.Entity):
 
     def __init__(self,enemyPic , pos): # Constructor for generic enemy, jumping/gravity not currently defined
         entity.Entity.__init__(self, [[enemyPic]], pos)
-        self.speed = 10
+        self.speed = 7
         self.boing = 0  # Also known as upward momentum.
         self.dive = 0  # downward momentum
         self.right_momentum = 0
