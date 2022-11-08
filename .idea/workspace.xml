@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8c9c6286-66a9-4239-b4e7-b4166552cbbc" name="Changes" comment="Added in alternate enemy class in level_renderer.&#10;Changed enemy handler to take input desired enemy picture for reusability.">
+    <list default="true" id="8c9c6286-66a9-4239-b4e7-b4166552cbbc" name="Changes" comment="Added new test level.&#10;Added in game over mechanic.">
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_26_2022_12_39_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_26_2022_12_39_PM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_26_2022_3_44_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_26_2022_3_44_PM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -154,7 +154,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667183455173</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Added new test level.&#10;Added in game over mechanic.">
+      <created>1667931431904</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1667931431904</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -209,6 +216,7 @@
     <MESSAGE value="Some stuff for animation with the player, definitely has bugs." />
     <MESSAGE value="Player animations still bugged, enemy direction change still bugged, pushed functionality of level renderer to handlers within the level_renderer class. Can now use the new theme variable to draw different types of the same functional tile." />
     <MESSAGE value="Added in alternate enemy class in level_renderer.&#10;Changed enemy handler to take input desired enemy picture for reusability." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added in alternate enemy class in level_renderer.&#10;Changed enemy handler to take input desired enemy picture for reusability." />
+    <MESSAGE value="Added new test level.&#10;Added in game over mechanic." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added new test level.&#10;Added in game over mechanic." />
   </component>
 </project>
