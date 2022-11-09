@@ -28,7 +28,7 @@ class LevelRenderer:
             self.tile_size = random.choice(tile_sizes)
 
         elif theme == 1:
-            tile_sizes = [192, 384]
+            tile_sizes = [192]
             self.tile_size = random.choice(tile_sizes)
 
         # Add any further sprite groups that need camera offset into this array.
@@ -218,27 +218,27 @@ class LevelRenderer:
         h_counter = 0
 
         if selector == "Enemy":
-            while h_counter <= h_space_size:
+            while h_counter < h_space_size:
                 v_counter = 0
-                while v_counter <= v_space_size:
+                while v_counter < v_space_size:
                     enemy = Enemy((position[0] + h_counter, position[1] + v_counter))
                     assets.append(enemy)
                     v_counter += v_asset_size
                 h_counter += h_asset_size
 
         elif selector == "Tile":
-            while h_counter <= h_space_size:
+            while h_counter < h_space_size:
                 v_counter = 0
-                while v_counter <= v_space_size:
+                while v_counter < v_space_size:
                     block = Tile(sprite_set, (position[0] + h_counter, position[1] + v_counter))
                     assets.append(block)
                     v_counter += v_asset_size
                 h_counter += h_asset_size
 
         elif selector == "Animation":
-            while h_counter <= h_space_size:
+            while h_counter < h_space_size:
                 v_counter = 0
-                while v_counter <= v_space_size:
+                while v_counter < v_space_size:
                     animation = Animation(sprite_set, (position[0] + h_counter, position[1] + v_counter))
                     assets.append(animation)
                     v_counter += v_asset_size
