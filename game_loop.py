@@ -1,10 +1,17 @@
 import pygame
+
+import game_menu
 import settings
 from settings import *
 from tile import *
 from player import *
 from level_renderer import *
 import random
+
+
+game_menu.main()
+
+
 pygame.init()
 
 gameOver = False; #Going to use this for encasing game in loop, when player touches enemy/hazard it is set to True
