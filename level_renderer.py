@@ -16,24 +16,25 @@ class LevelRenderer:
         self.enemies = pygame.sprite.Group()
         self.backgrounds = pygame.sprite.Group()
         self.non_solids = pygame.sprite.Group()
+        self.objectives = pygame.sprite.Group()
         self.screen = screen
         self.level_layout = level_layout
         self.background_speed = 0.1
         self.theme = theme
 
-        # Tile size should be evenly divisible by all assets that
+        # Remember, a chosen tile_size should be evenly divisible by all assets that
         # are drawn using the fill() function in level renderer
         if theme == 0:
             tile_sizes = [128,192,256]
             self.tile_size = random.choice(tile_sizes)
 
         elif theme == 1:
-            tile_sizes = [192, 384, 576]
+            tile_sizes = [192]
             self.tile_size = random.choice(tile_sizes)
 
         # Add any further sprite groups that need camera offset into this array.
         # The order of drawing is from left to right.
-        self.all_tiles = [self.backgrounds, self.solids, self.non_solids, self.enemies, self.players]
+        self.all_tiles = [self.backgrounds, self.solids, self.non_solids, self.objectives, self.enemies, self.players]
 
         # Drawing the layout to the screen
         for row in range(0, len(level_layout)):
@@ -65,6 +66,9 @@ class LevelRenderer:
 
                 elif level_layout[row][col] == 'A':
                     self.draw_non_solid_animation(position, self.theme)
+
+                elif level_layout[row][col] == 'O':
+                    self.draw_objective(position, self.theme)
 
         # Need to move the camera over the player at the start, otherwise there may be an awkward offset
         init = (self.players.sprites()[0].rect.x, self.players.sprites()[0].rect.y)
@@ -106,6 +110,7 @@ class LevelRenderer:
         self.backgrounds.draw(self.screen)
         self.solids.draw(self.screen)
         self.non_solids.draw(self.screen)
+        self.objectives.draw(self.screen)
         self.enemies.draw(self.screen)
         self.players.draw(self.screen)
 
@@ -156,6 +161,10 @@ class LevelRenderer:
             non_solid = Animation([["assets/red_cross.png", "assets/blue_cross"]], position)
             non_solid.add(self.non_solids)
             non_solid.add(self.animations)
+
+    def draw_objective(self, position, theme):
+        objective = Tile("assets/red_cross.png", position)
+        objective.add(self.objectives)
 
     def set_players(self, players):
         self.players = players

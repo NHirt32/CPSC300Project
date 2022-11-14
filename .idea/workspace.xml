@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8c9c6286-66a9-4239-b4e7-b4166552cbbc" name="Changes" comment="Added in alternate enemy class in level_renderer.&#10;Changed enemy handler to take input desired enemy picture for reusability.">
+    <list default="true" id="8c9c6286-66a9-4239-b4e7-b4166552cbbc" name="Changes" comment="Pretty sure flying is integrated now with the small change to Animations">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_10_26_2022_3_59_PM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enemy.py" beforeDir="false" afterPath="$PROJECT_DIR$/enemy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entity.py" beforeDir="false" afterPath="$PROJECT_DIR$/entity.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_loop.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_loop.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_menu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/level_renderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/level_renderer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/player.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tile.py" beforeDir="false" afterPath="$PROJECT_DIR$/tile.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +50,6 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/White Rider/Desktop/GameBuild1/game_loop.py&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
@@ -62,7 +67,6 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/game_loop.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -84,7 +88,6 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../GameBuild Backup/game_loop.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -113,8 +116,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1665607604160</updated>
-      <workItem from="1667182288348" duration="1171000" />
-      <workItem from="1667183659818" duration="1224000" />
     </task>
     <task id="LOCAL-00001" summary="Integrating, for the second time, the level generator, the enemies, and the walljump and player movement functionality changes">
       <created>1666837002344</created>
@@ -144,18 +145,43 @@
       <option name="project" value="LOCAL" />
       <updated>1666991930802</updated>
     </task>
-    <task id="LOCAL-00005" summary="Added in alternate enemy class in level_renderer.&#10;Changed enemy handler to take input desired enemy picture for reusability.">
-      <created>1667183455173</created>
+    <task id="LOCAL-00005" summary="Added a fill() function, and pushed the tile_size functionality into the&#10;level renderer. This is to accommodate the potential difference in asset sizes that could potentially occur. Player animations still bugged, enemy direction change still bugged">
+      <created>1667001826569</created>
       <option name="number" value="00005" />
       <option name="presentableId" value="LOCAL-00005" />
       <option name="project" value="LOCAL" />
-      <updated>1667183455173</updated>
+      <updated>1667001826570</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Made the player vertical functions go off of only onne momentum variable, might be a couple bugs but should be mostly functional.">
+      <created>1667173553466</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1667173553466</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Made the player vertical functions go off of only onne momentum variable, might be a couple bugs but should be mostly functional.">
+      <created>1667177779613</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1667177779613</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Made the player vertical functions go off of only onne momentum variable, might be a couple bugs but should be mostly functional.">
+      <created>1667181838285</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1667181838285</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Pretty sure flying is integrated now with the small change to Animations">
+      <created>1668029979775</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1668029979775</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -168,7 +194,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/main" />
+                        <option value="main" />
                       </list>
                     </value>
                   </entry>
@@ -205,10 +231,9 @@
     <MESSAGE value="Massive change to all of the player physics. Added acceleration, wall sliding, and horizontal momentum off a walljump." />
     <MESSAGE value="Some stuff for animation with the player, definitely has bugs." />
     <MESSAGE value="Player animations still bugged, enemy direction change still bugged, pushed functionality of level renderer to handlers within the level_renderer class. Can now use the new theme variable to draw different types of the same functional tile." />
-    <MESSAGE value="Added in alternate enemy class in level_renderer.&#10;Changed enemy handler to take input desired enemy picture for reusability." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added in alternate enemy class in level_renderer.&#10;Changed enemy handler to take input desired enemy picture for reusability." />
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/CPSC300Project$game_loop__1_.coverage" NAME="game_loop (1) Coverage Results" MODIFIED="1667184515663" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <MESSAGE value="Added a fill() function, and pushed the tile_size functionality into the&#10;level renderer. This is to accommodate the potential difference in asset sizes that could potentially occur. Player animations still bugged, enemy direction change still bugged" />
+    <MESSAGE value="Made the player vertical functions go off of only onne momentum variable, might be a couple bugs but should be mostly functional." />
+    <MESSAGE value="Pretty sure flying is integrated now with the small change to Animations" />
+    <option name="LAST_COMMIT_MESSAGE" value="Pretty sure flying is integrated now with the small change to Animations" />
   </component>
 </project>

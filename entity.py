@@ -8,6 +8,8 @@ class Entity(animation.Animation):
     def __init__(self, frames, pos):
         animation.Animation.__init__(self, frames, pos)
         self.speed = 10
+        self.gravity = 100  # Defines max fall speed, must be negative.
+        self.vertical_momentum = 0
 
     # Checks if the entity is touching the passed group beneath the entity.
     def touching_ground(self, group):
@@ -49,12 +51,6 @@ class Entity(animation.Animation):
             self.rect.y += 1
             return False
 
-    # Checks if the entity collided with the passed group. This should
-    # not be a group that collisions are forbidden with by move_y(), move_x() and v_mov_y()
-    def collided_with(self, group):
-        if pygame.sprite.spritecollideany(self, group) != None:
-            return True
-
     # Tries to move entity horizontally and already factors in entity speed.
     # Disables collision with the passed group.
     def move_x(self, x_pos, group):
@@ -94,3 +90,34 @@ class Entity(animation.Animation):
             while pygame.sprite.spritecollideany(self, group) == None:
                 self.rect.x += x_pos
             self.rect.x -= x_pos
+
+    def vertical_handler(self,x_mov, group, t_up):
+
+        # Processing upward vertical momentum, like in the case of jump.
+        if (self.vertical_momentum > 0) and (not t_up):
+            self.v_move_y(-1, self.vertical_momentum, group)
+            self.vertical_momentum -= 1
+
+        # Makes sure that the player bounces off the roof, and does not stick to it.
+        if t_up:
+            self.vertical_momentum = -1
+
+        #Process downward vertical momentum
+        self.gravity_handler(group)
+
+    # Does mostly downward vertical movement, but needs to factor in when sliding and when not sliding.
+    def gravity_handler(self, group):
+        # if falling
+        if(not self.touching_ground(group)):
+            if self.vertical_momentum <= 0:
+                self.v_move_y(1, abs(self.vertical_momentum), group)
+                if (self.vertical_momentum <= self.gravity):
+                    self.vertical_momentum -= 1
+                else:
+                    self.vertical_momentum += 1
+
+    # Checks if the entity collided with the passed group. This should
+    # not be a group that collisions are forbidden with by move_y(), move_x() and v_mov_y()
+    def collided_with(self, group):
+        if pygame.sprite.spritecollideany(self, group) != None:
+            return True

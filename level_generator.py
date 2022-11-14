@@ -1,6 +1,17 @@
 import random
 
 
+def addEntities(level, num):
+    col_len = len(level[0])
+    row_len = len(level)
+    for i in range(num):
+        row = random.randrange(2,row_len - 1)
+        col = random.randrange(2,col_len)
+        if level[row+1][col] == '0':
+            level[row][col] = 'F'
+        else:
+            level[row][col] = 'E'
+
 # This should be the only real method that you guys need to deal with
 # Will return the correct level based upon the number passed to it
 def get_level(level_num):
@@ -8,18 +19,23 @@ def get_level(level_num):
 
     if level_num == 1:
         create_level_path(level, 4, 1)
+        addEntities(level, 3)
         level[4][1] = 'P'
     elif level_num == 2:
-        create_level_path(level, 1, 1)
+        create_level_path(level, 1, 3)
+        addEntities(level, 2)
         level[1][1] = 'P'
     elif level_num == 3:
-        create_level_path(level, 0, 4)
+        create_level_path(level, 0, 3)
+        addEntities(level, 3)
         level[0][4] = 'P'
     elif level_num == 4:
-        create_level_path(level, 1, 1)
+        create_level_path(level, 1, 3)
+        addEntities(level, 3)
         level[1][1] = 'P'
     elif level_num == 5:
         create_level_path(level, 1, 6)
+        addEntities(level, 3)
         level[1][6] = 'P'
 
     return convert_format(level)
@@ -52,7 +68,7 @@ def get_format(level_num):
         return tunnel + cavern
 
     elif level_num == 4:
-        return [['X' for x in range(40)] for y in range(5)]
+        return [['X' for x in range(50)] for y in range(5)]
 
     elif level_num == 5:
         level5 = [['0', '0', '0', '0', '0', '0', 'X', '0', '0', '0', '0', '0', '0'],
@@ -164,10 +180,6 @@ def print_level(level):
     col_len = len(level[0])
     row_len = len(level)
 
-    print(col_len)
-    print(row_len)
-
-    print()
     for i in range(len(level)):
         print()
         for j in range(len(level[0])):
