@@ -17,17 +17,17 @@ class Player(entity.Entity):
                 ["assets/8_1.png","assets/8_2.png"]],
                                pos)
         self.jump_power = 21  # Defines max jump power
-        self.gravity = 100  # Defines max fall speed, must be negative.
-        self.slide_speed = 4 # defines gravity when sliding down a wall
+        self.gravity = 40  # Defines max fall speed.
+        self.slide_speed = 4  # defines gravity when sliding down a wall
         self.vertical_momentum = 0
-        self.horizontal_momentum = 0 # Used for non-wall jump related horizontal momentum
-        self.speed = 15 # Max momentum. MUST BE EVENLY DIVISIBLE BY horizontal_acceleration
+        self.horizontal_momentum = 0  # Used for non-wall jump related horizontal momentum
+        self.speed = 12  # Max momentum. MUST BE EVENLY DIVISIBLE BY horizontal_acceleration
         self.horizontal_acceleration = 3
-        self.wall_jump_cooldown = 20 # In frames of the game.
-        self.wall_jump_cooldown_counter = 0 # Counter for cooldown
-        self.wall_jump_horizontal_momentum = 21 # Max wall jump horizontal momentum. MUST BE EVENLY DIVISIBLE BY
+        self.wall_jump_cooldown = 20  # In frames of the game.
+        self.wall_jump_cooldown_counter = 0  # Counter for cooldown
+        self.wall_jump_horizontal_momentum = 21  # Max wall jump horizontal momentum. MUST BE EVENLY DIVISIBLE BY
         # horizontal_acceleration
-        self.wall_jump_vertical_momentum = 21 # Max wall jump vertical momentum
+        self.wall_jump_vertical_momentum = 21  # Max wall jump vertical momentum
         self.can_jump = True
 
         # Directions

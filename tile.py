@@ -8,3 +8,4 @@ class Tile(pygame.sprite.Sprite):
         self.image = pygame.image.load(image).convert_alpha()
         # Important thing here is basically everything is placed from the top left by the renderer.
         self.rect = self.image.get_rect(midbottom=pos)
+

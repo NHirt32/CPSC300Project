@@ -56,8 +56,8 @@ button.grid(row=2, column=4, padx=20, pady=20)
 
 
 def level_one():
-    settings.levelM = level_generator.get_level(1)
-
+    #settings.levelM = level_generator.get_level(1)
+    print()
 
 def level_two():
     settings.levelM = level_generator.get_level(2)

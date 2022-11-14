@@ -22,9 +22,11 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 frame_limiter = pygame.time.Clock()
 
 # For testing purposes, hard coded theme, and tile_size
-test_level = LevelRenderer(screen, settings.levelM, 1)
+test_level = LevelRenderer(screen, settings.levelM, settings.theme)
 keys_pressed = []
 player = test_level.get_player()
+completed = False
+
 #testenemy = test_level.get_enemies().sprites()[0]
 #testenemy1 = test_level.get_enemies().sprites()[1]
 
@@ -47,21 +49,39 @@ while run:
     x_mov = keys_pressed[pygame.K_d] - keys_pressed[pygame.K_a]
     y_mov = keys_pressed[pygame.K_s] - keys_pressed[pygame.K_SPACE]
 
-    for enemy in test_level.get_enemies().sprites():  # Initializes all enemies, currently turning around is broken
+    # Check to see if the player collided in the last frame
+    if player.collided_with(test_level.enemies) and not completed:  # If the player collides with an enemy
+        gameOver = True
+        test_level = LevelRenderer(screen, settings.levelM, 1)  # Reload the level
+        player = test_level.get_player()  # Reload the player
+
+    player_init_pos = (player.rect.x, player.rect.y)  # Grabbing the initial position of the player in the frame.
+    player.update(x_mov, y_mov, test_level.solids) # Player Movement Processed
+    player_fin_pos = (player.rect.x, player.rect.y) # Grabbing the final position of the player in the frame.
+
+    for enemy in test_level.get_enemies().sprites():  # Initializes all enemies
         if (enemy.edge_detect(test_level.solids) == False): # If the enemy is not colliding with a solid
             enemy.move_x(enemy.move_int, test_level.solids)
         else: # If the enemy is colliding with a solid
             enemy.move_int *= -1 # Turn around
             enemy.move_x(enemy.move_int, test_level.solids) # Move slightly to avoid being stuck on the wall
 
-    player_init_pos = (player.rect.x, player.rect.y)  # Grabbing the initial position of the player in the frame.
-    player.update(x_mov, y_mov, test_level.solids) # Player Movement Processed
-    player_fin_pos = (player.rect.x, player.rect.y) # Grabbing the final position of the player in the frame.
+        # Primitive enemy gravity handling.
+        enemy.gravity_handler(test_level.solids)
 
-    if player.collided_with(test_level.enemies):  # If the player collides with an enemy
-        gameOver = True
-        test_level = LevelRenderer(screen, settings.levelM, 1)  # Reload the level
-        player = test_level.get_player()  # Reload the player
+        # If the enemy was killed
+        if enemy.died(player):
+            test_level.enemies.remove([enemy])
+            player.vertical_momentum += 20  # make the player jump up a little.
+
+    # If player collided with objective
+    for objective in test_level.objectives.sprites():
+        if objective.rect.colliderect(player.rect):
+            test_level.objectives.remove([objective]) # Not sure if works.
+
+    # If got all objectives
+    if (len(test_level.objectives.sprites()) == 0):
+        completed = True
 
     test_level.update(player_init_pos,player_fin_pos) # The level_renderer can go draw everything.
     frame_limiter.tick(max_frames) # Capping the frames for consistent behaviour.
