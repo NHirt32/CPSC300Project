@@ -1,5 +1,4 @@
 import pygame
-
 import game_menu
 import settings
 from settings import *
@@ -11,10 +10,10 @@ import random
 # Moves the camera
 def update_camera():
     size = screen.get_size()
-    settings.screen_width = size[0]
-    settings.screen_height = size[1]
+    screen_width = size[0]
+    screen_height = size[1]
     init = (player.rect.x, player.rect.y)  # Grabbing the initial position of the player in the frame.
-    test_level.update((settings.screen_width / 2, settings.screen_height / 2), init)
+    test_level.update((screen_width / 2, screen_height / 2), init)
 
 game_menu.main()
 pygame.init()
@@ -32,7 +31,6 @@ screen_flag = False
 joystick = 0
 j_offset = 0.2  # corresponds to how touchy the controller is.
 pygame.time.set_timer(SPRITE_NEXT, 70, 0)
-
 
 while run:
     # Pygame event handling.
