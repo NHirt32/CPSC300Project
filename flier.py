@@ -5,6 +5,7 @@ class Flier(enemy.Enemy):
 
     def __init__(self, pos):
         enemy.Enemy.__init__(self, [["assets/birds.png"]], pos)
+        self.speed = 3
 
     def update(self, group):
         if (self.edge_detect(group) == False): # If the enemy is not colliding with a solid

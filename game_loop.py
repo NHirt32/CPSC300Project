@@ -8,31 +8,31 @@ from player import *
 from level_renderer import *
 import random
 
+# Moves the camera
+def update_camera():
+    size = screen.get_size()
+    settings.screen_width = size[0]
+    settings.screen_height = size[1]
+    init = (player.rect.x, player.rect.y)  # Grabbing the initial position of the player in the frame.
+    test_level.update((settings.screen_width / 2, settings.screen_height / 2), init)
 
 game_menu.main()
-
 
 pygame.init()
 
 gameOver = False; #Going to use this for encasing game in loop, when player touches enemy/hazard it is set to True
-#enemy_group = pygame.sprite.Group() #Group of sprites used to hold multiple enemies
 run = True
-screen = pygame.display.set_mode((screen_width, screen_height))
-
+screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE)
 frame_limiter = pygame.time.Clock()
-
-# For testing purposes, hard coded theme, and tile_size
 test_level = LevelRenderer(screen, settings.levelM, settings.theme)
 keys_pressed = []
 player = test_level.get_player()
 completed = False
-
-#testenemy = test_level.get_enemies().sprites()[0]
-#testenemy1 = test_level.get_enemies().sprites()[1]
-
 SPRITE_NEXT = pygame.USEREVENT + 1
+screen_flag = False
 
 pygame.time.set_timer(SPRITE_NEXT, 70, 0)
+
 while run:
     # Pygame event handling.
     events = pygame.event.get()
@@ -42,6 +42,9 @@ while run:
         if next_event.type == SPRITE_NEXT:
             for sprite in test_level.get_animations().sprites():
                 sprite.next()
+        if next_event.type == pygame.WINDOWSIZECHANGED:
+            # Update screen size, move camera accordingly
+            update_camera()
 
     keys_pressed = pygame.key.get_pressed()  # Array of bools accessed with the pygame key constants.
     # Uses the fact that true is one and false is 0 to evaluate the direction to move.
@@ -49,10 +52,22 @@ while run:
     x_mov = keys_pressed[pygame.K_d] - keys_pressed[pygame.K_a]
     y_mov = keys_pressed[pygame.K_s] - keys_pressed[pygame.K_SPACE]
 
+    if keys_pressed[pygame.K_F11]:
+        screen_flag = not screen_flag
+
+        if screen_flag:
+            screen = pygame.display.set_mode((screen_width, screen_height), pygame.FULLSCREEN)
+            update_camera()
+        else:
+            # NEEDS TO BE DONE TWICE, THIS IS A PROBLEM WITH PYGAME.
+            # More information at https://github.com/pygame/pygame/issues/3107
+            screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE)
+            screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE)
+
     # Check to see if the player collided in the last frame
     if player.collided_with(test_level.enemies) and not completed:  # If the player collides with an enemy
         gameOver = True
-        test_level = LevelRenderer(screen, settings.levelM, 1)  # Reload the level
+        test_level = LevelRenderer(screen, settings.levelM, settings.theme)  # Reload the level
         player = test_level.get_player()  # Reload the player
 
     player_init_pos = (player.rect.x, player.rect.y)  # Grabbing the initial position of the player in the frame.
@@ -82,9 +97,3 @@ while run:
 
 pygame.display.quit()
 
-pygame.display.quit()
-
-# def level_init(){
-#     player = test_level.get_player()
-#
-# }
