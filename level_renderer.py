@@ -124,7 +124,7 @@ class LevelRenderer:
         player1.add(self.animations)
 
     def draw_walker(self, position, theme):
-        enemy1 = walker(position)
+        enemy1 = Walker(position)
         enemy1.add(self.enemies)
         #enemy1.add(self.solids)
 
@@ -232,11 +232,20 @@ class LevelRenderer:
         assets = []
         h_counter = 0
 
-        if selector == "Enemy":
+        if selector == "Walker":
             while h_counter < h_space_size:
                 v_counter = 0
                 while v_counter < v_space_size:
-                    enemy = Enemy((position[0] + h_counter, position[1] + v_counter))
+                    enemy = Walker((position[0] + h_counter, position[1] + v_counter))
+                    assets.append(enemy)
+                    v_counter += v_asset_size
+                h_counter += h_asset_size
+
+        elif selector == "Flyer":
+            while h_counter < h_space_size:
+                v_counter = 0
+                while v_counter < v_space_size:
+                    enemy = Flier((position[0] + h_counter, position[1] + v_counter))
                     assets.append(enemy)
                     v_counter += v_asset_size
                 h_counter += h_asset_size

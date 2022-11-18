@@ -1,11 +1,11 @@
 import pygame
 import enemy #Inherits functionality from enemy
 
-class walker(enemy.Enemy):
+class Walker(enemy.Enemy):
 
     def __init__(self, pos):
         enemy.Enemy.__init__(self, [["assets/red_player.png"]], pos)
-        self.gravity = -100  # Defines max fall speed, must be negative
+        self.gravity = -100  # Defines max fall speed, MUST BE NEGATIVE
         self.vertical_momentum = 0
 
     # Does mostly downward vertical movement, but needs to factor in when sliding and when not sliding.
