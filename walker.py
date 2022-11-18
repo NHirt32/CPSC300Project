@@ -23,7 +23,10 @@ class Walker(enemy.Enemy):
     # Processes all movement for the walker
     def update(self, group):
 
-        if self.edge_detect(group):
+        if not self.touching_ground(group):
+            1
+
+        elif self.edge_detect(group):
             self.move_int *= -1
             self.move_x(self.move_int, group) # Move slightly to avoid being stuck on the wall
 
