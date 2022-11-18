@@ -4,7 +4,8 @@ from settings import *
 from tile import *
 from player import *
 from animation import *
-from enemy import *
+from walker import *
+from flier import *
 import random
 
 class LevelRenderer:
@@ -47,10 +48,10 @@ class LevelRenderer:
                     self.draw_player(position,self.theme)
 
                 elif level_layout[row][col] == 'E':
-                    self.draw_enemy("assets/red_player.png",position, self.theme)
+                    self.draw_walker(position, self.theme)
 
                 elif level_layout[row][col] == 'F':
-                    self.draw_enemy("assets/birds.png",position, self.theme)
+                    self.draw_flier(position, self.theme)
 
                 elif level_layout[row][col] == 'B':
                     self.draw_background(position, self.theme)
@@ -122,8 +123,13 @@ class LevelRenderer:
         player1.add(self.players)  # Adds player1 to renderer group
         player1.add(self.animations)
 
-    def draw_enemy(self,enemyPic , position, theme):
-        enemy1 = Enemy(enemyPic, position)
+    def draw_walker(self, position, theme):
+        enemy1 = walker(position)
+        enemy1.add(self.enemies)
+        #enemy1.add(self.solids)
+
+    def draw_flier(self, position, theme):
+        enemy1 = Flier(position)
         enemy1.add(self.enemies)
         #enemy1.add(self.solids)
 

@@ -60,14 +60,7 @@ while run:
     player_fin_pos = (player.rect.x, player.rect.y) # Grabbing the final position of the player in the frame.
 
     for enemy in test_level.get_enemies().sprites():  # Initializes all enemies
-        if (enemy.edge_detect(test_level.solids) == False): # If the enemy is not colliding with a solid
-            enemy.move_x(enemy.move_int, test_level.solids)
-        else: # If the enemy is colliding with a solid
-            enemy.move_int *= -1 # Turn around
-            enemy.move_x(enemy.move_int, test_level.solids) # Move slightly to avoid being stuck on the wall
-
-        # Primitive enemy gravity handling.
-        enemy.gravity_handler(test_level.solids)
+        enemy.update(test_level.solids) # Move the enemy
 
         # If the enemy was killed
         if enemy.died(player):

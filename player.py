@@ -17,7 +17,7 @@ class Player(entity.Entity):
                 ["assets/8_1.png","assets/8_2.png"]],
                                pos)
         self.jump_power = 21  # Defines max jump power
-        self.gravity = 40  # Defines max fall speed.
+        self.gravity = 100  # Defines max fall speed.
         self.slide_speed = 4  # defines gravity when sliding down a wall
         self.vertical_momentum = 0
         self.horizontal_momentum = 0  # Used for non-wall jump related horizontal momentum
