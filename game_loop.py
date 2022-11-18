@@ -26,11 +26,14 @@ test_level = LevelRenderer(screen, settings.levelM, settings.theme)
 keys_pressed = []
 player = test_level.get_player()
 completed = False
-SPRITE_NEXT = pygame.USEREVENT + 1
+
+PLAYER_SPRITE_NEXT = pygame.USEREVENT + 1
+FLAME_SPRITE_NEXT = pygame.USEREVENT + 2
 screen_flag = False
 joystick = 0
 j_offset = 0.2  # corresponds to how touchy the controller is.
-pygame.time.set_timer(SPRITE_NEXT, 70, 0)
+pygame.time.set_timer(PLAYER_SPRITE_NEXT, 70, 0)
+pygame.time.set_timer(FLAME_SPRITE_NEXT, 200, 0)
 
 while run:
     # Pygame event handling.
@@ -44,9 +47,10 @@ while run:
         if next_event.type == pygame.JOYDEVICEREMOVED:
             # If controller is removed
             joystick = 0
-        if next_event.type == SPRITE_NEXT:
-            for sprite in test_level.get_animations().sprites():
-                sprite.next()
+        if next_event.type == PLAYER_SPRITE_NEXT:
+            player.next()
+        if next_event.type == FLAME_SPRITE_NEXT:
+            test_level.effects.sprites()[0].next()
         if next_event.type == pygame.WINDOWSIZECHANGED:
             # Update screen size, move camera accordingly
             update_camera()
@@ -96,7 +100,7 @@ while run:
             screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE)
 
     # Check to see if the player collided in the last frame
-    if player.collided_with(test_level.enemies)and not completed:  # If the player collides with an enemy
+    if player.collided_with(test_level.enemies) and not completed:  # If the player collides with an enemy
         gameOver = True
         test_level = LevelRenderer(screen, settings.levelM, settings.theme)  # Reload the level
         player = test_level.get_player()  # Reload the player
@@ -105,6 +109,9 @@ while run:
     player_init_pos = (player.rect.x, player.rect.y)  # Grabbing the initial position of the player in the frame.
     player.update(x_mov, y_mov, test_level.solids)  # Player Movement Processed
     player_fin_pos = (player.rect.x, player.rect.y)  # Grabbing the final position of the player in the frame.
+
+    # Update Phil's flame, slight offset for looks
+    test_level.effects.sprites()[0].rect.midbottom = (player.rect.midtop[0] - 1, player.rect.midtop[1])
 
     for enemy in test_level.get_enemies().sprites():  # Initializes all enemies
         enemy.update(test_level.solids)  # Move the enemy
@@ -124,6 +131,7 @@ while run:
         completed = True
 
     test_level.update(player_init_pos, player_fin_pos)  # The level_renderer can go draw everything.
+
     frame_limiter.tick(max_frames)  # Capping the frames for consistent behaviour.
     pygame.display.update()
 

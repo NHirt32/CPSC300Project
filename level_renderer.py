@@ -18,6 +18,7 @@ class LevelRenderer:
         self.backgrounds = pygame.sprite.Group()
         self.non_solids = pygame.sprite.Group()
         self.objectives = pygame.sprite.Group()
+        self.effects = pygame.sprite.Group()
         self.screen = screen
         self.level_layout = level_layout
         self.background_speed = 0.1
@@ -35,7 +36,8 @@ class LevelRenderer:
 
         # Add any further sprite groups that need camera offset into this array.
         # The order of drawing is from left to right.
-        self.all_tiles = [self.backgrounds, self.solids, self.non_solids, self.objectives, self.enemies, self.players]
+        self.all_tiles = [self.backgrounds, self.solids, self.non_solids, self.objectives, self.enemies, self.players,
+                          self.effects]
 
         # Drawing the layout to the screen
         for row in range(0, len(level_layout)):
@@ -114,6 +116,7 @@ class LevelRenderer:
         self.objectives.draw(self.screen)
         self.enemies.draw(self.screen)
         self.players.draw(self.screen)
+        self.effects.draw(self.screen)
 
 
     # Handlers for the level renderer, looks at the theme of the level and chooses what version to draw,
@@ -122,6 +125,11 @@ class LevelRenderer:
         player1 = Player(position)
         player1.add(self.players)  # Adds player1 to renderer group
         player1.add(self.animations)
+        flame = \
+            Animation([["assets/flame1_1.png", "assets/flame1_2.png", "assets/flame1_1.png", "assets/flame1_3.png"]],
+                      position)
+        flame.add(self.effects)
+        flame.add(self.animations)
 
     def draw_walker(self, position, theme):
         enemy1 = Walker(position)
