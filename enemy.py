@@ -7,7 +7,8 @@ class Enemy(entity.Entity):
         entity.Entity.__init__(self, enemyPic, pos)
         self.speed = 7
         self.move_int = -1; # int used to track which direction an enemy object is moving
-        self.death_h_offset = 30
+        self.death_h_offset = 5 # deals with hitpoints of enemies horizontally.
+        self.death_v_offset = 4 # deals with hitpoints of enemies vertically.
 
     def edge_detect(self, group):  # Returns true if the enemy object is about to touch a wall
         if self.touching_right(group) == True:
@@ -25,7 +26,13 @@ class Enemy(entity.Entity):
             return True
 
     def died(self, sprite):
-        if sprite.rect.collidepoint(self.rect.midtop):
+
+        test_mid = (self.rect.midtop[0], (self.rect.midtop[1] - self.death_v_offset))
+        test_right = ((self.rect.midtop[0] + self.death_h_offset), (self.rect.midtop[1] - self.death_v_offset))
+        test_left = ((self.rect.midtop[0] - self.death_h_offset), (self.rect.midtop[1] - self.death_v_offset))
+
+        if sprite.rect.collidepoint(test_mid) or sprite.rect.collidepoint(test_right) or \
+                sprite.rect.collidepoint(test_left):
                  # If the top of enemy collided with player
             return True
         else:

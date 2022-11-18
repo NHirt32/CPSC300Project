@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8c9c6286-66a9-4239-b4e7-b4166552cbbc" name="Changes" comment="Pretty sure flying is integrated now with the small change to Animations">
+    <list default="true" id="8c9c6286-66a9-4239-b4e7-b4166552cbbc" name="Changes" comment="Made enemies not jitter in air.">
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_10_26_2022_3_59_PM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/1_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/1_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/1_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/1_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/1_3.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/1_3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/2_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/2_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/2_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/2_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/2_3.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/2_3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/3_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/3_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/3_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/3_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/4_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/4_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/4_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/4_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/5_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/5_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/6_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/6_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/7_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/7_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/7_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/7_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/8_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/8_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/8_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/8_2.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/enemy.py" beforeDir="false" afterPath="$PROJECT_DIR$/enemy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entity.py" beforeDir="false" afterPath="$PROJECT_DIR$/entity.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_loop.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_loop.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/level_renderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/level_renderer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/player.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tile.py" beforeDir="false" afterPath="$PROJECT_DIR$/tile.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/walker.py" beforeDir="false" afterPath="$PROJECT_DIR$/walker.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -180,7 +192,49 @@
       <option name="project" value="LOCAL" />
       <updated>1668029979775</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Added primitive enemy gravity, added primitive objective handling, added primitive enemy killing, had to reduce player speed.">
+      <created>1668403636334</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1668403636334</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Made subclasses Walker and Flier of enemy, made their updates functions instead of in the main game_loop">
+      <created>1668738352120</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1668738352120</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Fullscreen and Fullscreen Windowed Functionality Present, perhaps with bugs.">
+      <created>1668744450696</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1668744450696</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Added controller support and fixed bugs in player. Controller support guaranteed only for my personal controller. Cool if others work though">
+      <created>1668759336476</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1668759336476</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Made walking enemies detect ledges.">
+      <created>1668810602114</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1668810602114</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Made enemies not jitter in air.">
+      <created>1668810901886</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1668810901886</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -234,6 +288,28 @@
     <MESSAGE value="Added a fill() function, and pushed the tile_size functionality into the&#10;level renderer. This is to accommodate the potential difference in asset sizes that could potentially occur. Player animations still bugged, enemy direction change still bugged" />
     <MESSAGE value="Made the player vertical functions go off of only onne momentum variable, might be a couple bugs but should be mostly functional." />
     <MESSAGE value="Pretty sure flying is integrated now with the small change to Animations" />
-    <option name="LAST_COMMIT_MESSAGE" value="Pretty sure flying is integrated now with the small change to Animations" />
+    <MESSAGE value="Added primitive enemy gravity, added primitive objective handling, added primitive enemy killing, had to reduce player speed." />
+    <MESSAGE value="Made subclasses Walker and Flier of enemy, made their updates functions instead of in the main game_loop" />
+    <MESSAGE value="Fullscreen and Fullscreen Windowed Functionality Present, perhaps with bugs." />
+    <MESSAGE value="Added controller support and fixed bugs in player. Controller support guaranteed only for my personal controller. Cool if others work though" />
+    <MESSAGE value="Made walking enemies detect ledges." />
+    <MESSAGE value="Made enemies not jitter in air." />
+    <option name="LAST_COMMIT_MESSAGE" value="Made enemies not jitter in air." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/settings.py</url>
+          <line>11</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/level_renderer.py</url>
+          <line>23</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

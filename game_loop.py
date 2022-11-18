@@ -96,10 +96,11 @@ while run:
             screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE)
 
     # Check to see if the player collided in the last frame
-    if player.collided_with(test_level.enemies) and not completed:  # If the player collides with an enemy
+    if player.collided_with(test_level.enemies)and not completed:  # If the player collides with an enemy
         gameOver = True
         test_level = LevelRenderer(screen, settings.levelM, settings.theme)  # Reload the level
         player = test_level.get_player()  # Reload the player
+        update_camera()
 
     player_init_pos = (player.rect.x, player.rect.y)  # Grabbing the initial position of the player in the frame.
     player.update(x_mov, y_mov, test_level.solids)  # Player Movement Processed

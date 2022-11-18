@@ -8,6 +8,7 @@ class Walker(enemy.Enemy):
         self.gravity = -100  # Defines max fall speed, MUST BE NEGATIVE
         self.vertical_momentum = 0
         self.ledge_offset = 0
+        self.speed = 4
 
     # Does mostly downward vertical movement, but needs to factor in when sliding and when not sliding.
     def gravity_handler(self, group):
