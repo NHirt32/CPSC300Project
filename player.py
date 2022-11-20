@@ -17,11 +17,11 @@ class Player(entity.Entity):
                 ["assets/8_1.png","assets/8_2.png"]],
                                pos)
         self.jump_power = 21  # Defines max jump power
-        self.gravity = 100  # Defines max fall speed.
-        self.slide_speed = 4  # defines gravity when sliding down a wall
+        self.gravity = -100  # Defines max fall speed. MUST BE NEGATIVE
+        self.slide_speed = -4  # defines gravity when sliding down a wall, MUST BE NEGATIVE
         self.vertical_momentum = 0
         self.horizontal_momentum = 0  # Used for non-wall jump related horizontal momentum
-        self.speed = 12  # Max momentum. MUST BE EVENLY DIVISIBLE BY horizontal_acceleration
+        self.speed = 15  # Max momentum. MUST BE EVENLY DIVISIBLE BY horizontal_acceleration
         self.horizontal_acceleration = 3
         self.wall_jump_cooldown = 20  # In frames of the game.
         self.wall_jump_cooldown_counter = 0  # Counter for cooldown
@@ -78,7 +78,7 @@ class Player(entity.Entity):
         # Tests for right input, adjusts momentum by the acceleration if not touching a wall
         if (x_mov == 1) and (self.sign(self.horizontal_momentum) >= 0):
             if not t_right:
-                if (abs(self.horizontal_momentum) <= self.speed):
+                if (abs(self.horizontal_momentum) < self.speed):
                     self.horizontal_momentum += self.horizontal_acceleration
             else:
                 self.horizontal_momentum = 0
@@ -86,7 +86,7 @@ class Player(entity.Entity):
         # Tests for left input, adjusts momentum by the acceleration if not touching a wall
         elif (x_mov == -1) and (self.sign(self.horizontal_momentum) <= 0):
             if not t_left:
-                if (abs(self.horizontal_momentum) <= self.speed):
+                if (abs(self.horizontal_momentum) < self.speed):
                     self.horizontal_momentum -= self.horizontal_acceleration
             else:
                 self.horizontal_momentum = 0
@@ -129,19 +129,19 @@ class Player(entity.Entity):
             (not self.touching_ground(group)):
             if self.vertical_momentum <= 0:
                 self.v_move_y(1, abs(self.vertical_momentum), group)
-                if (abs(self.vertical_momentum) <= self.slide_speed):
-                    self.vertical_momentum -= 1
-                else:
+                if self.vertical_momentum < self.slide_speed:
                     self.vertical_momentum += 1
+                else:
+                    self.vertical_momentum -= 1
 
         # if falling
         elif(not self.touching_ground(group)):
             if self.vertical_momentum <= 0:
                 self.v_move_y(1, abs(self.vertical_momentum), group)
-                if (self.vertical_momentum <= self.gravity):
-                    self.vertical_momentum -= 1
-                else:
+                if (self.vertical_momentum < self.gravity):
                     self.vertical_momentum += 1
+                else:
+                    self.vertical_momentum -= 1
 
         else:
             self.vertical_momentum = 0

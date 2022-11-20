@@ -5,7 +5,9 @@ class Flier(enemy.Enemy):
 
     def __init__(self, pos):
         enemy.Enemy.__init__(self, [["assets/birds.png"]], pos)
+        self.speed = 3
 
+    # processes all movement for the walker
     def update(self, group):
         if (self.edge_detect(group) == False): # If the enemy is not colliding with a solid
             self.move_x(self.move_int, group)
