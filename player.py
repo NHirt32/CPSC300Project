@@ -149,34 +149,28 @@ class Player(entity.Entity):
     # Updates the player's direction variable, which controls which animations are shown.
     def update_direction(self, x_mov, y_mov, group, t_left, t_down, t_right, t_up):
 
-        m_direction = self.sign(self.horizontal_momentum)
+        h_direction = self.sign(self.horizontal_momentum)
+        v_direction = self.sign(self.vertical_momentum)
+
         if t_down:
-            if m_direction != 0:
-                if m_direction == 1:
+            if h_direction != 0:
+                if h_direction == 1:
                     if x_mov == 1:
                         self.next_direction = self.WALKING_RIGHT
                     else:
                         self.next_direction = self.STANDING_STILL_RIGHT
-                elif m_direction == -1:
+                elif h_direction == -1:
                     if x_mov == -1:
                         self.next_direction = self.WALKING_LEFT
                     else:
                         self.next_direction = self.STANDING_STILL_LEFT
-            else:
-                self.next_direction = self.direction
 
-        elif (not t_down) and self.vertical_momentum < 1:
-            if (self.direction == self.STANDING_STILL_LEFT) or (self.direction == self.WALKING_LEFT) \
-                or (self.direction == self.SLIDING_LEFT):
-                self.next_direction = self.STANDING_STILL_LEFT
-            elif (self.direction == self.STANDING_STILL_RIGHT) or (self.direction == self.WALKING_RIGHT) \
-                or (self.direction == self.SLIDING_RIGHT):
-                self.next_direction = self.SLIDING_RIGHT
-        elif (not t_down) and self.vertical_momentum >= 1:
-            if (self.direction == self.STANDING_STILL_LEFT) or (self.direction == self.WALKING_LEFT):
-                self.next_direction = self.JUMPING_LEFT
-            elif (self.direction == self.STANDING_STILL_RIGHT) or (self.direction == self.WALKING_RIGHT):
-                self.next_direction = self.JUMPING_RIGHT
+        else:
+            if v_direction > 1:
+                if h_direction == 1:
+                    self.next_direction = self.JUMPING_RIGHT
+                elif h_direction == -1:
+                    self.next_direction = self.JUMPING_LEFT
 
     def jump(self):
         self.vertical_momentum = self.jump_power
