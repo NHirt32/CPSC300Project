@@ -9,8 +9,6 @@ from level_renderer import *
 import random
 
 
-game_menu.main()
-pygame.init()
 # Moves the camera
 def update_camera():
     size = screen.get_size()
@@ -19,6 +17,9 @@ def update_camera():
     init = (player.rect.x, player.rect.y)  # Grabbing the initial position of the player in the frame.
     test_level.update((screen_width / 2, screen_height / 2), init)
 
+
+game_menu.main()
+pygame.init()
 
 run = True
 
@@ -37,6 +38,7 @@ while run:
     in_game = True
     screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE)
     frame_limiter = pygame.time.Clock()
+
     test_level = LevelRenderer(screen, settings.levelM, settings.theme)
     keys_pressed = []
     player = test_level.get_player()
@@ -117,7 +119,7 @@ while run:
         #         screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE)
         #         screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE)
 
-        if keys_pressed[pygame.K_p]:
+        if keys_pressed[pygame.K_p] or keys_pressed[pygame.K_ESCAPE]:
             pause_menu.main()
 
             if settings.pause_status == 0:
@@ -153,10 +155,12 @@ while run:
         for enemy in test_level.get_enemies().sprites():  # Initializes all enemies
             enemy.update(test_level.solids)  # Move the enemy
 
+
             # If the enemy was killed
             if enemy.died(player):
                 test_level.enemies.remove([enemy])
                 player.vertical_momentum = 10  # make the player jump up a little.
+
 
         # If player collided with objective
         for objective in test_level.objectives.sprites():

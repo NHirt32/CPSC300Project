@@ -134,12 +134,10 @@ class LevelRenderer:
     def draw_walker(self, position, theme):
         enemy1 = Walker(position)
         enemy1.add(self.enemies)
-        #enemy1.add(self.solids)
 
     def draw_flier(self, position, theme):
         enemy1 = Flier(position)
         enemy1.add(self.enemies)
-        #enemy1.add(self.solids)
 
     def draw_block(self, position, theme):
         if theme == 0:

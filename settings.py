@@ -4,9 +4,15 @@ from screeninfo import get_monitors
 
 monitors = get_monitors()
 
-# Game Defaults
 screen_width = monitors[0].width
-screen_height = monitors[0].height - 65
+screen_height = monitors[0].height - 64
+
+if (screen_height%2) != 0:
+    screen_height -= 1
+
+if (screen_width%2) != 0:
+    screen_width -= 1
+
 max_frames = 60
 theme = 1
 curr_level = 1
@@ -32,6 +38,7 @@ easy_num = 3
 mid_num = 5
 hard_num = 8
 
+levelM = None
 
 """
 levelM = [
@@ -42,16 +49,26 @@ levelM = [
     "",
     "",
     "",
-    "0000000000000000000000000000000000000",
-    "0000000000000000000000000000000XE0XX0",
-    "0000000000000000000000000XEXE00XX00X0",
-    "00000000000000000000000000XPX00X00XX0",
+    "0000000000000000000000000XFX000000000",
+    "00000000000000000000000000F00O0XE0XX0",
+    "0000000000000000000000000XF0EEEXX00X0",
+    "00000000000000000000000000XPXEEX00XX0",
     "000000000000000000000000XXXXXXXXX00XX",
     "000000000000000000000000XXXXXXXX00XXX",
     "000000000000000000000000XXXXXXXXXXXXX",
 ]
 """
-levelM = None
+"""
+levelM = [
+    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "XXF0000X0X0XXX000X000FX0000X0X",
+    "X00XXX0X0E00X00X00X0X0XX0X0X0X",
+    "X0XX00O0XXX000X0X000X0000X0X0X",
+    "XPX00XX0000OX0000XOX00X0X000EX",
+    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+]
+"""
+
 
 # level0 = level_generator.get_level(3)d
 
