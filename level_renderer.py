@@ -177,7 +177,7 @@ class LevelRenderer:
             non_solid.add(self.animations)
 
     def draw_objective(self, position, theme):
-        objective = Tile("assets/red_cross.png", position)
+        objective = Tile("assets/coin.png", position)
         objective.add(self.objectives)
 
     def set_players(self, players):
