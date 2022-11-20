@@ -7,7 +7,16 @@ import level_generator
 import settings
 
 
+def next_img(root, panel, images):
+    img = next(images)
+    img = Image.open(img)
+    img = ImageTk.PhotoImage(img)
+    panel.img = img
+    panel['image'] = img
+    root.after(150, next_img, root, panel, images)
+
 def main():
+
     # Initiates pygame for level one
     def level_one():
         settings.num_entities = define_num_entities(diff_scale.get())
@@ -77,13 +86,6 @@ def main():
     panel = tk.Label(frame, bg=settings.menu_colour)
     panel.grid(row=1, column=2)
 
-    def next_img():
-        img = next(images)
-        img = Image.open(img)
-        img = ImageTk.PhotoImage(img)
-        panel.img = img
-        panel['image'] = img
-        root.after(150, next_img)
 
     label = Label(frame, text="Difficulty Slider", bg=settings.menu_colour)
     label.config(font=("Impact", 18))
@@ -116,7 +118,7 @@ def main():
                        command=lambda: [level_five(), root.destroy()])
     button.grid(row=6, column=4, padx=20, pady=20)
 
-    root.after(140, next_img)
+    root.after(140, next_img, root, panel, images)
     root.mainloop()
 
 
