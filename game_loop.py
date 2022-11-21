@@ -138,7 +138,7 @@ while run:
 
             if settings.pause_status == 0:
                 gameOver = True
-                test_level = LevelRenderer(screen, settings.levelM, settings.theme)  # Reload the level
+                test_level = LevelRenderer(screen, settings.levelM, settings.curr_level)  # Reload the level
                 player = test_level.get_player()  # Reload the player
                 update_camera()
 
