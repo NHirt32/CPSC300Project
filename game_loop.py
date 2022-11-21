@@ -46,7 +46,11 @@ while run:
     PLAYER_SPRITE_NEXT = pygame.USEREVENT + 1
     FLAME_SPRITE_NEXT = pygame.USEREVENT + 2
     screen_flag = False
+
     joystick = 0
+    if pygame.joystick.get_count() != 0:
+        joystick = pygame.joystick.Joystick(0)
+
     j_offset = 0.2  # corresponds to how touchy the controller is.
     pygame.time.set_timer(PLAYER_SPRITE_NEXT, 70, 0)
     pygame.time.set_timer(FLAME_SPRITE_NEXT, 200, 0)
@@ -59,9 +63,11 @@ while run:
                 in_game = False
                 run = False
             if (next_event.type == pygame.JOYDEVICEADDED) and (joystick == 0):
+                print("Connected")
                 # If new controller is added
                 joystick = pygame.joystick.Joystick(0)
             if next_event.type == pygame.JOYDEVICEREMOVED:
+                print("Disconnected")
                 # If controller is removed
                 joystick = 0
             if next_event.type == PLAYER_SPRITE_NEXT:
