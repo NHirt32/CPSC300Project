@@ -26,13 +26,7 @@ class LevelRenderer:
 
         # Remember, a chosen tile_size should be evenly divisible by all assets that
         # are drawn using the fill() function in level renderer
-        if theme == 0:
-            tile_sizes = [128,192,256]
-            self.tile_size = random.choice(tile_sizes)
-
-        elif theme == 1:
-            tile_sizes = [192]
-            self.tile_size = random.choice(tile_sizes)
+        self.tile_size = 192
 
         # Add any further sprite groups that need camera offset into this array.
         # The order of drawing is from left to right.
@@ -144,15 +138,51 @@ class LevelRenderer:
     def draw_block(self, position, theme):
         if theme == 0:
             asset_size = 64
-            blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile", "assets/paper_block.png")
+            blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
+                               "assets/paper_block.png")
             for block in blocks:
                 block.add(self.solids)
 
         elif theme == 1:
             asset_size = 192
-            blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile", "assets/test.png")
+            blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
+                               "assets/foliage.png")
             for block in blocks:
                 block.add(self.solids)
+
+        elif theme == 2:
+            asset_size = 192
+            blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
+                               "assets/rocky_dirt.png")
+            for block in blocks:
+                block.add(self.solids)
+
+        elif theme == 3:
+            asset_size = 192
+            blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
+                               "assets/ice.png")
+            for block in blocks:
+                block.add(self.solids)
+
+        elif theme == 4:
+            asset_size = 192
+            blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
+                               "assets/red_brick.png")
+            for block in blocks:
+                block.add(self.solids)
+
+        elif theme == 5:
+            asset_size = 192
+            if(random.randint(1, 50) == 50):
+                blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
+                                   "assets/jewelled_ancient.png")
+                for block in blocks:
+                    block.add(self.solids)
+            else:
+                blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
+                                   "assets/ancient.png")
+                for block in blocks:
+                    block.add(self.solids)
 
     def draw_block_animation(self, position, theme):
         if theme == 0:

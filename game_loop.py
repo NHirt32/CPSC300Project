@@ -38,7 +38,7 @@ while run:
     screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE)
     frame_limiter = pygame.time.Clock()
 
-    test_level = LevelRenderer(screen, settings.levelM, settings.theme)
+    test_level = LevelRenderer(screen, settings.levelM, settings.curr_level)
     keys_pressed = []
     player = test_level.get_player()
     completed = False
@@ -155,7 +155,7 @@ while run:
         # Check to see if the player collided in the last frame
         if player.collided_with(test_level.enemies) and not completed:  # If the player collides with an enemy
             gameOver = True
-            test_level = LevelRenderer(screen, settings.levelM, settings.theme)  # Reload the level
+            test_level = LevelRenderer(screen, settings.levelM, settings.curr_level)  # Reload the level
             player = test_level.get_player()  # Reload the player
             update_camera()
 
