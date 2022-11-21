@@ -18,7 +18,6 @@ def update_camera():
     test_level.update((screen_width / 2, screen_height / 2), init)
 
 
-game_menu.main()
 pygame.init()
 
 run = True
