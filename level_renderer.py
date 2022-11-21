@@ -4,7 +4,8 @@ from settings import *
 from tile import *
 from player import *
 from animation import *
-from enemy import *
+from walker import *
+from flier import *
 import random
 
 class LevelRenderer:
@@ -17,6 +18,7 @@ class LevelRenderer:
         self.backgrounds = pygame.sprite.Group()
         self.non_solids = pygame.sprite.Group()
         self.objectives = pygame.sprite.Group()
+        self.effects = pygame.sprite.Group()
         self.screen = screen
         self.level_layout = level_layout
         self.background_speed = 0.1
@@ -34,7 +36,8 @@ class LevelRenderer:
 
         # Add any further sprite groups that need camera offset into this array.
         # The order of drawing is from left to right.
-        self.all_tiles = [self.backgrounds, self.solids, self.non_solids, self.objectives, self.enemies, self.players]
+        self.all_tiles = [self.backgrounds, self.solids, self.non_solids, self.objectives, self.enemies, self.players,
+                          self.effects]
 
         # Drawing the layout to the screen
         for row in range(0, len(level_layout)):
@@ -47,10 +50,10 @@ class LevelRenderer:
                     self.draw_player(position,self.theme)
 
                 elif level_layout[row][col] == 'E':
-                    self.draw_enemy("assets/red_player.png",position, self.theme)
+                    self.draw_walker(position, self.theme)
 
                 elif level_layout[row][col] == 'F':
-                    self.draw_enemy("assets/birds.png",position, self.theme)
+                    self.draw_flier(position, self.theme)
 
                 elif level_layout[row][col] == 'B':
                     self.draw_background(position, self.theme)
@@ -113,6 +116,7 @@ class LevelRenderer:
         self.objectives.draw(self.screen)
         self.enemies.draw(self.screen)
         self.players.draw(self.screen)
+        self.effects.draw(self.screen)
 
 
     # Handlers for the level renderer, looks at the theme of the level and chooses what version to draw,
@@ -121,11 +125,19 @@ class LevelRenderer:
         player1 = Player(position)
         player1.add(self.players)  # Adds player1 to renderer group
         player1.add(self.animations)
+        flame = \
+            Animation([["assets/flame1_1.png", "assets/flame1_2.png", "assets/flame1_1.png", "assets/flame1_3.png"]],
+                      position)
+        flame.add(self.effects)
+        flame.add(self.animations)
 
-    def draw_enemy(self,enemyPic , position, theme):
-        enemy1 = Enemy(enemyPic, position)
+    def draw_walker(self, position, theme):
+        enemy1 = Walker(position)
         enemy1.add(self.enemies)
-        #enemy1.add(self.solids)
+
+    def draw_flier(self, position, theme):
+        enemy1 = Flier(position)
+        enemy1.add(self.enemies)
 
     def draw_block(self, position, theme):
         if theme == 0:
@@ -163,7 +175,7 @@ class LevelRenderer:
             non_solid.add(self.animations)
 
     def draw_objective(self, position, theme):
-        objective = Tile("assets/red_cross.png", position)
+        objective = Tile("assets/coin.png", position)
         objective.add(self.objectives)
 
     def set_players(self, players):
@@ -226,11 +238,20 @@ class LevelRenderer:
         assets = []
         h_counter = 0
 
-        if selector == "Enemy":
+        if selector == "Walker":
             while h_counter < h_space_size:
                 v_counter = 0
                 while v_counter < v_space_size:
-                    enemy = Enemy((position[0] + h_counter, position[1] + v_counter))
+                    enemy = Walker((position[0] + h_counter, position[1] + v_counter))
+                    assets.append(enemy)
+                    v_counter += v_asset_size
+                h_counter += h_asset_size
+
+        elif selector == "Flyer":
+            while h_counter < h_space_size:
+                v_counter = 0
+                while v_counter < v_space_size:
+                    enemy = Flier((position[0] + h_counter, position[1] + v_counter))
                     assets.append(enemy)
                     v_counter += v_asset_size
                 h_counter += h_asset_size

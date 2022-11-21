@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8c9c6286-66a9-4239-b4e7-b4166552cbbc" name="Changes" comment="Pretty sure flying is integrated now with the small change to Animations">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_10_26_2022_3_59_PM__Changes_.xml" beforeDir="false" />
+    <list default="true" id="8c9c6286-66a9-4239-b4e7-b4166552cbbc" name="Changes" comment="Fixed the screensize enemy rendering bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enemy.py" beforeDir="false" afterPath="$PROJECT_DIR$/enemy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entity.py" beforeDir="false" afterPath="$PROJECT_DIR$/entity.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_loop.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_loop.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/level_renderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/level_renderer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/player.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tile.py" beforeDir="false" afterPath="$PROJECT_DIR$/tile.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +20,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="attempted_push" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -180,7 +172,70 @@
       <option name="project" value="LOCAL" />
       <updated>1668029979775</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Added primitive enemy gravity, added primitive objective handling, added primitive enemy killing, had to reduce player speed.">
+      <created>1668403636334</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1668403636334</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Made subclasses Walker and Flier of enemy, made their updates functions instead of in the main game_loop">
+      <created>1668738352120</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1668738352120</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Fullscreen and Fullscreen Windowed Functionality Present, perhaps with bugs.">
+      <created>1668744450696</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1668744450696</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Added controller support and fixed bugs in player. Controller support guaranteed only for my personal controller. Cool if others work though">
+      <created>1668759336476</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1668759336476</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Made walking enemies detect ledges.">
+      <created>1668810602114</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1668810602114</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Made enemies not jitter in air.">
+      <created>1668810901886</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1668810901886</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Slight asset changes for player pngs, made some primitive enemy hitboxing functionality.">
+      <created>1668813619235</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1668813619235</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Monumental moment; Phil has his flame.">
+      <created>1668815846455</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1668815846455</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Fixed the screensize enemy rendering bug">
+      <created>1668986740469</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1668986740469</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -194,7 +249,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="main" />
+                        <option value="alpha1" />
                       </list>
                     </value>
                   </entry>
@@ -234,6 +289,26 @@
     <MESSAGE value="Added a fill() function, and pushed the tile_size functionality into the&#10;level renderer. This is to accommodate the potential difference in asset sizes that could potentially occur. Player animations still bugged, enemy direction change still bugged" />
     <MESSAGE value="Made the player vertical functions go off of only onne momentum variable, might be a couple bugs but should be mostly functional." />
     <MESSAGE value="Pretty sure flying is integrated now with the small change to Animations" />
-    <option name="LAST_COMMIT_MESSAGE" value="Pretty sure flying is integrated now with the small change to Animations" />
+    <MESSAGE value="Added primitive enemy gravity, added primitive objective handling, added primitive enemy killing, had to reduce player speed." />
+    <MESSAGE value="Made subclasses Walker and Flier of enemy, made their updates functions instead of in the main game_loop" />
+    <MESSAGE value="Fullscreen and Fullscreen Windowed Functionality Present, perhaps with bugs." />
+    <MESSAGE value="Added controller support and fixed bugs in player. Controller support guaranteed only for my personal controller. Cool if others work though" />
+    <MESSAGE value="Made walking enemies detect ledges." />
+    <MESSAGE value="Made enemies not jitter in air." />
+    <MESSAGE value="Slight asset changes for player pngs, made some primitive enemy hitboxing functionality." />
+    <MESSAGE value="Monumental moment; Phil has his flame." />
+    <MESSAGE value="Fixed the screensize enemy rendering bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed the screensize enemy rendering bug" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/level_renderer.py</url>
+          <line>24</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

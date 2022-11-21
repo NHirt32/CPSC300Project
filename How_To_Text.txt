@@ -1,0 +1,51 @@
+Welcome to Phil The Candle!
+This Window will provide you with all the basic
+information that is required to play the "Phil
+The Candle!" experience.
+
+Controls:
+Movement:
+    [A] - Left Movement
+    [D] - Right Movement
+    [Space] - Jump
+
+Game Control:
+    [p] - pause game
+
+Gameplay:
+    Now that you know the basic controls of
+the game. Here are some fundamental tricks
+to help you play. The Gameplay of
+"Phil The Candle!" is akin to other games
+in the platforming genre, such as the Mario
+series of games produced by Nintendo.
+However, unlike the mario series of games
+"Phil The Candle!" is a much less linear
+experience.
+
+    In this game you play the character Phil.
+He is a candle. Phil's goal is to find all
+the coins in five randomly generated caverns.
+Each of the caverns take a different format,
+and can be played in any order. However,
+Phil is not alone in these caverns, as monsters
+who dislike candles will seek to destroy Phil.
+Luckily Phil has the ability to destroy these
+enemies by jumping upon their heads.
+
+    To help Phil traverse the depths Phil can
+bound off the walls by hitting space on them
+midair. This is because Phil is a parkour
+expert, which is standard amongst candles.
+
+    The life of a dungeon diving and treasure
+seeking candle can be tough, so you have your
+choice of three different difficultly levels.
+Difficulty 1 allows you to search for only
+three coins, difficulty 2 requires you top
+search for 5 coins, and difficulty 3 requires
+you to search for 8 coins. However, be warned
+the more treasure in the dungeon the more
+monsters there will be to protect it.
+
+Have fun, and remember Candles are Cool!

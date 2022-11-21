@@ -1,42 +1,105 @@
 import random
 
+import settings
 
-def addEntities(level, num):
+
+def addEntities(level, path_coordinates, num_entities):
     col_len = len(level[0])
     row_len = len(level)
-    for i in range(num):
-        row = random.randrange(2,row_len - 1)
-        col = random.randrange(2,col_len)
-        if level[row+1][col] == '0':
-            level[row][col] = 'F'
-        else:
-            level[row][col] = 'E'
+    num_enemies = 0
+    num_objectives = 0
+
+    random.shuffle(path_coordinates)
+
+    # Place the enemies
+    for coor in path_coordinates:
+        if num_enemies >= num_entities:
+            break
+
+        # Only place if it is a path
+        if isolated(level, coor):
+            # Done place enemies inbetween walls
+            if not_boxed(level, coor):
+                if has_no_ground(level, coor):
+                    level[coor[0]][coor[1]] = 'F'
+                    path_coordinates.remove(coor)
+                    num_enemies += 1
+                elif has_ground(level, coor):
+                    level[coor[0]][coor[1]] = 'E'
+                    path_coordinates.remove(coor)
+                    num_enemies += 1
+
+    # Place the objectives
+    for coor in path_coordinates:
+        if num_objectives >= num_entities:
+            break
+
+        # Only place if it is a path
+        if isolated(level, coor):
+            level[coor[0]][coor[1]] = 'O'
+            path_coordinates.remove(coor)
+            num_objectives += 1
+
+    while num_enemies < num_entities:
+        coor = path_coordinates.pop()
+        if has_no_ground(level, coor):
+            level[coor[0]][coor[1]] = 'F'
+            path_coordinates.remove(coor)
+            num_enemies += 1
+        elif has_ground(level, coor):
+            level[coor[0]][coor[1]] = 'E'
+            path_coordinates.remove(coor)
+            num_enemies += 1
+
+    while num_objectives < num_entities:
+        coor = path_coordinates.pop()
+        level[coor[0]][coor[1]] = 'O'
+
+
+def isolated(level, coor):
+    if level[coor[0]][coor[1]] == '0':
+        if level[coor[0] - 1][coor[1]] == '0' or level[coor[0] - 1][coor[1]] == 'X':
+            if level[coor[0] + 1][coor[1]] == '0' or level[coor[0] + 1][coor[1]] == 'X':
+                if level[coor[0]][coor[1] - 1] == '0' or level[coor[0]][coor[1] - 1] == 'X':
+                    if level[coor[0]][coor[1] + 1] == '0' or level[coor[0]][coor[1] + 1] == 'X':
+                        return True
+    return False
+
+def not_boxed(level, coor):
+    return level[coor[0]][coor[1] - 1] != 'X' or level[coor[0]][coor[1] + 1] != 'X'
+
+def has_no_ground(level, coor):
+    return level[coor[0] + 1][coor[1]] == '0'
+
+def has_ground(level, coor):
+    return level[coor[0] + 1][coor[1] - 1] == 'X' or level[coor[0] + 1][coor[1] + 1] == 'X'
+
 
 # This should be the only real method that you guys need to deal with
 # Will return the correct level based upon the number passed to it
 def get_level(level_num):
     level = get_format(level_num)
+    path_coordinates = []
 
     if level_num == 1:
-        create_level_path(level, 4, 1)
-        addEntities(level, 3)
+        create_level_path(level, path_coordinates, 4, 1)
         level[4][1] = 'P'
     elif level_num == 2:
-        create_level_path(level, 1, 3)
-        addEntities(level, 2)
+        create_level_path(level, path_coordinates, 1, 1)
         level[1][1] = 'P'
     elif level_num == 3:
-        create_level_path(level, 0, 3)
-        addEntities(level, 3)
-        level[0][4] = 'P'
+        create_level_path(level, path_coordinates, 1, 3)
+        level[1][4] = 'P'
+        level[1][3] = 'X'
     elif level_num == 4:
-        create_level_path(level, 1, 3)
-        addEntities(level, 3)
-        level[1][1] = 'P'
+        create_level_path(level, path_coordinates, 1, 4)
+        level[1][3] = 'P'
     elif level_num == 5:
-        create_level_path(level, 1, 6)
-        addEntities(level, 3)
-        level[1][6] = 'P'
+        create_level_path(level, path_coordinates, 1, 10)
+        level[1][10] = 'P'
+
+    path_coordinates.pop(0)
+    addEntities(level, path_coordinates, settings.num_entities)
 
     return convert_format(level)
 
@@ -44,47 +107,61 @@ def get_level(level_num):
 # Defines the format for the level
 def get_format(level_num):
     if level_num == 1:
-        return [['X' for x in range(40)] for y in range(6)]
+        return [['X' for x in range(30)] for y in range(6)]
 
     elif level_num == 2:
-        stair = [['X', 'X', 'X', 'X', 'X', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-                 ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-                 ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-                 ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0', '0', '0', '0', '0', '0'],
-                 ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0', '0', '0'],
-                 ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
-                 ['0', '0', '0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
-                 ['0', '0', '0', '0', '0', '0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
-                 ['0', '0', '0', '0', '0', '0', '0', '0', '0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
-                 ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
-                 ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'X', 'X', 'X', 'X', 'X'],
+        stair = [['X', 'X', 'X', 'X', 'X', 'X', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
+                 ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0', '0', '0', '0', '0', '0'],
+                 ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0', '0', '0', '0', '0', '0'],
+                 ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
+                 ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
+                 ['0', '0', '0', '0', '0', '0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
+                 ['0', '0', '0', '0', '0', '0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
+                 ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'X', 'X', 'X', 'X', 'X', 'X'],
+                 ['0', '0', '0', '0', '0', '0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
+                 ['0', '0', '0', '0', '0', '0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
+                 ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
+                 ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
+                 ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0', '0', '0', '0', '0', '0'],
+                 ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0', '0', '0', '0', '0', '0'],
+                 ['X', 'X', 'X', 'X', 'X', 'X', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
+                 ['X', 'X', 'X', 'X', 'X', 'X', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
                  ]
 
         return stair
 
     elif level_num == 3:
-        tunnel = [['0', '0', '0', 'X', 'X', 'X', '0', '0', '0'] for x in range(15)]
-        cavern = [['0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0'] for t in range(50)]
+        tunnel = [['0', '0', '0', 'X', 'X', 'X', '0', '0', '0'] for x in range(10)]
+        cavern = [['0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0'] for t in range(30)]
         return tunnel + cavern
 
     elif level_num == 4:
-        return [['X' for x in range(50)] for y in range(5)]
+        return [['X' for x in range(30)] for y in range(5)]
 
     elif level_num == 5:
-        level5 = [['0', '0', '0', '0', '0', '0', 'X', '0', '0', '0', '0', '0', '0'],
-                  ['0', '0', '0', '0', '0', 'X', 'X', 'X', '0', '0', '0', '0', '0'],
-                  ['0', '0', '0', '0', 'X', 'X', 'X', 'X', 'X', '0', '0', '0', '0'],
-                  ['0', '0', '0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0', '0', '0'],
-                  ['0', '0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0', '0'],
-                  ['0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0'],
-                  ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
-                  ['0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0'],
-                  ['0', '0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0', '0'],
-                  ['0', '0', '0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0', '0', '0'],
-                  ['0', '0', '0', '0', 'X', 'X', 'X', 'X', 'X', '0', '0', '0', '0'],
-                  ['0', '0', '0', '0', '0', 'X', 'X', 'X', '0', '0', '0', '0', '0'],
-                  ['0', '0', '0', '0', '0', '0', 'X', '0', '0', '0', '0', '0', '0']
-                  ]
+        level5 = [
+            ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'X', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', '0', '0', 'X', 'X', 'X', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', '0', 'X', 'X', 'X', 'X', 'X', '0', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0', '0', '0', '0'],
+            ['0', '0', '0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0', '0', '0'],
+            ['0', '0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0', '0'],
+            ['0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0'],
+            ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
+            ['0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0'],
+            ['0', '0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0', '0'],
+            ['0', '0', '0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0', '0', '0'],
+            ['0', '0', '0', '0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', '0', 'X', 'X', 'X', 'X', 'X', '0', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', '0', '0', 'X', 'X', 'X', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'X', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
+        ]
 
         return level5
     return -1
@@ -107,9 +184,10 @@ def array_to_string(char_array):
 
 
 # Actual algorithm that cuts the path and randomly generates the level
-def create_level_path(level, row, col):
+def create_level_path(level, path_coordinates, row, col):
     # Mark the passed cell as visited
     level[row][col] = '0'
+    path_coordinates.append((row, col))
 
     # Used to choose direction in level generation
     direction = [0, 1, 2, 3]
@@ -120,19 +198,19 @@ def create_level_path(level, row, col):
         # Move Up
         if temp == 0 and is_valid_up(level, row, col):
             level[row - 1][col] = '0'
-            create_level_path(level, row - 1, col)
+            create_level_path(level, path_coordinates, row - 1, col)
         # Move Right
         if temp == 1 and is_valid_right(level, row, col):
             level[row][col + 1] = '0'
-            create_level_path(level, row, col + 1)
+            create_level_path(level, path_coordinates, row, col + 1)
         # Move Down
         if temp == 2 and is_valid_down(level, row, col):
             level[row + 1][col] = '0'
-            create_level_path(level, row + 1, col)
+            create_level_path(level, path_coordinates, row + 1, col)
         # Move Left
         if temp == 3 and is_valid_left(level, row, col):
             level[row][col - 1] = '0'
-            create_level_path(level, row, col - 1)
+            create_level_path(level, path_coordinates, row, col - 1)
 
 
 # Checks to see if the level path can be cut up
