@@ -43,8 +43,11 @@ while run:
     player = test_level.get_player()
     completed = False
 
+    # Animation next events
     PLAYER_SPRITE_NEXT = pygame.USEREVENT + 1
     FLAME_SPRITE_NEXT = pygame.USEREVENT + 2
+    FLIER_SPRITE_NEXT = pygame.USEREVENT + 3
+
     screen_flag = False
 
     joystick = 0
@@ -52,8 +55,11 @@ while run:
         joystick = pygame.joystick.Joystick(0)
 
     j_offset = 0.2  # corresponds to how touchy the controller is.
-    pygame.time.set_timer(PLAYER_SPRITE_NEXT, 70, 0)
+
+    # Animation Timers
+    pygame.time.set_timer(PLAYER_SPRITE_NEXT, 200, 0)
     pygame.time.set_timer(FLAME_SPRITE_NEXT, 200, 0)
+    pygame.time.set_timer(FLIER_SPRITE_NEXT, 90, 0)
 
     while in_game:
         # Pygame event handling.
@@ -74,6 +80,9 @@ while run:
                 player.next()
             if next_event.type == FLAME_SPRITE_NEXT:
                 test_level.effects.sprites()[0].next()
+            if next_event.type == FLIER_SPRITE_NEXT:
+                for animation in test_level.animations.sprites():
+                    animation.next()
             if next_event.type == pygame.WINDOWSIZECHANGED:
                 # Update screen size, move camera accordingly
                 update_camera()
