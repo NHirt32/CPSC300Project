@@ -40,13 +40,9 @@ hard_num = 8
 
 """
 levelM = [
-    "00000O",
-    "0X0000",
-    "0X0000", 
-    "0XF00X",
-    "0X0000",
-    "0X0P00",
-    "XXXXXX"
+    "XXXXXXXX",
+    "XPOIIIIX",
+    "XXXXXXXX"
 ]
 """
 

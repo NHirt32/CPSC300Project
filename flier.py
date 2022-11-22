@@ -34,5 +34,3 @@ class Flier(enemy.Enemy):
             self.next_direction = self.RIGHT
         else:
             self.next_direction = self.LEFT
-
-        print(self.move_int)

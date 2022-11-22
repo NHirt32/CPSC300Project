@@ -43,6 +43,8 @@ while run:
     player = test_level.get_player()
     completed = False
 
+
+
     # Animation next events
     PLAYER_SPRITE_NEXT = pygame.USEREVENT + 1
     FLAME_SPRITE_NEXT = pygame.USEREVENT + 2
@@ -69,11 +71,9 @@ while run:
                 in_game = False
                 run = False
             if (next_event.type == pygame.JOYDEVICEADDED) and (joystick == 0):
-                print("Connected")
                 # If new controller is added
                 joystick = pygame.joystick.Joystick(0)
             if next_event.type == pygame.JOYDEVICEREMOVED:
-                print("Disconnected")
                 # If controller is removed
                 joystick = 0
             if next_event.type == PLAYER_SPRITE_NEXT:

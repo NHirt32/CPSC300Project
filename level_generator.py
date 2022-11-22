@@ -51,9 +51,15 @@ def addEntities(level, path_coordinates, num_entities):
             path_coordinates.remove(coor)
             num_enemies += 1
 
+
+
     while num_objectives < num_entities:
         coor = path_coordinates.pop()
         level[coor[0]][coor[1]] = 'O'
+
+    for coor in path_coordinates:
+        if level[coor[0]][coor[1]] != 'P':
+            level[coor[0]][coor[1]] = 'I'
 
 
 def isolated(level, coor):

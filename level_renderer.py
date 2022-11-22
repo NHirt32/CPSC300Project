@@ -6,6 +6,7 @@ from player import *
 from animation import *
 from walker import *
 from flier import *
+import tile_sets
 import random
 
 class LevelRenderer:
@@ -27,6 +28,8 @@ class LevelRenderer:
         # Remember, a chosen tile_size should be evenly divisible by all assets that
         # are drawn using the fill() function in level renderer
         self.tile_size = 192
+        # Must be a multiple of tile size.
+        self.tileset_size = 960
 
         # Add any further sprite groups that need camera offset into this array.
         # The order of drawing is from left to right.
@@ -37,23 +40,24 @@ class LevelRenderer:
         for row in range(0, len(level_layout)):
             for col in range(0, len(level_layout[row])):
 
-                position = ((col * self.tile_size), (row * self.tile_size))
+                position = ((col * self.tileset_size), (row * self.tileset_size))
 
                 # Add cases here for different types of tiles.
                 if level_layout[row][col] == 'P':
-                    self.draw_player(position,self.theme)
+                    self.draw_player_tileset(position, row, col)
 
                 elif level_layout[row][col] == 'E':
-                    self.draw_walker(position, self.theme)
+                    self.draw_walker_tileset(position, row, col)
 
                 elif level_layout[row][col] == 'F':
-                    self.draw_flier(position, self.theme)
+                    self.draw_flier_tileset(position, row, col)
 
                 elif level_layout[row][col] == 'B':
                     self.draw_background(position, self.theme)
 
                 elif level_layout[row][col] == 'X':
-                    self.draw_block(position, self.theme)
+                    x = 1
+                    #self.draw_block(position, self.theme)
 
                 elif level_layout[row][col] == 'Y':
                     self.draw_block_animation(position, self.theme)
@@ -65,7 +69,10 @@ class LevelRenderer:
                     self.draw_non_solid_animation(position, self.theme)
 
                 elif level_layout[row][col] == 'O':
-                    self.draw_objective(position, self.theme)
+                    self.draw_objective_tileset(position, row, col)
+
+                elif level_layout[row][col] == 'I':
+                    self.draw_tileset(position, row, col)
 
         # Need to move the camera over the player at the start, otherwise there may be an awkward offset
         init = (self.players.sprites()[0].rect.x, self.players.sprites()[0].rect.y)
@@ -209,6 +216,411 @@ class LevelRenderer:
     def draw_objective(self, position, theme):
         objective = Tile("assets/coin.png", position)
         objective.add(self.objectives)
+
+    # draws a mostly walker tileset
+    def draw_walker_tileset(self, position, row, col):
+        # State of coordinate
+        above = False
+        below = False
+        right = False
+        left = False
+
+        tile_set = []
+
+        # Checking above
+        if self.level_layout[row - 1][col] != 'X' and self.level_layout[row - 1][col] != '0':
+            above = True
+        # Checking below
+        if self.level_layout[row + 1][col] != 'X' and self.level_layout[row + 1][col] != '0':
+            below = True
+        # Checking right
+        if self.level_layout[row][col + 1] != 'X' and self.level_layout[row][col + 1] != '0':
+            right = True
+        # Checking left
+        if self.level_layout[row][col - 1] != 'X' and self.level_layout[row][col - 1] != '0':
+            left = True
+
+        # Choosing appropriate tileset
+        if above and not below and not right and not left:
+            tile_set = random.choice(tile_sets.e_up)
+
+        elif below and not above and not left and not right:
+            tile_set = random.choice(tile_sets.e_down)
+
+        elif right and not left and not above and not below:
+            tile_set = random.choice(tile_sets.e_right)
+
+        elif left and not right and not below and not above:
+            tile_set = random.choice(tile_sets.e_left)
+
+        elif above and right and not left and not below:
+            tile_set = random.choice(tile_sets.e_up_right)
+
+        elif below and right and not above and not left:
+            tile_set = random.choice(tile_sets.e_down_right)
+
+        elif left and below and not right and not above:
+            tile_set = random.choice(tile_sets.e_down_left)
+
+        elif left and above and not right and not below:
+            tile_set = random.choice(tile_sets.e_left_up)
+
+        elif left and right and not above and not below:
+            tile_set = random.choice(tile_sets.e_left_right)
+
+        elif above and below and not left and not right:
+            tile_set = random.choice(tile_sets.e_up_down)
+
+        elif left and above and right and not below:
+            tile_set = random.choice(tile_sets.e_right_up_left)
+
+        elif above and below and right and not left:
+            tile_set = random.choice(tile_sets.e_down_up_right)
+
+        elif left and below and right and not above:
+            tile_set = random.choice(tile_sets.e_down_right_left)
+
+        elif above and left and below and not right:
+            tile_set = random.choice(tile_sets.e_down_up_left)
+
+        elif above and left and below and right:
+            tile_set = random.choice(tile_sets.e_intersection)
+
+        else:
+            tile_set = tile_sets.enclosed
+
+        self.render_tileset(tile_set, position)
+
+    # Draws a tileset that contains a player
+    def draw_player_tileset(self, position, row, col):
+        # State of coordinate
+        above = False
+        below = False
+        right = False
+        left = False
+
+        tile_set = []
+
+        # Checking above
+        if self.level_layout[row - 1][col] != 'X' and self.level_layout[row - 1][col] != '0':
+            above = True
+        # Checking below
+        if self.level_layout[row + 1][col] != 'X' and self.level_layout[row + 1][col] != '0':
+            below = True
+        # Checking right
+        if self.level_layout[row][col + 1] != 'X' and self.level_layout[row][col + 1] != '0':
+            right = True
+        # Checking left
+        if self.level_layout[row][col - 1] != 'X' and self.level_layout[row][col - 1] != '0':
+            left = True
+
+        # Choosing appropriate tileset
+        if above and not below and not right and not left:
+            tile_set = random.choice(tile_sets.p_up)
+
+        elif below and not above and not left and not right:
+            tile_set = random.choice(tile_sets.p_down)
+
+        elif right and not left and not above and not below:
+            tile_set = random.choice(tile_sets.p_right)
+
+        elif left and not right and not below and not above:
+            tile_set = random.choice(tile_sets.p_left)
+
+        elif above and right and not left and not below:
+            tile_set = random.choice(tile_sets.p_up_right)
+
+        elif below and right and not above and not left:
+            tile_set = random.choice(tile_sets.p_down_right)
+
+        elif left and below and not right and not above:
+            tile_set = random.choice(tile_sets.p_down_left)
+
+        elif left and above and not right and not below:
+            tile_set = random.choice(tile_sets.p_left_up)
+
+        elif left and right and not above and not below:
+            tile_set = random.choice(tile_sets.p_left_right)
+
+        elif above and below and not left and not right:
+            tile_set = random.choice(tile_sets.p_up_down)
+
+        elif left and above and right and not below:
+            tile_set = random.choice(tile_sets.p_right_up_left)
+
+        elif above and below and right and not left:
+            tile_set = random.choice(tile_sets.p_down_up_right)
+
+        elif left and below and right and not above:
+            tile_set = random.choice(tile_sets.p_down_right_left)
+
+        elif above and left and below and not right:
+            tile_set = random.choice(tile_sets.p_down_up_left)
+
+        elif above and left and below and right:
+            tile_set = random.choice(tile_sets.p_intersection)
+
+        else:
+            tile_set = tile_sets.enclosed
+
+        self.render_tileset(tile_set, position)
+
+    # draws a tileset of objectives
+    def draw_objective_tileset(self, position, row, col):
+        # State of coordinate
+        above = False
+        below = False
+        right = False
+        left = False
+
+        tile_set = []
+
+        # Checking above
+        if self.level_layout[row - 1][col] != 'X' and self.level_layout[row - 1][col] != '0':
+            above = True
+        # Checking below
+        if self.level_layout[row + 1][col] != 'X' and self.level_layout[row + 1][col] != '0':
+            below = True
+        # Checking right
+        if self.level_layout[row][col + 1] != 'X' and self.level_layout[row][col + 1] != '0':
+            right = True
+        # Checking left
+        if self.level_layout[row][col - 1] != 'X' and self.level_layout[row][col - 1] != '0':
+            left = True
+
+        # Choosing appropriate tileset
+        if above and not below and not right and not left:
+            tile_set = random.choice(tile_sets.o_up)
+
+        elif below and not above and not left and not right:
+            tile_set = random.choice(tile_sets.o_down)
+
+        elif right and not left and not above and not below:
+            tile_set = random.choice(tile_sets.o_right)
+
+        elif left and not right and not below and not above:
+            tile_set = random.choice(tile_sets.o_left)
+
+        elif above and right and not left and not below:
+            tile_set = random.choice(tile_sets.o_up_right)
+
+        elif below and right and not above and not left:
+            tile_set = random.choice(tile_sets.o_down_right)
+
+        elif left and below and not right and not above:
+            tile_set = random.choice(tile_sets.o_down_left)
+
+        elif left and above and not right and not below:
+            tile_set = random.choice(tile_sets.o_left_up)
+
+        elif left and right and not above and not below:
+            tile_set = random.choice(tile_sets.o_left_right)
+
+        elif above and below and not left and not right:
+            tile_set = random.choice(tile_sets.o_up_down)
+
+        elif left and above and right and not below:
+            tile_set = random.choice(tile_sets.o_right_up_left)
+
+        elif above and below and right and not left:
+            tile_set = random.choice(tile_sets.o_down_up_right)
+
+        elif left and below and right and not above:
+            tile_set = random.choice(tile_sets.o_down_right_left)
+
+        elif above and left and below and not right:
+            tile_set = random.choice(tile_sets.o_down_up_left)
+
+        elif above and left and below and right:
+            tile_set = random.choice(tile_sets.o_intersection)
+
+        else:
+            tile_set = tile_sets.enclosed
+
+        self.render_tileset(tile_set, position)
+
+    # draws a mostly flyer tileset
+    def draw_flier_tileset(self, position, row, col):
+        # State of coordinate
+        above = False
+        below = False
+        right = False
+        left = False
+
+        tile_set = []
+
+        # Checking above
+        if self.level_layout[row - 1][col] != 'X' and self.level_layout[row - 1][col] != '0':
+            above = True
+        # Checking below
+        if self.level_layout[row + 1][col] != 'X' and self.level_layout[row + 1][col] != '0':
+            below = True
+        # Checking right
+        if self.level_layout[row][col + 1] != 'X' and self.level_layout[row][col + 1] != '0':
+            right = True
+        # Checking left
+        if self.level_layout[row][col - 1] != 'X' and self.level_layout[row][col - 1] != '0':
+                left = True
+
+        if above and not below and not right and not left:
+            tile_set = random.choice(tile_sets.f_up)
+
+        elif below and not above and not left and not right:
+            tile_set = random.choice(tile_sets.f_down)
+
+        elif right and not left and not above and not below:
+            tile_set = random.choice(tile_sets.f_right)
+
+        elif left and not right and not below and not above:
+            tile_set = random.choice(tile_sets.f_left)
+
+        elif above and right and not left and not below:
+            tile_set = random.choice(tile_sets.f_up_right)
+
+        elif below and right and not above and not left:
+            tile_set = random.choice(tile_sets.f_down_right)
+
+        elif left and below and not right and not above:
+            tile_set = random.choice(tile_sets.f_down_left)
+
+        elif left and above and not right and not below:
+            tile_set = random.choice(tile_sets.f_left_up)
+
+        elif left and right and not above and not below:
+            tile_set = random.choice(tile_sets.f_left_right)
+
+        elif above and below and not left and not right:
+            tile_set = random.choice(tile_sets.f_up_down)
+
+        elif left and above and right and not below:
+            tile_set = random.choice(tile_sets.f_right_up_left)
+
+        elif above and below and right and not left:
+            tile_set = random.choice(tile_sets.f_down_up_right)
+
+        elif left and below and right and not above:
+            tile_set = random.choice(tile_sets.f_down_right_left)
+
+        elif above and left and below and not right:
+            tile_set = random.choice(tile_sets.f_down_up_left)
+
+        elif above and left and below and right:
+            tile_set = random.choice(tile_sets.f_intersection)
+
+        else:
+            tile_set = tile_sets.enclosed
+
+        self.render_tileset(tile_set, position)
+
+    # draws a tileset of blocks
+    def draw_tileset(self, position, row, col):
+        # State of coordinate
+        above = False
+        below = False
+        right = False
+        left = False
+
+        tile_set = []
+
+        # Checking above
+        if self.level_layout[row - 1][col] != 'X' and self.level_layout[row - 1][col] != '0':
+            above = True
+        # Checking below
+        if self.level_layout[row + 1][col] != 'X' and self.level_layout[row + 1][col] != '0':
+            below = True
+        # Checking right
+        if self.level_layout[row][col + 1] != 'X' and self.level_layout[row][col + 1] != '0':
+            right = True
+        # Checking left
+        if self.level_layout[row][col - 1] != 'X' and self.level_layout[row][col - 1] != '0':
+            left = True
+
+        if above and not below and not right and not left:
+            tile_set = random.choice(tile_sets.up)
+
+        elif below and not above and not left and not right:
+            tile_set = random.choice(tile_sets.down)
+
+        elif right and not left and not above and not below:
+            tile_set = random.choice(tile_sets.right)
+
+        elif left and not right and not below and not above:
+            tile_set = random.choice(tile_sets.left)
+
+        elif above and right and not left and not below:
+            tile_set = random.choice(tile_sets.up_right)
+
+        elif below and right and not above and not left:
+            tile_set = random.choice(tile_sets.down_right)
+
+        elif left and below and not right and not above:
+            tile_set = random.choice(tile_sets.down_left)
+
+        elif left and above and not right and not below:
+            tile_set = random.choice(tile_sets.left_up)
+
+        elif left and right and not above and not below:
+            tile_set = random.choice(tile_sets.left_right)
+
+        elif above and below and not left and not right:
+            tile_set = random.choice(tile_sets.up_down)
+
+        elif left and above and right and not below:
+            tile_set = random.choice(tile_sets.right_up_left)
+
+        elif above and below and right and not left:
+            tile_set = random.choice(tile_sets.down_up_right)
+
+        elif left and below and right and not above:
+            tile_set = random.choice(tile_sets.down_right_left)
+
+        elif above and left and below and not right:
+            tile_set = random.choice(tile_sets.down_up_left)
+
+        elif above and left and below and right:
+            tile_set = random.choice(tile_sets.intersection)
+
+        else:
+            tile_set = tile_sets.enclosed
+
+        self.render_tileset(tile_set, position)
+
+    # Draws a tileset to a position, by invoking the draw handlers for specific sprites.
+    def render_tileset(self, tileset, position):
+        for row in range(0, len(tileset)):
+            for col in range(0, len(tileset[row])):
+
+                # Position refers to the place that the levelrenderer points to,
+                # subposition points to a place within that position.
+                subposition = (position[0] +(col * self.tile_size), position[1] + (row * self.tile_size))
+
+                # Add cases here for different types of tiles in a tileset.
+                if tileset[row][col] == 'P':
+                    self.draw_player(subposition, self.theme)
+
+                elif tileset[row][col] == 'E':
+                    self.draw_walker(subposition, self.theme)
+
+                elif tileset[row][col] == 'F':
+                    self.draw_flier(subposition, self.theme)
+
+                elif tileset[row][col] == 'B':
+                    self.draw_background(subposition, self.theme)
+
+                elif tileset[row][col] == 'X':
+                    self.draw_block(subposition, self.theme)
+
+                elif tileset[row][col] == 'Y':
+                    self.draw_block_animation(subposition, self.theme)
+
+                elif tileset[row][col] == 'N':
+                    self.draw_non_solid(subposition, self.theme)
+
+                elif tileset[row][col] == 'A':
+                    self.draw_non_solid_animation(subposition, self.theme)
+
+                elif tileset[row][col] == 'O':
+                    self.draw_objective(subposition, self.theme)
 
     def set_players(self, players):
         self.players = players
