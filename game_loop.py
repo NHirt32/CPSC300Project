@@ -152,12 +152,7 @@ while run:
             elif settings.pause_status == 3:
                 continue
 
-        # Check to see if the player collided in the last frame
-        if player.collided_with(test_level.enemies) and not completed:  # If the player collides with an enemy
-            gameOver = True
-            test_level = LevelRenderer(screen, settings.levelM, settings.curr_level)  # Reload the level
-            player = test_level.get_player()  # Reload the player
-            update_camera()
+
 
         player_init_pos = (player.rect.x, player.rect.y)  # Grabbing the initial position of the player in the frame.
         player.update(x_mov, y_mov, test_level.solids)  # Player Movement Processed
@@ -169,12 +164,17 @@ while run:
         for enemy in test_level.get_enemies().sprites():  # Initializes all enemies
             enemy.update(test_level.solids)  # Move the enemy
 
-
             # If the enemy was killed
             if enemy.died(player):
                 test_level.enemies.remove([enemy])
                 player.vertical_momentum = 10  # make the player jump up a little.
 
+        # Check to see if the player collided in the last frame
+        if player.collided_with(test_level.enemies) and not completed:  # If the player collides with an enemy
+            gameOver = True
+            test_level = LevelRenderer(screen, settings.levelM, settings.curr_level)  # Reload the level
+            player = test_level.get_player()  # Reload the player
+            update_camera()
 
         # If player collided with objective
         for objective in test_level.objectives.sprites():

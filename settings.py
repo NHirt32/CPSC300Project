@@ -41,14 +41,13 @@ hard_num = 8
 """
 levelM = [
     "XXXXXXXX",
-    "XPOIIIIX",
+    "XPEFFEOX",
     "XXXXXXXX"
 ]
 """
-
 levelM = None
 
-# level0 = level_generator.get_level(3)d
+# level0 = level_generator.get_level(3)
 
 # levelM = [
 #     "00000000X000000000000000000000000000000000000000000000000000000000000000000X00000000000000000000000000000000000000000000000000",
