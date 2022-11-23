@@ -29,7 +29,7 @@ class LevelRenderer:
         # are drawn using the fill() function in level renderer
         self.tile_size = 192
         # Must be a multiple of tile size.
-        self.tileset_size = 960
+        self.tileset_size = 192
 
         # Add any further sprite groups that need camera offset into this array.
         # The order of drawing is from left to right.
@@ -44,20 +44,22 @@ class LevelRenderer:
 
                 # Add cases here for different types of tiles.
                 if level_layout[row][col] == 'P':
-                    self.draw_player_tileset(position, row, col)
+                    #self.draw_player_tileset(position, row, col)
+                    self.draw_player(position, self.theme)
 
                 elif level_layout[row][col] == 'E':
-                    self.draw_walker_tileset(position, row, col)
+                    #self.draw_walker_tileset(position, row, col)
+                    self.draw_walker(position, self.theme)
 
                 elif level_layout[row][col] == 'F':
-                    self.draw_flier_tileset(position, row, col)
+                    #self.draw_flier_tileset(position, row, col)
+                    self.draw_flier(position, self.theme)
 
                 elif level_layout[row][col] == 'B':
                     self.draw_background(position, self.theme)
 
                 elif level_layout[row][col] == 'X':
-                    x = 1
-                    #self.draw_block(position, self.theme)
+                    self.draw_block(position, self.theme)
 
                 elif level_layout[row][col] == 'Y':
                     self.draw_block_animation(position, self.theme)
@@ -69,10 +71,12 @@ class LevelRenderer:
                     self.draw_non_solid_animation(position, self.theme)
 
                 elif level_layout[row][col] == 'O':
-                    self.draw_objective_tileset(position, row, col)
+                    #self.draw_objective_tileset(position, row, col)
+                    self.draw_objective(position, self.theme)
 
                 elif level_layout[row][col] == 'I':
-                    self.draw_tileset(position, row, col)
+                    x = 1
+                    #self.draw_tileset(position, row, col)
 
         # Need to move the camera over the player at the start, otherwise there may be an awkward offset
         init = (self.players.sprites()[0].rect.x, self.players.sprites()[0].rect.y)
