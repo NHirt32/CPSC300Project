@@ -35,7 +35,7 @@ while run:
 
     gameOver = False  # Going to use this for encasing game in loop, when player touches enemy/hazard it is set to True
     in_game = True
-    screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE)
+    screen = pygame.display.set_mode((screen_width, screen_height))
     frame_limiter = pygame.time.Clock()
 
     test_level = LevelRenderer(screen, settings.levelM, settings.curr_level)
@@ -152,14 +152,14 @@ while run:
             elif settings.pause_status == 3:
                 continue
 
-
-
         player_init_pos = (player.rect.x, player.rect.y)  # Grabbing the initial position of the player in the frame.
         player.update(x_mov, y_mov, test_level.solids)  # Player Movement Processed
         player_fin_pos = (player.rect.x, player.rect.y)  # Grabbing the final position of the player in the frame.
 
         # Update Phil's flame, slight offset for looks
         test_level.effects.sprites()[0].rect.midbottom = (player.rect.midtop[0] - 1, player.rect.midtop[1])
+        # Update the dark
+        test_level.effects.sprites()[1].rect.center = player.rect.center
 
         for enemy in test_level.get_enemies().sprites():  # Initializes all enemies
             enemy.update(test_level.solids)  # Move the enemy

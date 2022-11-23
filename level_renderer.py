@@ -55,9 +55,6 @@ class LevelRenderer:
                     #self.draw_flier_tileset(position, row, col)
                     self.draw_flier(position, self.theme)
 
-                elif level_layout[row][col] == 'B':
-                    self.draw_background(position, self.theme)
-
                 elif level_layout[row][col] == 'X':
                     self.draw_block(position, self.theme)
 
@@ -77,6 +74,9 @@ class LevelRenderer:
                 elif level_layout[row][col] == 'I':
                     x = 1
                     #self.draw_tileset(position, row, col)
+
+        # Draw the background appropriate for the level's theme.
+        self.draw_background(self.theme)
 
         # Need to move the camera over the player at the start, otherwise there may be an awkward offset
         init = (self.players.sprites()[0].rect.x, self.players.sprites()[0].rect.y)
@@ -135,6 +135,32 @@ class LevelRenderer:
                       position)
         flame.add(self.effects)
         flame.add(self.animations)
+
+        # Jungle
+        if theme == 1:
+            vignette = Tile("assets/dark5.png", position)
+            vignette.add(self.effects)
+
+        # Cave
+        elif theme == 2:
+            vignette = Tile("assets/dark4.png", position)
+            vignette.add(self.effects)
+
+        # Ice
+        elif theme == 3:
+            vignette = Tile("assets/dark3.png", position)
+            vignette.add(self.effects)
+
+        # Volcanic
+        elif theme == 4:
+            vignette = Tile("assets/dark2.png", position)
+            vignette.add(self.effects)
+
+        # Ancient
+        elif theme == 5:
+            vignette = Tile("assets/dark1.png", position)
+            vignette.add(self.effects)
+
 
     def draw_walker(self, position, theme):
         enemy1 = Walker(position)
@@ -255,9 +281,25 @@ class LevelRenderer:
             block.add(self.solids)
             block.add(self.animations)
 
-    def draw_background(self, position, theme):
-        if theme == 0:
-            background = Tile("assets/large_80_40_background.png",position)
+    # Places background at specific location
+    # Not all of them are centered, the just look ok where they are
+    def draw_background(self, theme):
+        if theme == 1:
+            background = Tile("assets/background_jungle.png",(5144,1800))
+            background.add(self.backgrounds)
+        elif theme == 2:
+            background = Tile("assets/background_cave.png", (2500,4000))
+            background.add(self.backgrounds)
+        elif theme == 3:
+            background = Tile("assets/background_ice.png", (1344,14000))
+            background.add(self.backgrounds)
+        elif theme == 4:
+            background = Tile("assets/background_volcanic.png", (5144,1800))
+            background.add(self.backgrounds)
+        elif theme == 5:
+            background = Tile("assets/background_ancient.png", (0,0))
+            # Centering this one
+            background.rect.center = (2016, 2016)
             background.add(self.backgrounds)
 
     def draw_non_solid(self, position, theme):
