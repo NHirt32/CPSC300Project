@@ -48,7 +48,7 @@ while run:
     # Animation next events
     PLAYER_SPRITE_NEXT = pygame.USEREVENT + 1
     FLAME_SPRITE_NEXT = pygame.USEREVENT + 2
-    FLIER_SPRITE_NEXT = pygame.USEREVENT + 3
+    SPRITE_NEXT = pygame.USEREVENT + 3
 
     screen_flag = False
 
@@ -61,7 +61,7 @@ while run:
     # Animation Timers
     pygame.time.set_timer(PLAYER_SPRITE_NEXT, 200, 0)
     pygame.time.set_timer(FLAME_SPRITE_NEXT, 200, 0)
-    pygame.time.set_timer(FLIER_SPRITE_NEXT, 90, 0)
+    pygame.time.set_timer(SPRITE_NEXT, 100, 0)
 
     while in_game:
         # Pygame event handling.
@@ -80,7 +80,7 @@ while run:
                 player.next()
             if next_event.type == FLAME_SPRITE_NEXT:
                 test_level.effects.sprites()[0].next()
-            if next_event.type == FLIER_SPRITE_NEXT:
+            if next_event.type == SPRITE_NEXT:
                 for animation in test_level.animations.sprites():
                     animation.next()
             if next_event.type == pygame.WINDOWSIZECHANGED:

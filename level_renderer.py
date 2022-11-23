@@ -147,51 +147,105 @@ class LevelRenderer:
         enemy1.add(self.animations)
 
     def draw_block(self, position, theme):
-        if theme == 0:
-            asset_size = 64
-            blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
-                               "assets/paper_block.png")
-            for block in blocks:
-                block.add(self.solids)
+        rnd = random.randint(1, 100)
 
-        elif theme == 1:
+        # Jungle
+        if theme == 1:
             asset_size = 192
-            blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
-                               "assets/foliage.png")
-            for block in blocks:
-                block.add(self.solids)
-
-        elif theme == 2:
-            asset_size = 192
-            blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
-                               "assets/rocky_dirt.png")
-            for block in blocks:
-                block.add(self.solids)
-
-        elif theme == 3:
-            asset_size = 192
-            blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
-                               "assets/ice.png")
-            for block in blocks:
-                block.add(self.solids)
-
-        elif theme == 4:
-            asset_size = 192
-            blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
-                               "assets/red_brick.png")
-            for block in blocks:
-                block.add(self.solids)
-
-        elif theme == 5:
-            asset_size = 192
-            if(random.randint(1, 50) == 50):
+            # Block probabilities for the jungles
+            if rnd <= 10:
                 blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
-                                   "assets/jewelled_ancient.png")
+                                   "assets/jungle3.png")
                 for block in blocks:
                     block.add(self.solids)
-            else:
+            elif 10 < rnd <= 50:
                 blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
-                                   "assets/ancient.png")
+                                   "assets/jungle2.png")
+                for block in blocks:
+                    block.add(self.solids)
+            elif 50 < rnd <= 100:
+                blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
+                                   "assets/jungle1.png")
+                for block in blocks:
+                    block.add(self.solids)
+
+        # Cave
+        elif theme == 2:
+            asset_size = 192
+            # Block probabilities for the caves
+            if rnd <= 2:
+                blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
+                                   "assets/cave3.png")
+                for block in blocks:
+                    block.add(self.solids)
+            elif 2 < rnd <= 50:
+                blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
+                                   "assets/cave2.png")
+                for block in blocks:
+                    block.add(self.solids)
+            elif 50 < rnd <= 100:
+                blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
+                                   "assets/cave1.png")
+                for block in blocks:
+                    block.add(self.solids)
+
+        # Ice
+        elif theme == 3:
+            asset_size = 192
+            # Block probabilities for the ices
+            if rnd <= 25:
+                blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
+                                   "assets/ice3.png")
+                for block in blocks:
+                    block.add(self.solids)
+            elif 25 < rnd <= 50:
+                blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
+                                   "assets/ice2.png")
+                for block in blocks:
+                    block.add(self.solids)
+            elif 50 < rnd <= 100:
+                blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
+                                   "assets/ice1.png")
+                for block in blocks:
+                    block.add(self.solids)
+
+        # Volcanic
+        elif theme == 4:
+            asset_size = 192
+            # Block probabilities for the volcanics
+            if rnd <= 6:
+                blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
+                                   "assets/volcanic3.png")
+                for block in blocks:
+                    block.add(self.solids)
+            elif 6 < rnd <= 50:
+                blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
+                                   "assets/volcanic2.png")
+                for block in blocks:
+                    block.add(self.solids)
+            elif 50 < rnd <= 100:
+                blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
+                                   "assets/volcanic1.png")
+                for block in blocks:
+                    block.add(self.solids)
+
+        # Ancient
+        elif theme == 5:
+            asset_size = 192
+            # Block probabilities for the ancients
+            if rnd <= 2:
+                blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
+                                   "assets/ancient3.png")
+                for block in blocks:
+                    block.add(self.solids)
+            elif 2 < rnd <= 12:
+                blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
+                                   "assets/ancient2.png")
+                for block in blocks:
+                    block.add(self.solids)
+            elif 12 < rnd <= 100:
+                blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
+                                   "assets/ancient1.png")
                 for block in blocks:
                     block.add(self.solids)
 

@@ -4,11 +4,23 @@ import enemy #Inherits functionality from enemy
 class Walker(enemy.Enemy):
 
     def __init__(self, pos):
-        enemy.Enemy.__init__(self, [["assets/red_player.png"]], pos)
+        enemy.Enemy.__init__(self, [["assets/walker1_1.png", "assets/walker3_1.png", "assets/walker1_1.png",
+                                     "assets/walker3_2.png"],
+                                    ["assets/walker2_1.png", "assets/walker4_1.png", "assets/walker2_1.png",
+                                     "assets/walker4_2.png"],
+                                    ["assets/walker1_1.png", "assets/walker1_1.png"],
+                                    ["assets/walker2_1.png", "assets/walker2_1.png"]
+                                    ], pos)
         self.gravity = -100  # Defines max fall speed, MUST BE NEGATIVE
         self.vertical_momentum = 0
         self.ledge_offset = 0
         self.speed = 4
+
+        # Directions
+        self.WALKING_RIGHT = 0
+        self.WALKING_LEFT = 1
+        self.FALLING_RIGHT = 2
+        self.FALLING_LEFT = 3
 
     # Does mostly downward vertical movement, but needs to factor in when sliding and when not sliding.
     def gravity_handler(self, group):
@@ -46,6 +58,7 @@ class Walker(enemy.Enemy):
 
         # Primitive enemy gravity handling.
         self.gravity_handler(group)
+        self.update_direction(group)
 
     # Returns true if a ledge is on left of walker
     def ledge_left(self, group):
@@ -68,5 +81,17 @@ class Walker(enemy.Enemy):
                 return False
 
         return True
-            
-            
+
+    # Updates the walkers animation direction
+    def update_direction(self, group):
+        if self.touching_ground(group):
+            if self.move_int == 1:
+                self.next_direction = self.WALKING_RIGHT
+            else:
+                self.next_direction = self.WALKING_LEFT
+        else:
+            if self.move_int == 1:
+                self.next_direction = self.FALLING_RIGHT
+            else:
+                self.next_direction = self.FALLING_LEFT
+

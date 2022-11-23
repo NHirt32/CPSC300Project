@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8c9c6286-66a9-4239-b4e7-b4166552cbbc" name="Changes" comment="Fixed the screensize enemy rendering bug">
+    <list default="true" id="8c9c6286-66a9-4239-b4e7-b4166552cbbc" name="Changes" comment="Tilesets objectives are now one objective to a tileset. LevelRenderer switched back to a 192 tilesize.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/player.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/ancient.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/foliage.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/ice.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/jewelled_ancient.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/rocky_dirt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flier.py" beforeDir="false" afterPath="$PROJECT_DIR$/flier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_loop.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_loop.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/level_renderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/level_renderer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/walker.py" beforeDir="false" afterPath="$PROJECT_DIR$/walker.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -235,7 +244,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668986740469</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Tilesets objectives are now one objective to a tileset. LevelRenderer switched back to a 192 tilesize.">
+      <created>1669168371516</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1669168371516</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -298,17 +314,7 @@
     <MESSAGE value="Slight asset changes for player pngs, made some primitive enemy hitboxing functionality." />
     <MESSAGE value="Monumental moment; Phil has his flame." />
     <MESSAGE value="Fixed the screensize enemy rendering bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed the screensize enemy rendering bug" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/level_renderer.py</url>
-          <line>24</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Tilesets objectives are now one objective to a tileset. LevelRenderer switched back to a 192 tilesize." />
+    <option name="LAST_COMMIT_MESSAGE" value="Tilesets objectives are now one objective to a tileset. LevelRenderer switched back to a 192 tilesize." />
   </component>
 </project>

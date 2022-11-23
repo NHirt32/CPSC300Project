@@ -16,6 +16,7 @@ class Flier(enemy.Enemy):
                              pos)
         self.speed = 3
 
+        # Directions
         self.RIGHT = 0
         self.LEFT = 1
 
@@ -29,6 +30,7 @@ class Flier(enemy.Enemy):
 
         self.update_direction()
 
+    # Updates the animation direction
     def update_direction(self):
         if self.move_int == 1:
             self.next_direction = self.RIGHT
