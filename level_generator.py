@@ -83,9 +83,10 @@ def has_ground_around(level, coor):
 # This should be the only real method that you guys need to deal with
 # Will return the correct level based upon the number passed to it
 def get_level(level_num):
-    level = get_format(level_num)
+    level = get_format_tileset(level_num)
     path_coordinates = []
 
+    # Start of path and player spawn
     if level_num == 1:
         create_level_path(level, path_coordinates, 1, 1)
         level[1][1] = 'P'
@@ -93,23 +94,71 @@ def get_level(level_num):
         create_level_path(level, path_coordinates, 1, 1)
         level[1][1] = 'P'
     elif level_num == 3:
-        create_level_path(level, path_coordinates, 1, 3)
-        level[1][4] = 'P'
-        level[1][3] = 'X'
-    elif level_num == 4:
         create_level_path(level, path_coordinates, 1, 4)
-        level[1][3] = 'P'
+        level[1][4] = 'P'
+    elif level_num == 4:
+        create_level_path(level, path_coordinates, 1, 5)
+        level[1][5] = 'P'
     elif level_num == 5:
-        create_level_path(level, path_coordinates, 1, 10)
-        level[1][10] = 'P'
+        create_level_path(level, path_coordinates, 3, 3)
+        level[3][3] = 'P'
+
 
     path_coordinates.pop(0)
     addEntities(level, path_coordinates, settings.num_entities)
 
     return convert_format(level)
 
+# Returns level format, acceptable for tilesets
+def get_format_tileset(level_num):
+    if level_num == 1:
+        return [['X' for x in range(7)] for y in range(4)]
 
-# Defines the format for the level
+    elif level_num == 2:
+        stair = [['X', 'X', 'X', '0', '0', '0'],
+                 ['X', 'X', 'X', 'X', 'X', 'X'],
+                 ['X', 'X', 'X', 'X', 'X', 'X'],
+                 ['0', 'X', 'X', 'X', 'X', 'X'],
+                 ['X', 'X', 'X', 'X', 'X', 'X'],
+                 ['X', 'X', 'X', 'X', 'X', 'X'],
+                 ['X', 'X', 'X', '0', '0', '0'],
+                 ]
+
+        return stair
+
+    elif level_num == 3:
+        tunnel = [['0', '0', '0', 'X', 'X', 'X', '0', '0', '0'],
+                  ['0', '0', '0', 'X', 'X', 'X', '0', '0', '0'],
+                  ['0', '0', '0', 'X', 'X', 'X', '0', '0', '0'],
+                  ['0', '0', 'X', 'X', 'X', 'X', 'X', '0', '0'],
+                  ['0', '0', 'X', 'X', 'X', 'X', 'X', '0', '0'],
+                  ['0', '0', 'X', 'X', 'X', 'X', 'X', '0', '0'],
+                  ['0', '0', 'X', 'X', 'X', 'X', 'X', '0', '0'],
+                  ['0', '0', 'X', 'X', 'X', 'X', 'X', '0', '0'],
+                  ['0', '0', 'X', 'X', 'X', 'X', 'X', '0', '0']]
+        return tunnel
+
+    elif level_num == 4:
+        return [['X', 'X', 'X', 'X', 'X', 'X', 'X'],
+                ['X', 'X', 'X', 'X', 'X', 'X', 'X'],
+                ['X', 'X', 'X', 'X', 'X', 'X', 'X'],
+                ['X', 'X', 'X', 'X', 'X', 'X', 'X'],
+                ['X', 'X', 'X', 'X', 'X', 'X', 'X']]
+
+    elif level_num == 5:
+        level5 = [
+            ['0', '0', '0', 'X', '0', '0', '0'],
+            ['0', '0', 'X', 'X', 'X', '0', '0'],
+            ['0', 'X', 'X', 'X', 'X', 'X', '0'],
+            ['X', 'X', 'X', 'x', 'X', 'X', 'X'],
+            ['0', 'X', 'X', 'X', 'X', 'X', '0'],
+            ['0', '0', 'X', 'X', 'X', '0', '0'],
+            ['0', '0', '0', 'X', '0', '0', '0']]
+
+        return level5
+    return -1
+
+# Defines the format for the level, in tile-acceptable form
 def get_format(level_num):
     if level_num == 1:
         return [['X' for x in range(30)] for y in range(5)]

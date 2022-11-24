@@ -24,6 +24,15 @@ run = True
 
 pygame.init()
 
+# Animation next events
+PLAYER_SPRITE_NEXT = pygame.USEREVENT + 1
+FLAME_SPRITE_NEXT = pygame.USEREVENT + 2
+SPRITE_NEXT = pygame.USEREVENT + 3
+
+# Setting allowed events lessens the load a little on frames.
+pygame.event.set_allowed([PLAYER_SPRITE_NEXT,FLAME_SPRITE_NEXT,SPRITE_NEXT,pygame.JOYDEVICEADDED,
+                          pygame.JOYDEVICEREMOVED, pygame.QUIT,pygame.WINDOWSIZECHANGED])
+
 while run:
 
     settings.curr_level = -1
@@ -35,20 +44,15 @@ while run:
 
     gameOver = False  # Going to use this for encasing game in loop, when player touches enemy/hazard it is set to True
     in_game = True
-    screen = pygame.display.set_mode((screen_width, screen_height))
+
+    # DOUBLEBUF flag helps our frames a bit
+    screen = pygame.display.set_mode((screen_width, screen_height), pygame.DOUBLEBUF)
     frame_limiter = pygame.time.Clock()
 
     test_level = LevelRenderer(screen, settings.levelM, settings.curr_level)
     keys_pressed = []
     player = test_level.get_player()
     completed = False
-
-
-
-    # Animation next events
-    PLAYER_SPRITE_NEXT = pygame.USEREVENT + 1
-    FLAME_SPRITE_NEXT = pygame.USEREVENT + 2
-    SPRITE_NEXT = pygame.USEREVENT + 3
 
     screen_flag = False
 
@@ -81,8 +85,10 @@ while run:
             if next_event.type == FLAME_SPRITE_NEXT:
                 test_level.effects.sprites()[0].next()
             if next_event.type == SPRITE_NEXT:
+                # Only update the animation if near player, in the dark.
                 for animation in test_level.animations.sprites():
-                    animation.next()
+                    if animation.rect.colliderect(test_level.effects.sprites()[1].rect):
+                        animation.next()
             if next_event.type == pygame.WINDOWSIZECHANGED:
                 # Update screen size, move camera accordingly
                 update_camera()
@@ -162,14 +168,14 @@ while run:
         test_level.effects.sprites()[1].rect.center = player.rect.center
 
         for enemy in test_level.get_enemies().sprites():  # Initializes all enemies
-            enemy.update(test_level.solids)  # Move the enemy
+            # Only update them if they are in the dark around the player
+                if(enemy.rect.colliderect(test_level.effects.sprites()[1].rect)):
+                    enemy.update(test_level.solids)  # Move the enemy
 
-
-            # If the enemy was killed
-            if enemy.died(player):
-                test_level.enemies.remove([enemy])
-                player.vertical_momentum = 10  # make the player jump up a little.
-
+                    # If the enemy was killed
+                    if enemy.died(player):
+                        enemy.kill()
+                        player.vertical_momentum = 10  # make the player jump up a little.
 
         # Check to see if the player collided in the last frame
         if player.collided_with(test_level.enemies) and not completed:  # If the player collides with an enemy
@@ -181,10 +187,11 @@ while run:
         # If player collided with objective
         for objective in test_level.objectives.sprites():
             if objective.rect.colliderect(player.rect):
-                test_level.objectives.remove([objective])  # Not sure if works.
+                objective.kill()  # Not sure if works.
 
         # If got all objectives
         if (len(test_level.objectives.sprites()) == 0):
+            x = 1
             completed = True
             in_game = False
 
