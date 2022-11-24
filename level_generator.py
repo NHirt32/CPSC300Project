@@ -4,63 +4,59 @@ import settings
 
 
 def addEntities(level, path_coordinates, num_entities):
-    col_len = len(level[0])
-    row_len = len(level)
     num_enemies = 0
     num_objectives = 0
 
     random.shuffle(path_coordinates)
 
-    # Place the enemies
-    for coor in path_coordinates:
-        if num_enemies >= num_entities:
-            break
-
-        # Only place if it is a path
-        if isolated(level, coor):
-            # Done place enemies inbetween walls
-            if not_boxed(level, coor):
-                if has_no_ground(level, coor):
-                    level[coor[0]][coor[1]] = 'F'
-                    path_coordinates.remove(coor)
-                    num_enemies += 1
-                elif has_ground(level, coor):
-                    level[coor[0]][coor[1]] = 'E'
-                    path_coordinates.remove(coor)
-                    num_enemies += 1
-
-    # Place the objectives
+    # Place isolated objectives
     for coor in path_coordinates:
         if num_objectives >= num_entities:
             break
-
         # Only place if it is a path
         if isolated(level, coor):
             level[coor[0]][coor[1]] = 'O'
             path_coordinates.remove(coor)
             num_objectives += 1
 
-    while num_enemies < num_entities:
-        coor = path_coordinates.pop()
-        if has_no_ground(level, coor):
-            level[coor[0]][coor[1]] = 'F'
-            path_coordinates.remove(coor)
-            num_enemies += 1
-        elif has_ground(level, coor):
-            level[coor[0]][coor[1]] = 'E'
-            path_coordinates.remove(coor)
-            num_enemies += 1
-
-
-
-    while num_objectives < num_entities:
+    # Place remaining objectives.
+    while (num_objectives < num_entities) and not (len(path_coordinates) == 0):
         coor = path_coordinates.pop()
         level[coor[0]][coor[1]] = 'O'
+        num_objectives += 1
 
+    # Place isolated enemies, one iteration through path_coordinates.
+    for coor in path_coordinates:
+        if num_enemies >= num_entities:
+            break
+        # Only place if it is a path
+        if isolated(level, coor):
+            # Done place enemies inbetween walls
+            if not_boxed(level, coor):
+                # Change the ground cases for varied probability.
+                if not has_ground(level, coor):
+                    level[coor[0]][coor[1]] = 'F'
+                    path_coordinates.remove(coor)
+                    num_enemies += 1
+                else:
+                    level[coor[0]][coor[1]] = 'E'
+                    path_coordinates.remove(coor)
+                    num_enemies += 1
+
+    # Place remaining enemies. Change the ground cases for varied probability.
+    while (num_enemies < num_entities) and not (len(path_coordinates) == 0):
+        coor = path_coordinates.pop()
+        if not has_ground(level, coor):
+            level[coor[0]][coor[1]] = 'F'
+            num_enemies += 1
+        else:
+            level[coor[0]][coor[1]] = 'E'
+            num_enemies += 1
+
+    # Convert the rest to path characters.
     for coor in path_coordinates:
         if level[coor[0]][coor[1]] != 'P':
             level[coor[0]][coor[1]] = 'I'
-
 
 def isolated(level, coor):
     if level[coor[0]][coor[1]] == '0':
@@ -74,11 +70,14 @@ def isolated(level, coor):
 def not_boxed(level, coor):
     return level[coor[0]][coor[1] - 1] != 'X' or level[coor[0]][coor[1] + 1] != 'X'
 
-def has_no_ground(level, coor):
-    return level[coor[0] + 1][coor[1]] == '0'
-
+# Looks directly below coord.
 def has_ground(level, coor):
-    return level[coor[0] + 1][coor[1] - 1] == 'X' or level[coor[0] + 1][coor[1] + 1] == 'X'
+    return level[coor[0] + 1][coor[1]] == 'X'
+
+# Looks directly below, below and left, and below and right.
+def has_ground_around(level, coor):
+    return level[coor[0] + 1][coor[1]] == 'X' and level[coor[0] + 1][coor[1] + 1] == 'X' and \
+           level[coor[0] + 1][coor[1] - 1] == 'X'
 
 
 # This should be the only real method that you guys need to deal with
@@ -88,8 +87,8 @@ def get_level(level_num):
     path_coordinates = []
 
     if level_num == 1:
-        create_level_path(level, path_coordinates, 4, 1)
-        level[4][1] = 'P'
+        create_level_path(level, path_coordinates, 1, 1)
+        level[1][1] = 'P'
     elif level_num == 2:
         create_level_path(level, path_coordinates, 1, 1)
         level[1][1] = 'P'
@@ -113,7 +112,7 @@ def get_level(level_num):
 # Defines the format for the level
 def get_format(level_num):
     if level_num == 1:
-        return [['X' for x in range(30)] for y in range(6)]
+        return [['X' for x in range(30)] for y in range(5)]
 
     elif level_num == 2:
         stair = [['X', 'X', 'X', 'X', 'X', 'X', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],

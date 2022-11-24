@@ -1964,3 +1964,11 @@ enclosed = [[
     "X000X",
     "XXXXX"]
 ]
+
+p_enclosed = [[
+    "XXXXX",
+    "XO00X",
+    "XFF0X",
+    "X0P0X",
+    "XXXXX"]
+]

@@ -164,10 +164,12 @@ while run:
         for enemy in test_level.get_enemies().sprites():  # Initializes all enemies
             enemy.update(test_level.solids)  # Move the enemy
 
+
             # If the enemy was killed
             if enemy.died(player):
                 test_level.enemies.remove([enemy])
                 player.vertical_momentum = 10  # make the player jump up a little.
+
 
         # Check to see if the player collided in the last frame
         if player.collided_with(test_level.enemies) and not completed:  # If the player collides with an enemy
