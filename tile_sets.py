@@ -1287,8 +1287,8 @@ o_left_right =[[
     "XXXXX"],
     [
     "XXXXX",
-    "00O00",
-    "XXFXX",
+    "00O0F",
+    "XX0XX",
     "00000",
     "XXXXX"],
     [

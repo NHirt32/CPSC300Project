@@ -61,9 +61,6 @@ class LevelRenderer:
                 elif level_layout[row][col] == 'F':
                     self.draw_flier_tileset(position, row, col)
 
-                elif level_layout[row][col] == 'X':
-                    self.draw_filled(position)
-
                 elif level_layout[row][col] == 'Y':
                     self.draw_block_animation(position, self.theme)
 
