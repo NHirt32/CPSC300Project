@@ -21,7 +21,7 @@ class Player(entity.Entity):
         self.slide_speed = -4  # defines gravity when sliding down a wall, MUST BE NEGATIVE
         self.vertical_momentum = 0
         self.horizontal_momentum = 0  # Used for non-wall jump related horizontal momentum
-        self.speed = 12  # Max momentum. MUST BE EVENLY DIVISIBLE BY horizontal_acceleration
+        self.speed = 18  # Max momentum. MUST BE EVENLY DIVISIBLE BY horizontal_acceleration
         self.horizontal_acceleration = 3
         self.wall_jump_cooldown = 20  # In frames of the game.
         self.wall_jump_cooldown_counter = 0  # Counter for cooldown
