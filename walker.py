@@ -36,6 +36,7 @@ class Walker(enemy.Enemy):
     # Processes all movement for the walker
     def update(self, group):
 
+        # Do nothing.
         if not self.touching_ground(group):
             1
 

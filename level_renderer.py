@@ -12,6 +12,7 @@ import random
 class LevelRenderer:
 
     def __init__(self, screen, level_layout, theme):
+        # Render Groups
         self.animations = pygame.sprite.Group()
         self.players = pygame.sprite.Group()
         self.solids = pygame.sprite.Group()
@@ -20,21 +21,29 @@ class LevelRenderer:
         self.non_solids = pygame.sprite.Group()
         self.objectives = pygame.sprite.Group()
         self.effects = pygame.sprite.Group()
+
+        # Group combinations
+        self.p_solids = pygame.sprite.Group()
+        self.e_solids = pygame.sprite.Group()
+
+        # Variables
         self.screen = screen
         self.level_layout = level_layout
         self.background_speed = 0.1
         self.theme = theme
-
         # Remember, a chosen tile_size should be evenly divisible by all assets that
         # are drawn using the fill() function in level renderer
         self.tile_size = 192
-        # Must be a multiple of tile size.
+        # Must be a multiple of tile size. We are using 5 by 5 tile sets.
         self.tileset_size = 960
 
         # Add any further sprite groups that need camera offset into this array.
         # The order of drawing is from left to right.
         self.all_tiles = [self.backgrounds, self.solids, self.non_solids, self.objectives, self.enemies, self.players,
                           self.effects]
+
+        for string in level_layout:
+            print(string)
 
         # Drawing the layout to the screen
         for row in range(0, len(level_layout)):
@@ -45,19 +54,15 @@ class LevelRenderer:
                 # Add cases here for different types of tiles.
                 if level_layout[row][col] == 'P':
                     self.draw_player_tileset(position, row, col)
-                    #self.draw_player(position, self.theme)
 
                 elif level_layout[row][col] == 'E':
                     self.draw_walker_tileset(position, row, col)
-                    #self.draw_walker(position, self.theme)
 
                 elif level_layout[row][col] == 'F':
                     self.draw_flier_tileset(position, row, col)
-                    #self.draw_flier(position, self.theme)
 
                 elif level_layout[row][col] == 'X':
-                    x = 1
-                    #self.draw_block(position, self.theme)
+                    self.draw_filled(position)
 
                 elif level_layout[row][col] == 'Y':
                     self.draw_block_animation(position, self.theme)
@@ -70,10 +75,8 @@ class LevelRenderer:
 
                 elif level_layout[row][col] == 'O':
                     self.draw_objective_tileset(position, row, col)
-                    #self.draw_objective(position, self.theme)
 
                 elif level_layout[row][col] == 'I':
-                    #x = 1
                     self.draw_tileset(position, row, col)
 
         # Draw the background appropriate for the level's theme.
@@ -131,6 +134,7 @@ class LevelRenderer:
         player1 = Player(position)
         player1.add(self.players)  # Adds player1 to renderer group
         player1.add(self.animations)
+        player1.add(self.e_solids)
         flame = \
             Animation([["assets/flame1_1.png", "assets/flame1_2.png", "assets/flame1_1.png", "assets/flame1_3.png"]],
                       position)
@@ -144,22 +148,22 @@ class LevelRenderer:
 
         # Cave
         elif theme == 2:
-            vignette = Tile("assets/dark5.png", position)
+            vignette = Tile("assets/dark4.png", position)
             vignette.add(self.effects)
 
         # Ice
         elif theme == 3:
-            vignette = Tile("assets/dark4.png", position)
+            vignette = Tile("assets/dark3.png", position)
             vignette.add(self.effects)
 
         # Volcanic
         elif theme == 4:
-            vignette = Tile("assets/dark4.png", position)
+            vignette = Tile("assets/dark2.png", position)
             vignette.add(self.effects)
 
         # Ancient
         elif theme == 5:
-            vignette = Tile("assets/dark3.png", position)
+            vignette = Tile("assets/dark1.png", position)
             vignette.add(self.effects)
 
 
@@ -167,11 +171,13 @@ class LevelRenderer:
         enemy1 = Walker(position)
         enemy1.add(self.enemies)
         enemy1.add(self.animations)
+        enemy1.add(self.p_solids)
 
     def draw_flier(self, position, theme):
         enemy1 = Flier(position)
         enemy1.add(self.enemies)
         enemy1.add(self.animations)
+        enemy1.add(self.p_solids)
 
     def draw_block(self, position, theme):
         rnd = random.randint(1, 100)
@@ -185,16 +191,22 @@ class LevelRenderer:
                                    "assets/jungle3.png")
                 for block in blocks:
                     block.add(self.solids)
+                    block.add(self.e_solids)
+                    block.add(self.p_solids)
             elif 10 < rnd <= 50:
                 blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
                                    "assets/jungle2.png")
                 for block in blocks:
                     block.add(self.solids)
+                    block.add(self.e_solids)
+                    block.add(self.p_solids)
             elif 50 < rnd <= 100:
                 blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
                                    "assets/jungle1.png")
                 for block in blocks:
                     block.add(self.solids)
+                    block.add(self.e_solids)
+                    block.add(self.p_solids)
 
         # Cave
         elif theme == 2:
@@ -205,16 +217,22 @@ class LevelRenderer:
                                    "assets/cave3.png")
                 for block in blocks:
                     block.add(self.solids)
+                    block.add(self.e_solids)
+                    block.add(self.p_solids)
             elif 2 < rnd <= 50:
                 blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
                                    "assets/cave2.png")
                 for block in blocks:
                     block.add(self.solids)
+                    block.add(self.e_solids)
+                    block.add(self.p_solids)
             elif 50 < rnd <= 100:
                 blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
                                    "assets/cave1.png")
                 for block in blocks:
                     block.add(self.solids)
+                    block.add(self.e_solids)
+                    block.add(self.p_solids)
 
         # Ice
         elif theme == 3:
@@ -225,16 +243,22 @@ class LevelRenderer:
                                    "assets/ice3.png")
                 for block in blocks:
                     block.add(self.solids)
+                    block.add(self.e_solids)
+                    block.add(self.p_solids)
             elif 25 < rnd <= 50:
                 blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
                                    "assets/ice2.png")
                 for block in blocks:
                     block.add(self.solids)
+                    block.add(self.e_solids)
+                    block.add(self.p_solids)
             elif 50 < rnd <= 100:
                 blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
                                    "assets/ice1.png")
                 for block in blocks:
                     block.add(self.solids)
+                    block.add(self.e_solids)
+                    block.add(self.p_solids)
 
         # Volcanic
         elif theme == 4:
@@ -245,16 +269,22 @@ class LevelRenderer:
                                    "assets/volcanic3.png")
                 for block in blocks:
                     block.add(self.solids)
+                    block.add(self.e_solids)
+                    block.add(self.p_solids)
             elif 6 < rnd <= 50:
                 blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
                                    "assets/volcanic2.png")
                 for block in blocks:
                     block.add(self.solids)
+                    block.add(self.e_solids)
+                    block.add(self.p_solids)
             elif 50 < rnd <= 100:
                 blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
                                    "assets/volcanic1.png")
                 for block in blocks:
                     block.add(self.solids)
+                    block.add(self.e_solids)
+                    block.add(self.p_solids)
 
         # Ancient
         elif theme == 5:
@@ -265,42 +295,54 @@ class LevelRenderer:
                                    "assets/ancient3.png")
                 for block in blocks:
                     block.add(self.solids)
+                    block.add(self.e_solids)
+                    block.add(self.p_solids)
             elif 2 < rnd <= 12:
                 blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
                                    "assets/ancient2.png")
                 for block in blocks:
                     block.add(self.solids)
+                    block.add(self.e_solids)
+                    block.add(self.p_solids)
             elif 12 < rnd <= 100:
                 blocks = self.fill(position, asset_size, asset_size, self.tile_size, self.tile_size, "Tile",
                                    "assets/ancient1.png")
                 for block in blocks:
                     block.add(self.solids)
+                    block.add(self.e_solids)
+                    block.add(self.p_solids)
 
     def draw_block_animation(self, position, theme):
         if theme == 0:
             block = Animation([["assets/green_block.png", "assets/red_block.png"]], position)
             block.add(self.solids)
+            block.add(self.e_solids)
+            block.add(self.p_solids)
             block.add(self.animations)
 
     # Places background at specific location
-    # Not all of them are centered, the just look ok where they are
+    # Not all of them are centered, they just look ok where they are
     def draw_background(self, theme):
+        renderpoint = (0, 0)
         if theme == 1:
-            background = Tile("assets/background_jungle.png",(5144,1800))
+            background = Tile("assets/background_jungle.png", renderpoint)
+            background.rect.topleft = renderpoint
             background.add(self.backgrounds)
         elif theme == 2:
-            background = Tile("assets/background_cave.png", (2500,4000))
+            background = Tile("assets/background_cave.png", renderpoint)
+            background.rect.topleft = renderpoint
             background.add(self.backgrounds)
         elif theme == 3:
-            background = Tile("assets/background_ice.png", (1344,14000))
+            background = Tile("assets/background_ice.png", renderpoint)
+            background.rect.topleft = renderpoint
             background.add(self.backgrounds)
         elif theme == 4:
-            background = Tile("assets/background_volcanic.png", (5144,1800))
+            background = Tile("assets/background_volcanic.png", renderpoint)
+            background.rect.topleft = renderpoint
             background.add(self.backgrounds)
         elif theme == 5:
-            background = Tile("assets/background_ancient.png", (0,0))
-            # Centering this one
-            background.rect.center = (2016, 2016)
+            background = Tile("assets/background_ancient.png", renderpoint)
+            background.rect.center = self.players.sprites()[0].rect.center
             background.add(self.backgrounds)
 
     def draw_non_solid(self, position, theme):
@@ -317,6 +359,10 @@ class LevelRenderer:
     def draw_objective(self, position, theme):
         objective = Tile("assets/coin.png", position)
         objective.add(self.objectives)
+
+    # Draws a filled tileset:
+    def draw_filled(self, position):
+        self.render_tileset(tile_sets.filled[0], position)
 
     # draws a mostly walker tileset
     def draw_walker_tileset(self, position, row, col):
@@ -388,7 +434,7 @@ class LevelRenderer:
             tile_set = random.choice(tile_sets.e_intersection)
 
         else:
-            tile_set = tile_sets.enclosed
+            tile_set = random.choice(tile_sets.enclosed)
 
         self.render_tileset(tile_set, position)
 
@@ -462,7 +508,7 @@ class LevelRenderer:
             tile_set = random.choice(tile_sets.p_intersection)
 
         else:
-            tile_set = tile_sets.enclosed
+            tile_set = random.choice(tile_sets.p_enclosed)
 
         self.render_tileset(tile_set, position)
 
@@ -536,7 +582,7 @@ class LevelRenderer:
             tile_set = random.choice(tile_sets.o_intersection)
 
         else:
-            tile_set = tile_sets.enclosed
+            tile_set = random.choice(tile_sets.enclosed)
 
         self.render_tileset(tile_set, position)
 
@@ -609,7 +655,7 @@ class LevelRenderer:
             tile_set = random.choice(tile_sets.f_intersection)
 
         else:
-            tile_set = tile_sets.enclosed
+            tile_set = random.choice(tile_sets.enclosed)
 
         self.render_tileset(tile_set, position)
 
@@ -682,7 +728,7 @@ class LevelRenderer:
             tile_set = random.choice(tile_sets.intersection)
 
         else:
-            tile_set = tile_sets.enclosed
+            tile_set = random.choice(tile_sets.enclosed)
 
         self.render_tileset(tile_set, position)
 
@@ -706,7 +752,7 @@ class LevelRenderer:
                     self.draw_flier(subposition, self.theme)
 
                 elif tileset[row][col] == 'B':
-                    self.draw_background(subposition, self.theme)
+                    self.draw_background(self.theme)
 
                 elif tileset[row][col] == 'X':
                     self.draw_block(subposition, self.theme)
@@ -773,7 +819,7 @@ class LevelRenderer:
 
     # This may be useful for resolving asset size conflicts, but I do not know if it will be needed.
     # This function takes a lot of arguments, and should ideally be called from a draw handler.
-    # May have bugs. This function fills a space specified as h_space_size by v_space_size, with the top left
+    # This function fills a space specified as h_space_size by v_space_size, with the top left
     # of this area located at position, with the constructed object, determined by selector, with the given
     # sprite_set, if applicable.
     # h_space_size should be evenly divisible by h_asset_size, and v_space_size should be evenly divisible

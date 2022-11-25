@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8c9c6286-66a9-4239-b4e7-b4166552cbbc" name="Changes" comment="Tilesets objectives are now one objective to a tileset. LevelRenderer switched back to a 192 tilesize.">
+    <list default="true" id="8c9c6286-66a9-4239-b4e7-b4166552cbbc" name="Changes" comment="Modified to use tilesets again, made some optimizations for frames, primitive occlusion for enemies now implemented in gameloop.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/ancient.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/foliage.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/ice.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/jewelled_ancient.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/rocky_dirt.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/flier.py" beforeDir="false" afterPath="$PROJECT_DIR$/flier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/background_ancient.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/background_ancient.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/background_cave.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/background_cave.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/background_ice.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/background_ice.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/background_jungle.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/background_jungle.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/background_volcanic.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/background_volcanic.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dark1.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/dark1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dark2.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/dark2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dark3.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/dark3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dark4.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/dark4.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/volcanic3.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/volcanic3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enemy.py" beforeDir="false" afterPath="$PROJECT_DIR$/enemy.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_loop.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_loop.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/level_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/level_generator.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/level_renderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/level_renderer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tile_sets.py" beforeDir="false" afterPath="$PROJECT_DIR$/tile_sets.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/walker.py" beforeDir="false" afterPath="$PROJECT_DIR$/walker.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -251,7 +257,21 @@
       <option name="project" value="LOCAL" />
       <updated>1669168371516</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Fixed the bug in addEntities function in level_generator.">
+      <created>1669281213596</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1669281213596</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Modified to use tilesets again, made some optimizations for frames, primitive occlusion for enemies now implemented in gameloop.">
+      <created>1669285938183</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1669285938183</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -315,6 +335,8 @@
     <MESSAGE value="Monumental moment; Phil has his flame." />
     <MESSAGE value="Fixed the screensize enemy rendering bug" />
     <MESSAGE value="Tilesets objectives are now one objective to a tileset. LevelRenderer switched back to a 192 tilesize." />
-    <option name="LAST_COMMIT_MESSAGE" value="Tilesets objectives are now one objective to a tileset. LevelRenderer switched back to a 192 tilesize." />
+    <MESSAGE value="Fixed the bug in addEntities function in level_generator." />
+    <MESSAGE value="Modified to use tilesets again, made some optimizations for frames, primitive occlusion for enemies now implemented in gameloop." />
+    <option name="LAST_COMMIT_MESSAGE" value="Modified to use tilesets again, made some optimizations for frames, primitive occlusion for enemies now implemented in gameloop." />
   </component>
 </project>

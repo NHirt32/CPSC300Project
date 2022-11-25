@@ -100,8 +100,8 @@ def get_level(level_num):
         create_level_path(level, path_coordinates, 1, 5)
         level[1][5] = 'P'
     elif level_num == 5:
-        create_level_path(level, path_coordinates, 3, 3)
-        level[3][3] = 'P'
+        create_level_path(level, path_coordinates, 4, 4)
+        level[4][4] = 'P'
 
 
     path_coordinates.pop(0)
@@ -115,13 +115,13 @@ def get_format_tileset(level_num):
         return [['X' for x in range(7)] for y in range(4)]
 
     elif level_num == 2:
-        stair = [['X', 'X', 'X', '0', '0', '0'],
+        stair = [['X', 'X', 'X', 'X', '0', '0'],
                  ['X', 'X', 'X', 'X', 'X', 'X'],
                  ['X', 'X', 'X', 'X', 'X', 'X'],
                  ['0', 'X', 'X', 'X', 'X', 'X'],
                  ['X', 'X', 'X', 'X', 'X', 'X'],
                  ['X', 'X', 'X', 'X', 'X', 'X'],
-                 ['X', 'X', 'X', '0', '0', '0'],
+                 ['X', 'X', 'X', 'X', '0', '0'],
                  ]
 
         return stair
@@ -147,13 +147,15 @@ def get_format_tileset(level_num):
 
     elif level_num == 5:
         level5 = [
-            ['0', '0', '0', 'X', '0', '0', '0'],
-            ['0', '0', 'X', 'X', 'X', '0', '0'],
-            ['0', 'X', 'X', 'X', 'X', 'X', '0'],
-            ['X', 'X', 'X', 'x', 'X', 'X', 'X'],
-            ['0', 'X', 'X', 'X', 'X', 'X', '0'],
-            ['0', '0', 'X', 'X', 'X', '0', '0'],
-            ['0', '0', '0', 'X', '0', '0', '0']]
+            ['0', '0', '0', '0', 'X', '0', '0', '0', '0'],
+            ['0', '0', '0', 'X', 'X', 'X', '0', '0', '0'],
+            ['0', '0', 'X', 'X', 'X', 'X', 'X', '0', '0'],
+            ['0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0'],
+            ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
+            ['0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '0'],
+            ['0', '0', 'X', 'X', 'X', 'X', 'X', '0', '0'],
+            ['0', '0', '0', 'X', 'X', 'X', '0', '0', '0'],
+            ['0', '0', '0', '0', 'X', '0', '0', '0', '0']]
 
         return level5
     return -1

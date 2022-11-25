@@ -858,7 +858,7 @@ f_down =[[
     "X000X",
     "X0X0X",
     "X0X0X",
-    "X0XFX"]
+    "X0F0X"]
 ]
 
 f_up =[[
@@ -881,9 +881,9 @@ f_up =[[
     "XXXXX"],
     [
     "X0X0X",
-    "XFXFX",
+    "XFX0X",
     "X0X0X",
-    "X000X",
+    "X0F0X",
     "XXXXX"]
 ]
 
@@ -895,8 +895,8 @@ f_left_right =[[
     "XXXXX"],
     [
     "XXXXX",
-    "00000",
-    "XXFXX",
+    "00F00",
+    "XX0XX",
     "00000",
     "XXXXX"],
     [
@@ -1273,7 +1273,7 @@ o_up =[[
     "XXXXX"],
     [
     "X0X0X",
-    "XFXFX",
+    "XFX0X",
     "X0X0X",
     "X0OEX",
     "XXXXX"]
@@ -1301,7 +1301,7 @@ o_left_right =[[
     "XXXXX",
     "X0F0X",
     "00X00",
-    "0OXO0",
+    "0OX00",
     "XXXXX"]
 ]
 
@@ -1970,5 +1970,13 @@ p_enclosed = [[
     "XO00X",
     "XFF0X",
     "X0P0X",
+    "XXXXX"]
+]
+
+filled = [[
+    "XXXXX",
+    "XXXXX",
+    "XXXXX",
+    "XXXXX",
     "XXXXX"]
 ]

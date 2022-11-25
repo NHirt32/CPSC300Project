@@ -125,20 +125,7 @@ while run:
         x_mov = (keys_pressed[pygame.K_d] or right_jmov) - (keys_pressed[pygame.K_a] or left_jmov)
         y_mov = (keys_pressed[pygame.K_s] or down_jmov) - (keys_pressed[pygame.K_SPACE] or up_jmov)
 
-        # This is a problem, and won't work with the menu system, contact @Daniel if you want me to elaborate
-
-        # if keys_pressed[pygame.K_F11]:
-        #     screen_flag = not screen_flag
-        #
-        #     if screen_flag:
-        #         screen = pygame.display.set_mode((screen_width, screen_height), pygame.FULLSCREEN)
-        #         update_camera()
-        #     else:
-        #         # NEEDS TO BE DONE TWICE, THIS IS A PROBLEM WITH PYGAME.
-        #         # More information at https://github.com/pygame/pygame/issues/3107
-        #         screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE)
-        #         screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE)
-
+        # Pause case
         if keys_pressed[pygame.K_p] or keys_pressed[pygame.K_ESCAPE]:
             pause_menu.main()
 
@@ -159,7 +146,7 @@ while run:
                 continue
 
         player_init_pos = (player.rect.x, player.rect.y)  # Grabbing the initial position of the player in the frame.
-        player.update(x_mov, y_mov, test_level.solids)  # Player Movement Processed
+        player.update(x_mov, y_mov, test_level.p_solids)  # Player Movement Processed
         player_fin_pos = (player.rect.x, player.rect.y)  # Grabbing the final position of the player in the frame.
 
         # Update Phil's flame, slight offset for looks
@@ -170,15 +157,16 @@ while run:
         for enemy in test_level.get_enemies().sprites():  # Initializes all enemies
             # Only update them if they are in the dark around the player
                 if(enemy.rect.colliderect(test_level.effects.sprites()[1].rect)):
-                    enemy.update(test_level.solids)  # Move the enemy
+                    enemy.update(test_level.e_solids)  # Move the enemy
 
-                    # If the enemy was killed
-                    if enemy.died(player):
+                    # If the enemy was killed.
+                    if enemy.died(test_level.players):
                         enemy.kill()
                         player.vertical_momentum = 10  # make the player jump up a little.
 
-        # Check to see if the player collided in the last frame
-        if player.collided_with(test_level.enemies) and not completed:  # If the player collides with an enemy
+        # Check to see if the player is touching an enemy.
+        if player.touching_right(test_level.enemies) or player.touching_left(test_level.enemies) or \
+                player.touching_roof(test_level.enemies) and not completed:  # If the player collides with an enemy
             gameOver = True
             test_level = LevelRenderer(screen, settings.levelM, settings.curr_level)  # Reload the level
             player = test_level.get_player()  # Reload the player
@@ -191,7 +179,6 @@ while run:
 
         # If got all objectives
         if (len(test_level.objectives.sprites()) == 0):
-            x = 1
             completed = True
             in_game = False
 
