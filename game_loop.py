@@ -7,6 +7,7 @@ from tile import *
 from player import *
 from level_renderer import *
 import random
+import time
 
 
 # Moves the camera
@@ -17,6 +18,19 @@ def update_camera():
     init = (player.rect.x, player.rect.y)  # Grabbing the initial position of the player in the frame.
     test_level.update((screen_width / 2, screen_height / 2), init)
 
+def deathScreen():
+    font = pygame.font.Font("assets/OptimusPrinceps.ttf", 56)
+    text = font.render("YOU DIED", True, (139, 0, 0), (0, 0, 0))
+
+    textRect = text.get_rect();
+    textRect.center = (settings.screen_width // 2, settings.screen_height // 2)
+
+    screen.fill((0, 0, 0))
+    screen.blit(text, textRect)
+
+    pygame.display.update()
+
+    time.sleep(0.75)
 
 pygame.init()
 
@@ -168,6 +182,7 @@ while run:
         if player.touching_right(test_level.enemies) or player.touching_left(test_level.enemies) or \
                 player.touching_roof(test_level.enemies) and not completed:  # If the player collides with an enemy
             gameOver = True
+            deathScreen()
             test_level = LevelRenderer(screen, settings.levelM, settings.curr_level)  # Reload the level
             player = test_level.get_player()  # Reload the player
             update_camera()
@@ -184,7 +199,8 @@ while run:
 
         test_level.update(player_init_pos, player_fin_pos)  # The level_renderer can go draw everything.
 
-        frame_limiter.tick(max_frames)  # Capping the frames for consistent behaviour.
+        frame_limiter.tick(max_frames)  # Cadpping the frames for consistent behaviour.
         pygame.display.update()
 
     pygame.display.quit()
+
