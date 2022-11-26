@@ -22,7 +22,7 @@ def deathScreen():
     font = pygame.font.Font("assets/OptimusPrinceps.ttf", 56)
     text = font.render("YOU DIED", True, (139, 0, 0), (0, 0, 0))
 
-    textRect = text.get_rect();
+    textRect = text.get_rect()
     textRect.center = (settings.screen_width // 2, settings.screen_height // 2)
 
     screen.fill((0, 0, 0))
@@ -31,6 +31,25 @@ def deathScreen():
     pygame.display.update()
 
     time.sleep(0.75)
+
+def winScreen():
+    font = pygame.font.Font("assets/OptimusPrinceps.ttf", 56)
+    text = font.render("YOU WIN ! ", True, (255, 170, 29), (0, 0, 0))
+    text2 = font.render(("Score: " + str(settings.score)), True, (255, 170, 29), (0, 0, 0))
+
+    textRect = text.get_rect()
+    textRect.center = (settings.screen_width // 2, settings.screen_height // 2)
+
+    textRect2 = text.get_rect()
+    textRect2.center = (settings.screen_width // 2, (settings.screen_height // 2) + 75)
+
+    screen.fill((0, 0, 0))
+    screen.blit(text, textRect)
+    screen.blit(text2, textRect2)
+
+    pygame.display.update()
+
+    time.sleep(2.0)
 
 pygame.init()
 
@@ -175,6 +194,7 @@ while run:
 
                     # If the enemy was killed.
                     if enemy.died(test_level.players):
+                        settings.score += settings.kill_reward
                         enemy.kill()
                         player.vertical_momentum = 10  # make the player jump up a little.
 
@@ -182,6 +202,7 @@ while run:
         if player.touching_right(test_level.enemies) or player.touching_left(test_level.enemies) or \
                 player.touching_roof(test_level.enemies) and not completed:  # If the player collides with an enemy
             gameOver = True
+            settings.score -= settings.death_penalty
             deathScreen()
             test_level = LevelRenderer(screen, settings.levelM, settings.curr_level)  # Reload the level
             player = test_level.get_player()  # Reload the player
@@ -194,6 +215,7 @@ while run:
 
         # If got all objectives
         if (len(test_level.objectives.sprites()) == 0):
+            winScreen()
             completed = True
             in_game = False
 

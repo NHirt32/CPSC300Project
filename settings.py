@@ -18,7 +18,6 @@ theme = 1
 curr_level = 1
 
 # How To Death defaults
-
 ht_width = 550
 ht_height = 450
 
@@ -37,6 +36,12 @@ num_entities = 3
 easy_num = 3
 mid_num = 5
 hard_num = 8
+
+#Game Win and Death Screens
+score = 5000
+death_penalty = 500
+kill_reward = 300
+time_penalty = 100
 
 """
 levelM = [
