@@ -36,7 +36,7 @@ def deathScreen():
 
 def winScreen():
     settings.end_time = time.time()
-    settings.score -= ((int(settings.end_time - settings.start_time)) * (settings.curr_difficulty * 100))
+    settings.score -= ((int(settings.end_time - settings.start_time)) * (settings.curr_difficulty * 10))
 
     font = pygame.font.Font("assets/OptimusPrinceps.ttf", 56)
     text = font.render("YOU WIN ! ", True, (255, 170, 29), (0, 0, 0))
@@ -222,12 +222,13 @@ while run:
         if player.touching_right(test_level.enemies) or player.touching_left(test_level.enemies) or \
             player.touching_roof(test_level.enemies) and not completed:  # If the player collides with an enemy
 
-            if time.time() - player.last_hurt >= 0.08 or player.last_hurt == 0:
+            if time.time() - player.last_hurt >= 0.45 or player.last_hurt == 0:
 
                 rounded = min(255, max(0, round(255 * 0.40)))
                 screen.fill((255, rounded, rounded), special_flags=pygame.BLEND_MULT)
                 pygame.display.update()
-                time.sleep(0.08)
+                settings.score -= settings.hurt_penalty
+                time.sleep(0.15)
 
                 player.last_hurt = time.time()
 

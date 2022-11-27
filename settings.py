@@ -44,8 +44,9 @@ hard_num = 8
 
 #Game Win and Death Screens
 score = 10000
-death_penalty = 1000
-kill_reward = 200
+death_penalty = 2500
+kill_reward = 300
+hurt_penalty = 300
 start_time = 0
 end_time = 0
 
