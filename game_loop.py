@@ -37,7 +37,7 @@ def deathScreen():
 
 def winScreen():
     settings.end_time = time.time()
-    settings.score -= ((int(settings.end_time - settings.start_time)) * (settings.curr_difficulty * 10))
+    settings.score -= ((int(settings.end_time - settings.start_time)) * (settings.curr_difficulty * 100))
 
     font = pygame.font.Font("assets/OptimusPrinceps.ttf", 56)
     text = font.render("YOU WIN ! ", True, (255, 170, 29), (0, 0, 0))
@@ -66,7 +66,6 @@ def winScreen():
             jsonFile.truncate()
 
     time.sleep(2.0)
-
 
 pygame.init()
 
@@ -116,9 +115,11 @@ while run:
     pygame.time.set_timer(PLAYER_SPRITE_NEXT, 200, 0)
     pygame.time.set_timer(FLAME_SPRITE_NEXT, 200, 0)
     pygame.time.set_timer(SPRITE_NEXT, 100, 0)
+    font = pygame.font.Font("assets/OptimusPrinceps.ttf", 26)
 
     settings.start_time = time.time()
     while in_game:
+
         # Pygame event handling.
         events = pygame.event.get()
         for next_event in events:
@@ -221,12 +222,24 @@ while run:
         # Check to see if the player is touching an enemy.
         if player.touching_right(test_level.enemies) or player.touching_left(test_level.enemies) or \
             player.touching_roof(test_level.enemies) and not completed:  # If the player collides with an enemy
-            gameOver = True
-            settings.score -= settings.death_penalty
-            deathScreen()
-            test_level = LevelRenderer(screen, settings.levelM, settings.curr_level)  # Reload the level
-            player = test_level.get_player()  # Reload the player
-            update_camera()
+
+            if time.time() - player.last_hurt >= 1 or player.last_hurt == 0:
+
+                GB = min(255, max(0, round(255 * 0.40)))
+                screen.fill((255, GB, GB), special_flags=pygame.BLEND_MULT)
+                pygame.display.update()
+                time.sleep(0.10)
+
+                player.last_hurt = time.time()
+
+                player.health -= 1
+                if player.health == 0:
+                    gameOver = True
+                    settings.score -= settings.death_penalty
+                    deathScreen()
+                    test_level = LevelRenderer(screen, settings.levelM, settings.curr_level)  # Reload the level
+                    player = test_level.get_player()  # Reload the player
+                    update_camera()
 
         # If player collided with objective
         for objective in test_level.objectives.sprites():
@@ -242,6 +255,17 @@ while run:
         test_level.update(player_init_pos, player_fin_pos)  # The level_renderer can go draw everything.
 
         frame_limiter.tick(max_frames)  # Capping the frames for consistent behaviour.
+
+        text = font.render("COINS:   " + str(len(test_level.objectives.sprites())) + "   ", True, (255, 255, 255))
+        textRect = text.get_rect()
+        textRect.center = (settings.screen_width - 80, 25)
+        screen.blit(text, textRect)
+
+        text = font.render("   HEALTH:   " + str(player.health) + "   ", True, (255, 255, 255))
+        textRect = text.get_rect()
+        textRect.center = (settings.screen_width - 80, 50)
+        screen.blit(text, textRect)
+
         pygame.display.update()
 
     pygame.display.quit()

@@ -1,24 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8c9c6286-66a9-4239-b4e7-b4166552cbbc" name="Changes" comment="Modified to use tilesets again, made some optimizations for frames, primitive occlusion for enemies now implemented in gameloop.">
+    <list default="true" id="8c9c6286-66a9-4239-b4e7-b4166552cbbc" name="Changes" comment="Completed Score System, and Score Menu. Quick Patch.">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_26_2022_12_39_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_26_2022_12_39_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_26_2022_3_44_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_26_2022_3_44_PM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/background_ancient.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/background_ancient.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/background_cave.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/background_cave.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/background_ice.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/background_ice.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/background_jungle.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/background_jungle.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/background_volcanic.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/background_volcanic.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dark1.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/dark1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dark2.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/dark2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dark3.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/dark3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dark4.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/dark4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/volcanic3.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/volcanic3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enemy.py" beforeDir="false" afterPath="$PROJECT_DIR$/enemy.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_loop.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_loop.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/level_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/level_generator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/level_renderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/level_renderer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tile_sets.py" beforeDir="false" afterPath="$PROJECT_DIR$/tile_sets.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/walker.py" beforeDir="false" afterPath="$PROJECT_DIR$/walker.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/player.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scores.json" beforeDir="false" afterPath="$PROJECT_DIR$/scores.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="attempted_push" />
+        <entry key="$PROJECT_DIR$" value="alpha1" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -57,10 +46,16 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/White Rider/Desktop/GameBuild1/game_loop.py&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/danie/PycharmProjects/CPSC300Project2/assets&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\danie\PycharmProjects\CPSC300Project2\assets" />
+    </key>
+  </component>
   <component name="RunManager" selected="Python.game_loop (1)">
     <configuration name="game_loop (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="GameBuild1" />
@@ -69,11 +64,12 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="C:\Users\danie\PycharmProjects\CPSC300Project\venv\Scripts\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/game_loop.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -95,6 +91,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../GameBuild Backup/game_loop.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -123,6 +120,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1665607604160</updated>
+      <workItem from="1669443549868" duration="188000" />
+      <workItem from="1669488700521" duration="1266000" />
+      <workItem from="1669495805166" duration="969000" />
+      <workItem from="1669496783742" duration="8855000" />
+      <workItem from="1669518758178" duration="16574000" />
+      <workItem from="1669542733882" duration="2066000" />
     </task>
     <task id="LOCAL-00001" summary="Integrating, for the second time, the level generator, the enemies, and the walljump and player movement functionality changes">
       <created>1666837002344</created>
@@ -271,8 +274,39 @@
       <option name="project" value="LOCAL" />
       <updated>1669285938183</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Added the death screen">
+      <created>1669500267288</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1669500267288</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Primitive Win Screen and Score system">
+      <created>1669503556041</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1669503556041</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Completed Score System, and Score Menu.">
+      <created>1669538349169</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1669538349169</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Completed Score System, and Score Menu. Quick Patch.">
+      <created>1669538775048</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1669538775048</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -337,6 +371,13 @@
     <MESSAGE value="Tilesets objectives are now one objective to a tileset. LevelRenderer switched back to a 192 tilesize." />
     <MESSAGE value="Fixed the bug in addEntities function in level_generator." />
     <MESSAGE value="Modified to use tilesets again, made some optimizations for frames, primitive occlusion for enemies now implemented in gameloop." />
-    <option name="LAST_COMMIT_MESSAGE" value="Modified to use tilesets again, made some optimizations for frames, primitive occlusion for enemies now implemented in gameloop." />
+    <MESSAGE value="Added the death screen" />
+    <MESSAGE value="Primitive Win Screen and Score system" />
+    <MESSAGE value="Completed Score System, and Score Menu." />
+    <MESSAGE value="Completed Score System, and Score Menu. Quick Patch." />
+    <option name="LAST_COMMIT_MESSAGE" value="Completed Score System, and Score Menu. Quick Patch." />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/CPSC300Project2$game_loop__1_.coverage" NAME="game_loop (1) Coverage Results" MODIFIED="1669544813036" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

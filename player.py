@@ -5,6 +5,9 @@ from settings import *
 import math
 
 class Player(entity.Entity):
+    health = 3
+    last_hurt = 0
+
     def __init__(self, pos):
         entity.Entity.__init__(self,
                 [["assets/1_1.png","assets/1_2.png","assets/1_3.png","assets/1_2.png","assets/1_1.png"],
