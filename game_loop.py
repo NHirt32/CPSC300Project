@@ -59,9 +59,6 @@ def winScreen():
         data = json.load(jsonFile)
         str1 = str(settings.curr_difficulty) + "-"
         str1 += str(settings.curr_level)
-
-        print(str1)
-        print(settings.score)
         if settings.score > data[str1]:
             data[str1] = settings.score
             jsonFile.seek(0)
