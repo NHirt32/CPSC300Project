@@ -8,6 +8,7 @@ from player import *
 from level_renderer import *
 import random
 import time
+import json
 
 
 # Moves the camera
@@ -17,6 +18,7 @@ def update_camera():
     screen_height = size[1]
     init = (player.rect.x, player.rect.y)  # Grabbing the initial position of the player in the frame.
     test_level.update((screen_width / 2, screen_height / 2), init)
+
 
 def deathScreen():
     font = pygame.font.Font("assets/OptimusPrinceps.ttf", 56)
@@ -32,7 +34,11 @@ def deathScreen():
 
     time.sleep(0.75)
 
+
 def winScreen():
+    settings.end_time = time.time()
+    settings.score -= ((int(settings.end_time - settings.start_time)) * (settings.curr_difficulty * 10))
+
     font = pygame.font.Font("assets/OptimusPrinceps.ttf", 56)
     text = font.render("YOU WIN ! ", True, (255, 170, 29), (0, 0, 0))
     text2 = font.render(("Score: " + str(settings.score)), True, (255, 170, 29), (0, 0, 0))
@@ -49,7 +55,21 @@ def winScreen():
 
     pygame.display.update()
 
+    with open("scores.json", 'r+') as jsonFile:
+        data = json.load(jsonFile)
+        str1 = str(settings.curr_difficulty) + "-"
+        str1 += str(settings.curr_level)
+
+        print(str1)
+        print(settings.score)
+        if settings.score > data[str1]:
+            data[str1] = settings.score
+            jsonFile.seek(0)
+            json.dump(data, jsonFile, indent=4)
+            jsonFile.truncate()
+
     time.sleep(2.0)
+
 
 pygame.init()
 
@@ -63,12 +83,12 @@ FLAME_SPRITE_NEXT = pygame.USEREVENT + 2
 SPRITE_NEXT = pygame.USEREVENT + 3
 
 # Setting allowed events lessens the load a little on frames.
-pygame.event.set_allowed([PLAYER_SPRITE_NEXT,FLAME_SPRITE_NEXT,SPRITE_NEXT,pygame.JOYDEVICEADDED,
-                          pygame.JOYDEVICEREMOVED, pygame.QUIT,pygame.WINDOWSIZECHANGED])
+pygame.event.set_allowed([PLAYER_SPRITE_NEXT, FLAME_SPRITE_NEXT, SPRITE_NEXT, pygame.JOYDEVICEADDED,
+                          pygame.JOYDEVICEREMOVED, pygame.QUIT, pygame.WINDOWSIZECHANGED])
 
 while run:
-
     settings.curr_level = -1
+    settings.score = 10000
 
     game_menu.main()
 
@@ -100,6 +120,7 @@ while run:
     pygame.time.set_timer(FLAME_SPRITE_NEXT, 200, 0)
     pygame.time.set_timer(SPRITE_NEXT, 100, 0)
 
+    settings.start_time = time.time()
     while in_game:
         # Pygame event handling.
         events = pygame.event.get()
@@ -169,6 +190,8 @@ while run:
                 update_camera()
 
             elif settings.pause_status == 1:
+                settings.start_time = time.time()
+                settings.score = 10000
                 in_game = False
 
             elif settings.pause_status == 2:
@@ -189,18 +212,18 @@ while run:
 
         for enemy in test_level.get_enemies().sprites():  # Initializes all enemies
             # Only update them if they are in the dark around the player
-                if(enemy.rect.colliderect(test_level.effects.sprites()[1].rect)):
-                    enemy.update(test_level.e_solids)  # Move the enemy
+            if (enemy.rect.colliderect(test_level.effects.sprites()[1].rect)):
+                enemy.update(test_level.e_solids)  # Move the enemy
 
-                    # If the enemy was killed.
-                    if enemy.died(test_level.players):
-                        settings.score += settings.kill_reward
-                        enemy.kill()
-                        player.vertical_momentum = 10  # make the player jump up a little.
+                # If the enemy was killed.
+                if enemy.died(test_level.players):
+                    settings.score += settings.kill_reward
+                    enemy.kill()
+                    player.vertical_momentum = 10  # make the player jump up a little.
 
         # Check to see if the player is touching an enemy.
         if player.touching_right(test_level.enemies) or player.touching_left(test_level.enemies) or \
-                player.touching_roof(test_level.enemies) and not completed:  # If the player collides with an enemy
+            player.touching_roof(test_level.enemies) and not completed:  # If the player collides with an enemy
             gameOver = True
             settings.score -= settings.death_penalty
             deathScreen()
@@ -225,4 +248,3 @@ while run:
         pygame.display.update()
 
     pygame.display.quit()
-

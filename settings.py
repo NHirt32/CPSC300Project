@@ -18,7 +18,7 @@ theme = 1
 curr_level = 1
 
 # How To Death defaults
-ht_width = 550
+ht_width = 600
 ht_height = 450
 
 # Pause Defaults
@@ -26,22 +26,28 @@ pause_width = 450
 pause_height = 400
 pause_status = 3
 
+#Score Menu Defaults
+sc_width = 600
+sc_height = 450
+
 # Main Menu Defaults
-menu_width = 550
+menu_width = 600
 menu_height = 450
 menu_colour = "#00FFFF"
 
 # Difficult Defaults
+curr_difficulty = 1
 num_entities = 3
 easy_num = 3
 mid_num = 5
 hard_num = 8
 
 #Game Win and Death Screens
-score = 5000
-death_penalty = 500
-kill_reward = 300
-time_penalty = 100
+score = 10000
+death_penalty = 1000
+kill_reward = 200
+start_time = 0
+end_time = 0
 
 """
 levelM = [
