@@ -45,6 +45,8 @@ class LevelRenderer:
         for string in level_layout:
             print(string)
 
+        print("\n")
+
         # Drawing the layout to the screen
         for row in range(0, len(level_layout)):
             for col in range(0, len(level_layout[row])):

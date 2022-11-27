@@ -190,7 +190,7 @@ up_right =[[
     [
     "X000X",
     "X0000",
-    "XX0XX",
+    "X00XX",
     "X0000",
     "XXXXX"],
     [
@@ -216,7 +216,7 @@ down_right =[[
     [
     "XXXXX",
     "X0000",
-    "XX0XX",
+    "XX00X",
     "X0000",
     "X000X"],
     [
@@ -242,7 +242,7 @@ down_left =[[
     [
     "XXXXX",
     "0000X",
-    "XX0XX",
+    "XX00X",
     "0000X",
     "X000X"],
     [
@@ -268,7 +268,7 @@ down_right_left =[[
     [
     "XXXXX",
     "00000",
-    "XX0XX",
+    "X000X",
     "00000",
     "X000X"],
     [
@@ -294,7 +294,7 @@ down_up_left =[[
     [
     "X000X",
     "0000X",
-    "XX0XX",
+    "XX00X",
     "0000X",
     "X000X"],
     [
@@ -556,7 +556,7 @@ e_left_up =[[
     [
     "X000X",
     "0E00X",
-    "XX0XX",
+    "XX00X",
     "0000X",
     "XXXXX"],
     [
@@ -582,7 +582,7 @@ e_up_right =[[
     [
     "X000X",
     "X00E0",
-    "XX0XX",
+    "X00XX",
     "X00E0",
     "XXXXX"],
     [
@@ -608,7 +608,7 @@ e_down_right =[[
     [
     "XXXXX",
     "X00E0",
-    "XX0XX",
+    "XX00X",
     "X0000",
     "X000X"],
     [
@@ -634,7 +634,7 @@ e_down_left =[[
     [
     "XXXXX",
     "0E00X",
-    "XX0XX",
+    "XX00X",
     "0000X",
     "X000X"],
     [
@@ -660,7 +660,7 @@ e_down_right_left =[[
     [
     "XXXXX",
     "E0000",
-    "XX0XX",
+    "X000X",
     "0000E",
     "X000X"],
     [
@@ -686,7 +686,7 @@ e_down_up_left =[[
     [
     "X000X",
     "E000X",
-    "XX0XX",
+    "XX00X",
     "0000X",
     "X000X"],
     [
@@ -948,7 +948,7 @@ f_left_up =[[
     [
     "X0F0X",
     "0000X",
-    "XX0XX",
+    "XX00X",
     "0000X",
     "XXXXX"],
     [
@@ -974,7 +974,7 @@ f_up_right =[[
     [
     "X000X",
     "X00F0",
-    "XX0XX",
+    "X00XX",
     "X0000",
     "XXXXX"],
     [
@@ -1000,7 +1000,7 @@ f_down_right =[[
     [
     "XXXXX",
     "X0000",
-    "XX0XX",
+    "XX0X0",
     "X0000",
     "X0F0X"],
     [
@@ -1026,7 +1026,7 @@ f_down_left =[[
     [
     "XXXXX",
     "0000X",
-    "XX0XX",
+    "X00XX",
     "00F0X",
     "X000X"],
     [
@@ -1052,7 +1052,7 @@ f_down_right_left =[[
     [
     "XXXXX",
     "00F00",
-    "XX0XX",
+    "XX0X0",
     "00000",
     "X000X"],
     [
@@ -1077,8 +1077,8 @@ f_down_up_left =[[
     "X000X"],
     [
     "X000X",
-    "0F00X",
-    "XX0XX",
+    "0F0XX",
+    "X000X",
     "000FX",
     "X000X"],
     [
@@ -1288,8 +1288,8 @@ o_left_right =[[
     [
     "XXXXX",
     "00O0F",
-    "XX0XX",
-    "00000",
+    "0X0X0",
+    "00F00",
     "XXXXX"],
     [
     "XXXXX",
@@ -1341,7 +1341,7 @@ o_left_up =[[
     "X0F0X",
     "000OX",
     "XX0XX",
-    "0000X",
+    "000XX",
     "XXXXX"],
     [
     "X0F0X",
@@ -1367,7 +1367,7 @@ o_up_right =[[
     "X000X",
     "X00F0",
     "XXOXX",
-    "X0000",
+    "XX000",
     "XXXXX"],
     [
     "X0F0X",
@@ -1392,8 +1392,8 @@ o_down_right =[[
     [
     "XXXXX",
     "X0000",
-    "XXOXX",
-    "X0000",
+    "XXO0X",
+    "X00X0",
     "X0F0X"],
     [
     "XXXXX",
@@ -1419,7 +1419,7 @@ o_down_left =[[
     "XXXXX",
     "EO00X",
     "XX0XX",
-    "00F0X",
+    "0XF0X",
     "X000X"],
     [
     "XXXXX",
@@ -1444,7 +1444,7 @@ o_down_right_left =[[
     [
     "XXXXX",
     "00F00",
-    "XXOXX",
+    "X0O0X",
     "00000",
     "X000X"],
     [
@@ -1470,7 +1470,7 @@ o_down_up_left =[[
     [
     "X000X",
     "0F0OX",
-    "XX0XX",
+    "X00XX",
     "000FX",
     "X000X"],
     [
@@ -1680,7 +1680,7 @@ p_left_right =[[
     [
     "XXXXX",
     "000P0",
-    "XX0XX",
+    "XX0X0",
     "00000",
     "XXXXX"],
     [
@@ -1732,7 +1732,7 @@ p_left_up =[[
     [
     "X000X",
     "000PX",
-    "XX0XX",
+    "X00XX",
     "0000X",
     "XXXXX"],
     [
@@ -1758,7 +1758,7 @@ p_up_right =[[
     [
     "X000X",
     "X00P0",
-    "XX0XX",
+    "XX0X0",
     "X0000",
     "XXXXX"],
     [
@@ -1784,7 +1784,7 @@ p_down_right =[[
     [
     "XXXXX",
     "X00P0",
-    "XX0XX",
+    "XX0X0",
     "X0000",
     "X000X"],
     [
@@ -1810,7 +1810,7 @@ p_down_left =[[
     [
     "XXXXX",
     "0P00X",
-    "XX0XX",
+    "XX00X",
     "0000X",
     "X000X"],
     [
@@ -1836,7 +1836,7 @@ p_down_right_left =[[
     [
     "XXXXX",
     "0P000",
-    "XX0XX",
+    "XX0X0",
     "00000",
     "X000X"],
     [
@@ -1862,7 +1862,7 @@ p_down_up_left =[[
     [
     "X000X",
     "0P00X",
-    "XX0XX",
+    "0X0XX",
     "0000X",
     "X000X"],
     [

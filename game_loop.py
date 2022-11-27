@@ -221,7 +221,7 @@ while run:
 
         test_level.update(player_init_pos, player_fin_pos)  # The level_renderer can go draw everything.
 
-        frame_limiter.tick(max_frames)  # Cadpping the frames for consistent behaviour.
+        frame_limiter.tick(max_frames)  # Capping the frames for consistent behaviour.
         pygame.display.update()
 
     pygame.display.quit()
