@@ -29,7 +29,6 @@ def deathScreen():
 
     screen.fill((0, 0, 0))
     screen.blit(text, textRect)
-
     pygame.display.update()
 
     time.sleep(0.75)
@@ -223,12 +222,12 @@ while run:
         if player.touching_right(test_level.enemies) or player.touching_left(test_level.enemies) or \
             player.touching_roof(test_level.enemies) and not completed:  # If the player collides with an enemy
 
-            if time.time() - player.last_hurt >= 1 or player.last_hurt == 0:
+            if time.time() - player.last_hurt >= 0.08 or player.last_hurt == 0:
 
-                GB = min(255, max(0, round(255 * 0.40)))
-                screen.fill((255, GB, GB), special_flags=pygame.BLEND_MULT)
+                rounded = min(255, max(0, round(255 * 0.40)))
+                screen.fill((255, rounded, rounded), special_flags=pygame.BLEND_MULT)
                 pygame.display.update()
-                time.sleep(0.10)
+                time.sleep(0.08)
 
                 player.last_hurt = time.time()
 
