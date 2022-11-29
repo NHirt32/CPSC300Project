@@ -118,7 +118,7 @@
         level_renderer.py, etc. 
 
     - game_loop.py
-        The game_loop.py component is the heart of the game. It provides the main of the program, and by extenstion
+        The game_loop.py component is the heart of the game. It provides the main of the program, and by extension
         the driver code that instructs the other components of the project. As such it has interactions with most of the
         critical components of the game. This means that the level_render.py, settings.py, game_menu.py, pause_menu.py,
         and all extentions of entity.py directly or indirectly plug into game_loop.py. game_loop.py runs the central
