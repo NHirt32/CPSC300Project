@@ -77,6 +77,7 @@ def main():
 
     root.geometry("%dx%d+%d+%d" % (width, height, x, y))
     root.config(bg=settings.menu_colour)
+    root.resizable(False, False)
 
     frame = tk.Frame(root, bg=settings.menu_colour)
     frame.place(relx=0.5, rely=0.5, anchor="center")
@@ -135,6 +136,7 @@ def how_to_menu():
     ht_win = tk.Tk()
     ht_win.config(bg=settings.menu_colour)
     ht_win.title("How To Play!")
+    ht_win.resizable(False, False)
 
     width = settings.ht_width
     height = settings.ht_height
@@ -163,6 +165,7 @@ def scoresMenu():
     sc_win = tk.Tk()
     sc_win.config(bg=settings.menu_colour)
     sc_win.title("High Scores")
+    sc_win.resizable(False, False)
 
     width = settings.sc_width
     height = settings.sc_height
