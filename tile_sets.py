@@ -1910,7 +1910,7 @@ p_right_up_left =[[
 p_down_up_right =[[
     "X000X",
     "X0000",
-    "X0000",
+    "XX000",
     "X000P",
     "X000X"],
     [
