@@ -154,31 +154,20 @@ class LevelRenderer:
         flame.add(self.effects)
         flame.add(self.animations)
 
-        # Jungle
+        # easy
         if theme == 1:
             vignette = Tile("assets/dark5.png", position)
             vignette.add(self.effects)
 
-        # Cave
+        # medium
         elif theme == 2:
-            vignette = Tile("assets/dark4.png", position)
-            vignette.add(self.effects)
-
-        # Ice
-        elif theme == 3:
             vignette = Tile("assets/dark3.png", position)
             vignette.add(self.effects)
 
-        # Volcanic
-        elif theme == 4:
-            vignette = Tile("assets/dark2.png", position)
-            vignette.add(self.effects)
-
-        # Ancient
-        elif theme == 5:
+        # hard
+        elif theme == 3:
             vignette = Tile("assets/dark1.png", position)
             vignette.add(self.effects)
-
 
     def draw_walker(self, position, theme):
         """draw_walker() places a walker in the level.
@@ -813,7 +802,7 @@ class LevelRenderer:
 
                 # Add cases here for different types of tiles in a tileset.
                 if tileset[row][col] == 'P':
-                    self.draw_player(subposition, self.theme)
+                    self.draw_player(subposition, settings.curr_difficulty) # Making darkness a function of difficulty
 
                 elif tileset[row][col] == 'E':
                     self.draw_walker(subposition, self.theme)
