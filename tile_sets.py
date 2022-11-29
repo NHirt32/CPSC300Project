@@ -1394,7 +1394,7 @@ o_down_right =[[
     [
     "XXXXX",
     "X0000",
-    "XXO0X",
+    "XXO00",
     "X00X0",
     "X0F0X"],
     [
@@ -1420,7 +1420,7 @@ o_down_left =[[
     [
     "XXXXX",
     "EO00X",
-    "XX0XX",
+    "0X0XX",
     "0XF0X",
     "X000X"],
     [
