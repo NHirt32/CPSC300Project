@@ -5,6 +5,7 @@ import settings
 
 
 def main():
+    """main() creates and runs the pause menu."""
     root = tk.Tk()
 
     root.title("Phil the Candle")
@@ -43,17 +44,21 @@ def main():
 
 
 def regen_level():
+    """regen_level() regenerates the underlying maze layout of the layout."""
     settings.levelM = level_generator.get_level(settings.curr_level)
     settings.pause_status = 0
 
 
 def main_menu():
+    """main_menu() sets up variables to go to main menu."""
     settings.pause_status = 1
 
 
 def quit():
+    """quit() sets up variables to quit the game."""
     settings.pause_status = 2
 
 
 def cont():
+    """cont() sets up variables close the pause menu and continue the game."""
     settings.pause_status = 3

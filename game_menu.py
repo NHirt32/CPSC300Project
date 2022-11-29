@@ -9,6 +9,7 @@ import json
 
 
 def next_img(root, panel, images):
+    """TODO"""
     img = next(images)
     img = Image.open(img)
     img = ImageTk.PhotoImage(img)
@@ -18,38 +19,39 @@ def next_img(root, panel, images):
 
 
 def main():
-    # Initiates pygame for level one
+    """main() runs the main menu."""
     def level_one():
+        """level_one() initiates pygame for level one."""
         settings.num_entities = define_num_entities(diff_scale.get())
         settings.levelM = level_generator.get_level(1)
         settings.curr_level = 1
 
-    # Initiates pygame for level two
     def level_two():
+        """level_two() initiates pygame for level two."""
         settings.num_entities = define_num_entities(diff_scale.get())
         settings.levelM = level_generator.get_level(2)
         settings.curr_level = 2
 
-    # Initiates pygame for level three
     def level_three():
+        """level_three() initiates pygame for level three."""
         settings.num_entities = define_num_entities(diff_scale.get())
         settings.levelM = level_generator.get_level(3)
         settings.curr_level = 3
 
-    # Initiates pygame for level four
     def level_four():
+        """level_four() initiates pygame for level four."""
         settings.num_entities = define_num_entities(diff_scale.get())
         settings.levelM = level_generator.get_level(4)
         settings.curr_level = 4
 
-    # Initiates pygame for level five
     def level_five():
+        """level_five() initiates pygame for level five."""
         settings.num_entities = define_num_entities(diff_scale.get())
         settings.levelM = level_generator.get_level(5)
         settings.curr_level = 5
 
-    # Used to change the difficulty of the game based on diff_scale
     def define_num_entities(diff_level):
+        """define_num_entities() is used to change the difficulty of the game based on diff_scale."""
         if diff_level == 1:
             settings.curr_difficulty = 1
             return settings.easy_num
@@ -128,9 +130,8 @@ def main():
     root.after(140, next_img, root, panel, images)
     root.mainloop()
 
-
-# Creates how to menu
 def how_to_menu():
+    """how_to_menu() creates how to menu."""
     ht_win = tk.Tk()
     ht_win.config(bg=settings.menu_colour)
     ht_win.title("How To Play!")
@@ -158,6 +159,7 @@ def how_to_menu():
 
 
 def scoresMenu():
+    """scoresMenu() creates and runs the scores menu."""
     sc_win = tk.Tk()
     sc_win.config(bg=settings.menu_colour)
     sc_win.title("High Scores")

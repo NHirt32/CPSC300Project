@@ -10,8 +10,14 @@ import tile_sets
 import random
 
 class LevelRenderer:
-
+    """The LevelRenderer class contains all the objects found in a level and functions to draw them to the screen.
+    It also provides the functionality to render the tile sets."""
     def __init__(self, screen, level_layout, theme):
+        """Constructor for a LevelRenderer.
+
+        :param screen: the screen to draw on.
+        :param level_layout: the list of strings representing a level layout.
+        :param theme: an integer representing the theme of the level."""
         # Render Groups
         self.animations = pygame.sprite.Group()
         self.players = pygame.sprite.Group()
@@ -87,8 +93,12 @@ class LevelRenderer:
         # The offset is reversed with its tuples, can simply use update to draw them
         self.update((settings.screen_width / 2, settings.screen_height / 2), init)
 
-    # Draws everything to the screen with appropriate offset.
     def update(self, init_pos, final_pos):
+        """update() redraws everything in the level in the proper order. It also handles moving everything for the
+        camera.
+
+        :param init_pos: a tuple representing the inital position of center of the last frame.
+        :param final_pos: a tuple representing the final position of the center of the last frame."""
         # Intended to be physical distance that the player moved this frame,
         # stored as a tuple, (x,y).
         # Since directions are flipped, need to multiply by -1.
@@ -130,6 +140,10 @@ class LevelRenderer:
     # Handlers for the level renderer, looks at the theme of the level and chooses what version to draw,
     # adds the constructed group to be drawn.
     def draw_player(self, position, theme):
+        """draw_player() places a player in the level.
+
+        :param position: a tuple representing the spot to put the player.
+        :param theme: an integer representing the theme of the level."""
         player1 = Player(position)
         player1.add(self.players)  # Adds player1 to renderer group
         player1.add(self.animations)
@@ -167,18 +181,30 @@ class LevelRenderer:
 
 
     def draw_walker(self, position, theme):
+        """draw_walker() places a walker in the level.
+
+        :param position: a tuple representing the spot to put the walker.
+        :param theme: an integer representing the theme of the level."""
         enemy1 = Walker(position)
         enemy1.add(self.enemies)
         enemy1.add(self.animations)
         enemy1.add(self.p_solids)
 
     def draw_flier(self, position, theme):
+        """draw_flier() places a flier in the level.
+
+        :param position: a tuple representing the spot to put the flier.
+        :param theme: an integer representing the theme of the level."""
         enemy1 = Flier(position)
         enemy1.add(self.enemies)
         enemy1.add(self.animations)
         enemy1.add(self.p_solids)
 
     def draw_block(self, position, theme):
+        """draw_block() places a block in the level.
+
+        :param position: a tuple representing the spot to put the block.
+        :param theme: an integer representing the theme of the level."""
         rnd = random.randint(1, 100)
 
         # Jungle
@@ -312,6 +338,10 @@ class LevelRenderer:
                     block.add(self.p_solids)
 
     def draw_block_animation(self, position, theme):
+        """Currently unused. draw_block_animation() would place a block animation in the level.
+
+        :param position: a tuple representing the spot to put block animation.
+        :param theme: an integer representing the theme of the level."""
         if theme == 0:
             block = Animation([["assets/green_block.png", "assets/red_block.png"]], position)
             block.add(self.solids)
@@ -322,6 +352,9 @@ class LevelRenderer:
     # Places background at specific location
     # Not all of them are centered, they just look ok where they are
     def draw_background(self, theme):
+        """draw_background() places a background in the level.
+
+        :param theme: an integer representing the theme of the level."""
         renderpoint = (0, 0)
         if theme == 1:
             background = Tile("assets/background_jungle.png", renderpoint)
@@ -345,26 +378,44 @@ class LevelRenderer:
             background.add(self.backgrounds)
 
     def draw_non_solid(self, position, theme):
+        """Currently unused. draw_non_solid() would place a generic non-solid in the level.
+
+        :param position: a tuple representing the spot to put block non-solid.
+        :param theme: an integer representing the theme of the level."""
         if theme == 0:
             non_solid = Tile("assets/red_cross.png", position)
             non_solid.add(self.non_solids)
 
     def draw_non_solid_animation(self, position, theme):
+        """Currently unused. draw_non_solid_animation() would place a non-solid animation in the level.
+
+        :param position: a tuple representing the spot to put non-solid animation.
+        :param theme: an integer representing the theme of the level."""
         if theme == 0:
             non_solid = Animation([["assets/red_cross.png", "assets/blue_cross"]], position)
             non_solid.add(self.non_solids)
             non_solid.add(self.animations)
 
     def draw_objective(self, position, theme):
+        """draw_objective() places an objective in the level.
+
+        :param position: a tuple representing the spot to put the objective.
+        :param theme: an integer representing the theme of the level."""
         objective = Tile("assets/coin.png", position)
         objective.add(self.objectives)
 
-    # Draws a filled tileset:
     def draw_filled(self, position):
+        """draw_filled() renders a filled tile_set in the level.
+
+        :param position: a tuple representing the spot to put the filled tile_set."""
         self.render_tileset(tile_sets.filled[0], position)
 
-    # draws a mostly walker tileset
     def draw_walker_tileset(self, position, row, col):
+        """draw_walker_tileset() renders an appropriate walker tile_set in the level.
+
+        :param position: a tuple representing the spot to put the tile_set.
+        :param row: an integer representing the row in the level of the location to check around.
+        :param col: an integer representing the col in the level of the location to check around."""
         # State of coordinate
         above = False
         below = False
@@ -437,8 +488,12 @@ class LevelRenderer:
 
         self.render_tileset(tile_set, position)
 
-    # Draws a tileset that contains a player
     def draw_player_tileset(self, position, row, col):
+        """draw_player_tileset() renders an appropriate player tile_set in the level.
+
+        :param position: a tuple representing the spot to put the tile_set.
+        :param row: an integer representing the row in the level of the location to check around.
+        :param col: an integer representing the col in the level of the location to check around."""
         # State of coordinate
         above = False
         below = False
@@ -511,8 +566,12 @@ class LevelRenderer:
 
         self.render_tileset(tile_set, position)
 
-    # draws a tileset of objectives
     def draw_objective_tileset(self, position, row, col):
+        """draw_objective_tileset() renders an appropriate objective tile_set in the level.
+
+        :param position: a tuple representing the spot to put the tile_set.
+        :param row: an integer representing the row in the level of the location to check around.
+        :param col: an integer representing the col in the level of the location to check around."""
         # State of coordinate
         above = False
         below = False
@@ -585,8 +644,12 @@ class LevelRenderer:
 
         self.render_tileset(tile_set, position)
 
-    # draws a mostly flyer tileset
     def draw_flier_tileset(self, position, row, col):
+        """draw_flier_tileset() renders an appropriate flier tile_set in the level.
+
+        :param position: a tuple representing the spot to put the tile_set.
+        :param row: an integer representing the row in the level of the location to check around.
+        :param col: an integer representing the col in the level of the location to check around."""
         # State of coordinate
         above = False
         below = False
@@ -660,6 +723,11 @@ class LevelRenderer:
 
     # draws a tileset of blocks
     def draw_tileset(self, position, row, col):
+        """draw_tileset() renders an appropriate path non-entity tile_set in the level.
+
+        :param position: a tuple representing the spot to put the tile_set.
+        :param row: an integer representing the row in the level of the location to check around.
+        :param col: an integer representing the col in the level of the location to check around."""
         # State of coordinate
         above = False
         below = False
@@ -731,8 +799,11 @@ class LevelRenderer:
 
         self.render_tileset(tile_set, position)
 
-    # Draws a tileset to a position, by invoking the draw handlers for specific sprites.
     def render_tileset(self, tileset, position):
+        """render_tileset() places all the objects in a tile_set into the level.
+
+        :param tileset: a list of strings representing the tile_set.
+        :param position: a tuple representing the place to render the top left of the tile_set."""
         for row in range(0, len(tileset)):
             for col in range(0, len(tileset[row])):
 
@@ -768,63 +839,27 @@ class LevelRenderer:
                 elif tileset[row][col] == 'O':
                     self.draw_objective(subposition, self.theme)
 
-    def set_players(self, players):
-        self.players = players
-
-    def set_solids(self, solids):
-        self.solids = solids
-
-    def set_enemies(self, enemies):
-        self.enemies = enemies
-
-    def set_screen(self, screen):
-        self.screen = screen
-
-    def set_level_layout(self, level_layout):
-        self.level_layout = level_layout
-
-    def set_background_speed(self, background_speed):
-        self.background_speed = background_speed
-
-    def set_animations(self, animations):
-        self.animations = animations
-
-    # returns the players group
-    def get_players(self):
-        return self.players
-
-    def get_solids(self):
-        return self.solids
-
-    def get_enemies(self):
-        return self.enemies
-
-    def get_screen(self):
-        return self.screen
-
-    def get_level_layout(self):
-        return self.level_layout
-
-    def get_background_speed(self):
-        return self.background_speed
-
-    # returns the first player sprite in players group
-    def get_player(self):
-        return self.players.sprites()[0]
-
-    # returns a group of the animations
-    def get_animations(self):
-        return self.animations
-
-    # This may be useful for resolving asset size conflicts, but I do not know if it will be needed.
-    # This function takes a lot of arguments, and should ideally be called from a draw handler.
-    # This function fills a space specified as h_space_size by v_space_size, with the top left
-    # of this area located at position, with the constructed object, determined by selector, with the given
-    # sprite_set, if applicable.
-    # h_space_size should be evenly divisible by h_asset_size, and v_space_size should be evenly divisible
-    # by v_asset_size
-    # This function can create a lot of sprite objects very quickly, please use it sparingly.
     def fill(self, position, h_asset_size, v_asset_size, h_space_size, v_space_size, selector, sprite_set):
+        """fill(): This may be useful for resolving asset size conflicts, but I do not know if it will be needed.
+        This function takes a lot of arguments, and should ideally be called from a draw handler.
+        This function fills a space specified as h_space_size by v_space_size, with the top left
+        of this area located at position, with the constructed object, determined by selector, with the given
+        sprite_set, if applicable.
+        h_space_size should be evenly divisible by h_asset_size, and v_space_size should be evenly divisible
+        by v_asset_size
+        This function can create a lot of sprite objects very quickly, please use it sparingly.
+
+        :param position: a tuple representing the top left of the place to fill.
+        :param h_asset_size: an integer of the horizontal size of the asset to fill.
+        :param v_asset_size: an integer of the vertical size of the asset to fill.
+        :param h_space_size: an integer of the horizontal size of the space to fill. Must be evenly divisible by
+        h_asset_size.
+        :param v_space_size: an integer of the vertical size of the space to fill. Must be evenly divisible by
+        v_asset_size.
+        :param selector: a string determining what constructors are used for the assets.
+        :param sprite_set: a string, or list of lists of strings if you are filling an animation,
+         representing the filepath(s) to the images of the assets.
+         :returns: a list of the sprite objects that were placed."""
         assets = []
         h_counter = 0
 

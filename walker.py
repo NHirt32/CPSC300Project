@@ -2,8 +2,12 @@ import pygame
 import enemy #Inherits functionality from enemy
 
 class Walker(enemy.Enemy):
-
+    """The Walker class extends an enemy to give the functionality walkers should have.
+    This is mostly just gravity."""
     def __init__(self, pos):
+        """Constructor for a Walker.
+.
+        :param pos: a position as a tuple."""
         enemy.Enemy.__init__(self, [["assets/walker1_1.png", "assets/walker3_1.png", "assets/walker1_1.png",
                                      "assets/walker3_2.png"],
                                     ["assets/walker2_1.png", "assets/walker4_1.png", "assets/walker2_1.png",
@@ -22,8 +26,10 @@ class Walker(enemy.Enemy):
         self.FALLING_RIGHT = 2
         self.FALLING_LEFT = 3
 
-    # Does mostly downward vertical movement, but needs to factor in when sliding and when not sliding.
     def gravity_handler(self, group):
+        """gravity_handler() handles gravity for the enemy.
+
+        :param group: the group to disable collisions for."""
         # if falling
         if (not self.touching_ground(group)):
             if self.vertical_momentum <= 0:
@@ -33,9 +39,10 @@ class Walker(enemy.Enemy):
                 else:
                     self.vertical_momentum -= 1
 
-    # Processes all movement for the walker
     def update(self, group):
+        """update() handles all movement for the enemy.
 
+        :param group: the group to disable collisions for."""
         # Do nothing.
         if not self.touching_ground(group):
             1
@@ -61,8 +68,11 @@ class Walker(enemy.Enemy):
         self.gravity_handler(group)
         self.update_direction(group)
 
-    # Returns true if a ledge is on left of walker
     def ledge_left(self, group):
+        """ledge_left() detects if a ledge is on the left of the walker.
+
+        :param group: the group to test for collisions.
+        :returns: true if a ledge is on the left of the walker."""
         # Just below and left of enemy.
         test_point = ((self.rect.bottomleft[0]), (self.rect.bottomleft[1]))
 
@@ -72,8 +82,11 @@ class Walker(enemy.Enemy):
 
         return True
 
-    # Returns true if a ledge is on right of walker
     def ledge_right(self, group):
+        """ledge_right() detects if a ledge is on the right of the walker.
+
+        :param group: the group to test for collisions.
+        :returns: true if a ledge is on the right of the walker."""
         # Just below and left of enemy.
         test_point = ((self.rect.bottomright[0]), (self.rect.bottomright[1]))
 
@@ -83,8 +96,11 @@ class Walker(enemy.Enemy):
 
         return True
 
-    # Updates the walkers animation direction
     def update_direction(self, group):
+        """update_direction() updates the next direction of the walker based on its touching status, its move int,
+         and its fields.
+
+         :param group: the group to test for touching."""
         if self.touching_ground(group):
             if self.move_int == 1:
                 self.next_direction = self.WALKING_RIGHT

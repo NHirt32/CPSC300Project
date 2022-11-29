@@ -1,3 +1,5 @@
+"""tile_sets is a large collection of tile_sets that can be chosen by the LevelRenderer object."""
+
 # tilesets specified by the side they open on.
 left = [[
     "XXXXX",

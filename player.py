@@ -5,10 +5,14 @@ from settings import *
 import math
 
 class Player(entity.Entity):
+    """The Player class extends an entity with the specific functionality a player must have."""
     health = 3
     last_hurt = 0
 
     def __init__(self, pos):
+        """Constructor for a Player.
+
+        :param pos: a position as a tuple."""
         entity.Entity.__init__(self,
                 [["assets/1_1.png","assets/1_2.png","assets/1_3.png","assets/1_2.png","assets/1_1.png"],
                 ["assets/2_1.png","assets/2_2.png","assets/2_3.png","assets/2_2.png","assets/2_1.png"],
@@ -43,8 +47,12 @@ class Player(entity.Entity):
         self.SLIDING_LEFT = 7
         self.SLIDING_RIGHT = 6
 
-    # Does all the movement associated with the player
     def update(self, x_direction, y_direction, collision_group):
+        """update() handles all of the player movement, collision checking, and next animations based input.
+
+        :param x_direction: an integer representing the horizontal directional input.
+        :param y_direction: an integer representing the vertical directional input.
+        :param collision_group: a group to disable collisions for."""
         t_left = self.touching_left(collision_group)
         t_down = self.touching_ground(collision_group)
         t_right = self.touching_right(collision_group)
@@ -72,11 +80,15 @@ class Player(entity.Entity):
 
         self.vertical_handler(x_direction, collision_group, t_up)
         self.horizontal_handler(x_direction, collision_group, t_left, t_right)
-        self.update_direction(x_direction, y_direction, collision_group, t_left, t_down, t_right, t_up)
+        self.update_direction(x_direction, t_left, t_down, t_right)
 
-    # Handles all horizontal movement relating to the player. Takes a collision group
-    # and the horizontal input data as arguments.
     def horizontal_handler(self, x_mov, group, t_left, t_right):
+        """horizontal_handler() handles all horizontal movement relating to the player.
+
+        :param x_mov: integer of horizontal input.
+        :param group: group to disable collisions for.
+        :param t_left: boolean status of whether touching on left of player.
+        :param t_right:boolean status of whether touching on right of player."""
 
         # Tests for right input, adjusts momentum by the acceleration if not touching a wall
         if (x_mov == 1) and (self.sign(self.horizontal_momentum) >= 0):
@@ -105,9 +117,12 @@ class Player(entity.Entity):
 
         self.v_move_x(self.sign(self.horizontal_momentum), abs(self.horizontal_momentum), group)
 
-    # Handles all vertical movement relating to the player. Takes a collision group
-    # and the vertical input data as arguments.
     def vertical_handler(self,x_mov, group, t_up):
+        """vertical_handler() handles all horizontal movement relating to the player.
+
+        :param x_mov: integer of horizontal input.
+        :param group: group to disable collisions for.
+        :param t_up: boolean status of whether touching above of player."""
 
         # Processing upward vertical momentum, like in the case of jump.
         if (self.vertical_momentum > 0) and (not t_up):
@@ -125,8 +140,11 @@ class Player(entity.Entity):
         #Process downward vertical momentum
         self.gravity_handler(x_mov,group)
 
-    # Does mostly downward vertical movement, but needs to factor in when sliding and when not sliding.
     def gravity_handler(self, x_mov, group):
+        """gravity_handler() handles all gravity relating to the player.
+
+        :param x_mov: integer of horizontal input.
+        :param group: group to disable collisions for."""
         # If sliding
         if ((self.touching_right(group) and (x_mov == 1)) or (self.touching_left(group) and (x_mov == -1))) and\
             (not self.touching_ground(group)):
@@ -149,9 +167,14 @@ class Player(entity.Entity):
         else:
             self.vertical_momentum = 0
 
-    # Updates the player's direction variable, which controls which animations are shown.
-    def update_direction(self, x_mov, y_mov, group, t_left, t_down, t_right, t_up):
+    def update_direction(self, x_mov, t_left, t_down, t_right):
+        """update_direction() updates the player's next direction variable based on the player's fields, input,
+        and touching status.
 
+        :param x_mov: integer of horizontal input.
+        :param t_left: boolean status of whether touching a solid left of player.
+        :param t_down: boolean status of whether player is touching a solid below itself.
+        :param t_right: boolean status of whether touching a solid right of player."""
         rl = 0
 
         if self.direction == self.JUMPING_LEFT or self.direction == self.WALKING_LEFT or \
@@ -235,18 +258,19 @@ class Player(entity.Entity):
                             self.next_direction = self.STANDING_STILL_RIGHT
 
     def jump(self):
+        """jump() sets the fields of the player such that a jump will occur."""
         self.vertical_momentum = self.jump_power
         self.can_jump = False
 
-    # Makes conditions right for the player to wall jump left
     def wall_jump_l(self):
+        """wall_jump_l() sets the fields of the player such that a left wall jump will occur."""
         self.vertical_momentum = self.wall_jump_vertical_momentum
         self.horizontal_momentum = -1 * self.wall_jump_horizontal_momentum
         self.wall_jump_cooldown_counter = self.wall_jump_cooldown
         self.can_jump = False
 
-    # Makes conditions right for the player to wall jump right
     def wall_jump_r(self):
+        """wall_jump_r() sets the fields of the player such that a right wall jump will occur."""
         self.vertical_momentum = self.wall_jump_vertical_momentum
         self.horizontal_momentum = self.wall_jump_horizontal_momentum
         self.wall_jump_cooldown_counter = self.wall_jump_cooldown
@@ -254,6 +278,9 @@ class Player(entity.Entity):
 
     # Takes a number. Returns -1 if the number is negative, 0 if its 0, and 1 if its positive
     def sign(self, number):
+        """sign() returns the sign of a number.
+        :param number: the number to test.
+        :returns: -1 if the sign is negative, 0 if the number is 0, 1 if the number is positive."""
         if number > 0:
             return 1
         elif number == 0:

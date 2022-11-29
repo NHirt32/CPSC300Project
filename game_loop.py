@@ -1,3 +1,6 @@
+"""game_loop is the driver program of the game, everything is run from game_loop. It is most of the classes interact,
+and so small changes in game_loop can have large impacts to the features in the game."""
+
 import pygame
 import game_menu
 import pause_menu
@@ -10,9 +13,9 @@ import random
 import time
 import json
 
-
-# Moves the camera
 def update_camera():
+    """update_camera() re-centers the camera over the player, when a new level is loaded or an attribute
+    about the screen changes."""
     size = screen.get_size()
     screen_width = size[0]
     screen_height = size[1]
@@ -21,6 +24,7 @@ def update_camera():
 
 
 def deathScreen():
+    """deathScreen() draws the death-screen onto the screen when it is called, and waits a small amount of time."""
     font = pygame.font.Font("assets/OptimusPrinceps.ttf", 56)
     text = font.render("YOU DIED", True, (139, 0, 0), (0, 0, 0))
 
@@ -35,6 +39,8 @@ def deathScreen():
 
 
 def winScreen():
+    """winScreen() draws the win-screen to the screen. This involves calculating the final score and may involve
+    saving it to the scores file as well."""
     settings.end_time = time.time()
     settings.score -= ((int(settings.end_time - settings.start_time)) * (settings.curr_difficulty * 10))
 
@@ -66,6 +72,8 @@ def winScreen():
 
     time.sleep(2.0)
 
+# Program start
+
 pygame.init()
 
 run = True
@@ -90,16 +98,16 @@ while run:
     if settings.curr_level == -1:
         break
 
-    gameOver = False  # Going to use this for encasing game in loop, when player touches enemy/hazard it is set to True
+    gameOver = False  # Going to use this for encasing game in loop, when player touches enemy/hazard it is set to True.
     in_game = True
 
-    # DOUBLEBUF flag helps our frames a bit
+    # the pygame.DOUBLEBUF flag helps our frames a bit.
     screen = pygame.display.set_mode((screen_width, screen_height), pygame.DOUBLEBUF)
     frame_limiter = pygame.time.Clock()
 
     test_level = LevelRenderer(screen, settings.levelM, settings.curr_level)
     keys_pressed = []
-    player = test_level.get_player()
+    player = test_level.players.sprites()[0]
     completed = False
 
     screen_flag = False
@@ -108,7 +116,7 @@ while run:
     if pygame.joystick.get_count() != 0:
         joystick = pygame.joystick.Joystick(0)
 
-    j_offset = 0.2  # corresponds to how touchy the controller is.
+    j_offset = 0.2  # Corresponds to how touchy the controller is.
 
     # Animation Timers
     pygame.time.set_timer(PLAYER_SPRITE_NEXT, 200, 0)
@@ -119,17 +127,17 @@ while run:
     settings.start_time = time.time()
     while in_game:
 
-        # Pygame event handling.
+        # Pygame event handling
         events = pygame.event.get()
         for next_event in events:
             if next_event.type == pygame.QUIT:
                 in_game = False
                 run = False
             if (next_event.type == pygame.JOYDEVICEADDED) and (joystick == 0):
-                # If new controller is added
+                # If new controller is added.
                 joystick = pygame.joystick.Joystick(0)
             if next_event.type == pygame.JOYDEVICEREMOVED:
-                # If controller is removed
+                # If controller is removed.
                 joystick = 0
             if next_event.type == PLAYER_SPRITE_NEXT:
                 player.next()
@@ -141,15 +149,16 @@ while run:
                     if animation.rect.colliderect(test_level.effects.sprites()[1].rect):
                         animation.next()
             if next_event.type == pygame.WINDOWSIZECHANGED:
-                # Update screen size, move camera accordingly
+                # Update screen size, move camera accordingly.
                 update_camera()
 
-        # Clearing input from the last frame
+        # Clearing input from the last frame.
         right_jmov = False
         left_jmov = False
         up_jmov = False
         down_jmov = False
 
+        # Handling controller input.
         if joystick != 0:
             x_state = joystick.get_axis(0)
             y_state = joystick.get_axis(1)
@@ -182,8 +191,8 @@ while run:
 
             if settings.pause_status == 0:
                 gameOver = True
-                test_level = LevelRenderer(screen, settings.levelM, settings.curr_level)  # Reload the level
-                player = test_level.get_player()  # Reload the player
+                test_level = LevelRenderer(screen, settings.levelM, settings.curr_level)  # Reload the level.
+                player = test_level.players.sprites()[0]  # Reload the player.
                 update_camera()
 
             elif settings.pause_status == 1:
@@ -199,24 +208,24 @@ while run:
                 continue
 
         player_init_pos = (player.rect.x, player.rect.y)  # Grabbing the initial position of the player in the frame.
-        player.update(x_mov, y_mov, test_level.p_solids)  # Player Movement Processed
+        player.update(x_mov, y_mov, test_level.p_solids)  # Player Movement Processed.
         player_fin_pos = (player.rect.x, player.rect.y)  # Grabbing the final position of the player in the frame.
 
-        # Update Phil's flame, slight offset for looks
+        # Update Phil's flame, slight offset for looks.
         test_level.effects.sprites()[0].rect.midbottom = (player.rect.midtop[0] - 1, player.rect.midtop[1])
-        # Update the dark
+        # Update the dark.
         test_level.effects.sprites()[1].rect.center = player.rect.center
 
-        for enemy in test_level.get_enemies().sprites():  # Initializes all enemies
-            # Only update them if they are in the dark around the player
+        for enemy in test_level.enemies.sprites():  # Initializes all enemies.
+            # Only update them if they are in the dark around the player.
             if (enemy.rect.colliderect(test_level.effects.sprites()[1].rect)):
-                enemy.update(test_level.e_solids)  # Move the enemy
+                enemy.update(test_level.e_solids)  # Move the enemy.
 
                 # If the enemy was killed.
                 if enemy.died(test_level.players):
                     settings.score += settings.kill_reward
                     enemy.kill()
-                    player.vertical_momentum = 10  # make the player jump up a little.
+                    player.vertical_momentum = 10  # Make the player jump up a little.
 
         # Check to see if the player is touching an enemy.
         if player.touching_right(test_level.enemies) or player.touching_left(test_level.enemies) or \
@@ -232,35 +241,39 @@ while run:
 
                 player.last_hurt = time.time()
 
+                # If the player died.
                 player.health -= 1
                 if player.health == 0:
                     gameOver = True
                     settings.score -= settings.death_penalty
                     deathScreen()
                     test_level = LevelRenderer(screen, settings.levelM, settings.curr_level)  # Reload the level
-                    player = test_level.get_player()  # Reload the player
+                    player = test_level.players.sprites()[0]  # Reload the player
                     update_camera()
 
-        # If player collided with objective
+        # If player collided with objective.
         for objective in test_level.objectives.sprites():
             if objective.rect.colliderect(player.rect):
-                objective.kill()  # Not sure if works.
+                objective.kill()
 
-        # If got all objectives
+        # If got all objectives.
         if (len(test_level.objectives.sprites()) == 0):
             winScreen()
             completed = True
             in_game = False
 
-        test_level.update(player_init_pos, player_fin_pos)  # The level_renderer can go draw everything.
+        # Handles drawing everything to the screen after updates, also handles moving the camera in a level.
+        test_level.update(player_init_pos, player_fin_pos)
 
         frame_limiter.tick(max_frames)  # Capping the frames for consistent behaviour.
 
+        # Drawing the remaining coins.
         text = font.render("COINS:   " + str(len(test_level.objectives.sprites())) + "   ", True, (255, 255, 255))
         textRect = text.get_rect()
         textRect.center = (settings.screen_width - 80, 25)
         screen.blit(text, textRect)
 
+        # Drawing the remaining health.
         text = font.render("   HEALTH:   " + str(player.health) + "   ", True, (255, 255, 255))
         textRect = text.get_rect()
         textRect.center = (settings.screen_width - 80, 50)

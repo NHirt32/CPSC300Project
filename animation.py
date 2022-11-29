@@ -1,16 +1,22 @@
 import pygame
 import tile
-import settings
-
 
 class Animation(tile.Tile):
+    """The Animation class extends a tile by adding multiple frames, and has the functionality to change to
+    the next frame in a list or a new list of frames. To change the list of frames an animation is iterating over,
+    change the next_direction field."""
+
     def __init__(self, images, pos):
+        """Constructor for an Animation.
+
+        :param images: a list of lists of strings that are filepaths to images.
+        :param pos: a position as a tuple."""
         tile.Tile.__init__(self, images[0][0], pos)
         self.current_frame = 0
         self.frames = [[]]
 
         # Load all images in at start, not constantly from the disc.
-        # Store it with the player, so its easily retrieved and switched.
+        # Store it with the animation, so its easily retrieved and switched.
         for i in range(0, len(images)):
             self.frames.append([])
             for j in range(0, len(images[i])):
@@ -19,7 +25,7 @@ class Animation(tile.Tile):
         # Direction refers to which animation set should be accessed.
         # For example, if a player moves right, a different set of images should be used than if a player
         # were to have moved left. Thus, take care to define direction appropriately, and initialize
-        # animations with file paths in measurable orders
+        # animations with file paths in measurable orders.
         # Need to record the direction of the previous frame for comparisons about the next frame.
         self.direction = 0
 
@@ -27,8 +33,9 @@ class Animation(tile.Tile):
         # The direction will change to next direction.
         self.next_direction = 0
 
-    # Flips to the next frame of the specified direction
     def next(self):
+        """next() will make the animation display the next frame in the list, or reset to the start of the list if it
+        has reached the end."""
 
         length = len(self.frames[self.direction])
 
