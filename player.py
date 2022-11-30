@@ -1,11 +1,14 @@
 import pygame
+
+import settings
 import tile
 import entity
 from settings import *
 import math
 
 class Player(entity.Entity):
-    """The Player class extends an entity with the specific functionality a player must have."""
+    """The Player class extends an entity with the specific functionality a player must have. This is mostly
+    an elaborate physics system and a special function to handle player animations."""
     health = 3
     last_hurt = 0
 
@@ -23,18 +26,19 @@ class Player(entity.Entity):
                 ["assets/7_1.png","assets/7_2.png"],
                 ["assets/8_1.png","assets/8_2.png"]],
                                pos)
-        self.jump_power = 21  # Defines max jump power
-        self.gravity = -100  # Defines max fall speed. MUST BE NEGATIVE
-        self.slide_speed = -4  # defines gravity when sliding down a wall, MUST BE NEGATIVE
+        self.jump_power = settings.jump_power  # Defines max jump power
+        self.gravity = settings.gravity  # Defines max fall speed. MUST BE NEGATIVE
+        self.slide_speed = settings.slide_speed  # defines gravity when sliding down a wall, MUST BE NEGATIVE
         self.vertical_momentum = 0
         self.horizontal_momentum = 0  # Used for non-wall jump related horizontal momentum
-        self.speed = 15  # Max momentum. MUST BE EVENLY DIVISIBLE BY horizontal_acceleration
-        self.horizontal_acceleration = 3
+        self.speed = settings.speed  # Max momentum. MUST BE EVENLY DIVISIBLE BY horizontal_acceleration
+        self.horizontal_acceleration = settings.horizontal_acceleration
         self.wall_jump_cooldown = 20  # In frames of the game.
         self.wall_jump_cooldown_counter = 0  # Counter for cooldown
-        self.wall_jump_horizontal_momentum = 21  # Max wall jump horizontal momentum. MUST BE EVENLY DIVISIBLE BY
+        self.wall_jump_horizontal_momentum = settings.wall_jump_horizontal_momentum
+        # Max wall jump horizontal momentum. MUST BE EVENLY DIVISIBLE BY
         # horizontal_acceleration
-        self.wall_jump_vertical_momentum = 21  # Max wall jump vertical momentum
+        self.wall_jump_vertical_momentum = settings.wall_jump_vertical_momentum  # Max wall jump vertical momentum
         self.can_jump = True
 
         # Directions

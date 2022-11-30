@@ -44,7 +44,7 @@ easy_num = 3
 mid_num = 5
 hard_num = 8
 
-#Game Win and Death Screens
+# Game Win and Death Screens
 score = 10000
 death_penalty = 2500
 kill_reward = 300
@@ -52,5 +52,16 @@ hurt_penalty = 300
 start_time = 0
 end_time = 0
 
+# Player demo variables. Messing with these can break the game.
+jump_power = 21  # Defines max jump power
+gravity = -100  # Defines max fall speed. MUST BE NEGATIVE for proper behaviour.
+slide_speed = -4  # defines gravity when sliding down a wall, MUST BE NEGATIVE for proper behaviour.
+speed = 15  # Max momentum. MUST BE EVENLY DIVISIBLE BY horizontal_acceleration.
+horizontal_acceleration = 3 # should be less than speed.
+wall_jump_horizontal_momentum = 21  # Max wall jump horizontal momentum. MUST BE EVENLY DIVISIBLE BY
+# horizontal_acceleration
+wall_jump_vertical_momentum = 21  # Max wall jump vertical momentum.
+
 levelM = None
+
 
