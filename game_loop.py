@@ -1,15 +1,10 @@
 """game_loop is the driver program of the game, everything is run from game_loop. It is most of the classes interact,
 and so small changes in game_loop can have large impacts to the features in the game."""
 
-import pygame
 import game_menu
 import pause_menu
-import settings
 from settings import *
-from tile import *
-from player import *
 from level_renderer import *
-import random
 import time
 import json
 

@@ -1,4 +1,3 @@
-import pygame
 import enemy #Inherits functionality from enemy
 
 class Flier(enemy.Enemy):

@@ -1,6 +1,3 @@
-import pygame
-import settings
-from settings import *
 from tile import *
 from player import *
 from animation import *
@@ -39,9 +36,9 @@ class LevelRenderer:
         self.theme = theme
         # Remember, a chosen tile_size should be evenly divisible by all assets that
         # are drawn using the fill() function in level renderer
-        self.tile_size = 192
+        self.tile_size = settings.tile_size
         # Must be a multiple of tile size. We are using 5 by 5 tile sets.
-        self.tileset_size = 960
+        self.tileset_size = 5 * self.tile_size
 
         # Add any further sprite groups that need camera offset into this array.
         # The order of drawing is from left to right.

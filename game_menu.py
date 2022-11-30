@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import *
 from PIL import ImageTk, Image
 from itertools import cycle
-import time
 import level_generator
 import settings
 import json

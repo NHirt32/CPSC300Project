@@ -1,6 +1,4 @@
-import pygame
 import enemy  # Inherits functionality from enemy
-
 
 class Walker(enemy.Enemy):
     """The Walker class extends an enemy to give the functionality walkers should have.

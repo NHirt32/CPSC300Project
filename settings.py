@@ -63,5 +63,8 @@ wall_jump_horizontal_momentum = 21  # Max wall jump horizontal momentum. MUST BE
 # horizontal_acceleration
 wall_jump_vertical_momentum = 21  # Max wall jump vertical momentum.
 
+# Level_Renderer demo variables. Messing with these can break the game.
+tile_size = 192
+
 levelM = None
 

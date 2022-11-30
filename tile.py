@@ -1,6 +1,4 @@
 import pygame
-from settings import *
-
 
 class Tile(pygame.sprite.Sprite):
     """The Tile class extends sprite to give the functionality tiles should have.

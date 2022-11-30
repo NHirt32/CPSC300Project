@@ -1,10 +1,5 @@
-import pygame
-
 import settings
-import tile
 import entity
-from settings import *
-import math
 
 class Player(entity.Entity):
     """The Player class extends an entity with the specific functionality a player must have. This is mostly

@@ -1,7 +1,5 @@
 import pygame
-import tile
 import animation
-from settings import *
 
 class Entity(animation.Animation):
     """The Entity class extends an animation with the basic functionality all entities should have, like

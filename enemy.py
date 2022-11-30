@@ -1,4 +1,3 @@
-import pygame
 import entity #Inherits functionality from entity
 
 class Enemy(entity.Entity):
