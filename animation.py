@@ -1,6 +1,7 @@
 import pygame
 import tile
 
+
 class Animation(tile.Tile):
     """The Animation class extends a tile by adding multiple frames, and has the functionality to change to
     the next frame in a list or a new list of frames. To change the list of frames an animation is iterating over,

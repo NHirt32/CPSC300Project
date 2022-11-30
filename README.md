@@ -1,92 +1,258 @@
-# CPSC300Project
+# CPSC-300 Project: Phil The Candle
 
-Semester project for CPSC 300.
+## Contributors
 
-## Getting started
+    Name: Andrew Hunter-Owega
+    Email: ahunterow@unbc.ca
+    Student Number: 230 147 357
+    
+    Name: Daniel Strickland
+    Email: dstrickla@unbc.ca
+    Student Number: 230 146 357
+    
+    Name: Nicholas Hirt
+    Email: nhirt@unbc.ca
+    Student Number: 230 127 295
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Notes for Marker
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## Relative Table of Contents
 
-## Add your files
+    ~ Project Description: Description of the project
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+    ~ Project Structure: Overview of System Components
 
-```
-cd existing_repo
-git remote add origin https://csgit.unbc.ca/nhirt/cpsc300project.git
-git branch -M main
-git push -uf origin main
-```
+    ~ Installation and Execution: How to install and execute the game project
 
-## Integrate with your tools
+    ~ Game Instructions: How to play and use the game application.
 
-- [ ] [Set up project integrations](https://csgit.unbc.ca/nhirt/cpsc300project/-/settings/integrations)
+## Project Description
 
-## Collaborate with your team
+    For CPSC-300, we were given the choice to create a project based around the utilization of software development
+    techniques through the creation of a group project. The </name_placeholder> group decided to implement a platforming
+    game similar to the Mario series of games developed by Nintendo. The primary features of the game include
+    a game window that displays the platforming level, the ability to move and jump, an objective system, an enemy 
+    system, a life-death system, a main menu, a pause menu and a score system. For an additional level of complexity
+    all levels in Phil the Candle are created through a random generation algorithm. 
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+## Project Structure
 
-## Test and Deploy
+    The Project as described above involves a number of components and files. To simplify the understanding of the code
+    a brief overview of the system structure will be given within this section. Note that this description serves as a
+    high level description of component function, and some of the primary interactions, and not an extensive review of
+    implementation. 
 
-Use the built-in continuous integration in GitLab.
+<p align="center" width="100%">
+    <img width="80%" src="assets/sys_figure.png" alt="Photo of games main menu.">
+</p>
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+    The above diagram shows the primary interactions between system components within the project code, the function of 
+    each of these components will be discussed as follows: 
 
-***
+    - tile.py
+        An extension of a pyGame sprite, and is used in the creation of animations.py and defines a generic tile in 
+        the game. 
 
-# Editing this README
+    - animation.py
+        Implements the most generic functionality for animations of moving objects in the game. 
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+        - entity.py
+            Extension of animation.py such that it allows for the functionality that all moving "entities" will require,
+            such as animation support, collision detection, and of course movement. 
+            - player.py
+                An extension of entity.py that specifies the specific animation, collisions and movements and variables
+                associated with the player character in the game. 
+            - enemy.py
+                An extension of entity.py that specifies the generic animations, collision detection and life status
+                shared by enemies regardless of type. 
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+                - walker.py
+                    An extension of enemy that supports gravity for an enemy, and factors such as speed specific to 
+                    walking enemies. 
 
-## Name
-Choose a self-explaining name for your project.
+                - flier.py
+                    An extension of enemy that lacks gravity support, and factors such as speed specific to flying 
+                    enemies.
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+    - game_menu.py
+        Implements the tkinter window used as a welcome screen and primary entry state into the game. It implements the
+        functionality to change difficulty, start a level, access highscores and a how to play menu. The score menu
+        and how to play menu are implemented within this class as can only be invoked via the main menu. As such the 
+        game_menu.py class reads from both the How_To_Play.txt file and scores.json. It is invoked by game_loop.py.
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+    - pause_menu.py
+        Implements the tkiner window accessible only when a pause event is invoked during the execution of a game level.
+        (Key press p). It provides the functionality for the user to regenerate a level, quit the game and return to the
+        main menu. As such it is connected with level_generator.py, game_loop.py and settings.py. 
+        
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+    The next two classes require a brief description of how levels are randomly generated in the Project. The first step
+    in randomly generating a level is accomplished by running a random maze generation algorithm on one of the predefined
+    layouts for a level found in level_generator.py. This creates a 2-D List containing a maze. Entities are then randomly
+    placed into the maze as either 'E' for enemy, 'F' for flying enemy, or 'O' for objective/coin. This 2-D list is then
+    rendered with a tile set. This is done be looking at each entry in the 2-D level array and rendering a five by five
+    tile to the game screen based on each level array entry and its surrounding members. There are multiple possible 
+    options allowing for more unique game states. 
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+    - level_generator.py
+        The level_generator.py class contains all of the code for generating the 2-D level array as described as above.
+        That is to say that it implements a recursive-backtracking algorithm for random maze generation as well as an
+        algorithm for the random placement of enemies and objectives into this 2-D level array. Primarily interacts with
+        settings, and the game menus. 
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+    - level_renderer.py
+        The level_renderer.py class has two primary functions: (1) determine tile sets, and (2) render level to the 
+        screen. The tile set portion of level render picks an appropriate five by five tile to render to the screen
+        in place of the one by one entry of the 2-D array. The secondary function of level_renderer.py is to display the
+        level and the game to the game screen. Primarily interacts with settings.py, tile_sets.py, animation.py, 
+        extensions of entity.py and game_loop.py.
+            - tile_sets.py
+                tile_sets.py contains all of the possible five by five tile sets that can be used to replace
+                entries in the 2-D level array. Seperated into another file due to the verbose nature. 
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+    - settings.py
+        Contains several settings that can be used to alter the project. This includes everything from the size and 
+        color of the various game windows, to the penalties used to calculate score. Settings also includes some 
+        variables that need to be referenced from multiple components such as curr_difficulty. As such the variables in
+        settings.py are used and altered by numerous other components such as pause_menu.py, level_generator.py, 
+        level_renderer.py, etc. 
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+    - game_loop.py
+        The game_loop.py component is the heart of the game. It provides the main of the program, and by extension
+        the driver code that instructs the other components of the project. As such it has interactions with most of the
+        critical components of the game. This means that the level_render.py, settings.py, game_menu.py, pause_menu.py,
+        and all extentions of entity.py directly or indirectly plug into game_loop.py. game_loop.py runs the central
+        logic loop which organizes the interactions of the other classes as well as driving the central logic of the
+        final game. 
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+    - How_To_Text.txt
+        Contains the text that will be displayed on the How_To_Play Menu accessible from the Game's main menu.
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+    - scores.json
+        Json storage of users highest recorded scores. Accessed and rendered by main_menu.py's score menu.  
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+## Installation and Execution
+ 
+Phil the Game can be accessed from the Git repository found at: 
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+    https://github.com/NHirt32/CPSC300Project
 
-## License
-For open source projects, say how it is licensed.
+To get the game code, the project can either be cloned, or be downloaded in a zip folder. There are two primary methods
+for how to execute the game. 
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+    1) The Easy Method
+        Assuming that the user of the game is has a device that is running Windows 10, a executable file is 
+        provided in the dist directory of the game code. To make use of this executable file it must be in a folder with
+        the following: "How_To_Text.txt", scores.json, and the assets directory. This is true by default, and all that 
+        is required to execute the game is to activate the executable file. This executable file was created with the 
+        use of pyInstaller.
+
+    2) The Not-So-Easy Method
+        This method should be reserved for those who are not running a windows machine. 
+
+        To execute the game you must have python installed on your computer, this can be accomplished by following the
+        directions here:
+
+            https://realpython.com/installing-python/
+
+        After installing python you will need to make use of pip to install the following libraries
+
+            - pygame - To use as an engine for the game
+
+            - screeninfo - To get screen size
+
+            - Pillow - For images in main menu
+
+            - Tkinter - For the main/pause menu
+
+        After this is accomplished the terminal must be opened and the directory containing the project must be found 
+        through navigation of the file system. Once the current directory in the terminal contains the game source code,
+        the following should be entered into the terminal:
+    
+            py game_loop.py
+        
+        can be executed to run the game project.
+
+
+## Game Instructions
+
+    For installation and execution of the project please see the previous section of the README.md "Installation and
+    Execution." This section includes the instructions for how to play the game. For a more indepth review of gameplay
+    mechanics please refer to the ingame "How To Play" window. 
+
+<p align="center" width="100%">
+    <img width="60%" src="assets/m_menu.png" alt="Photo of games main menu.">
+</p>
+
+### Main Menu:
+
+    Upon execution of the program, regardless of the method the user will be brought to the Primary Game Menu of the
+    game project. The game Menu project is seen in the previous figure. The game menu provides the following 
+    functionality. 
+        - Difficulty Slider:
+            - Controls the difficulty of the next level to be generated. Difficulty comes in three tiers with one being
+              easy, two being medium difficulty, and three being hard difficulty. 
+        
+        - How To Play Button:
+            - Launches a window that allows for instructions on how to play the game. Must be closed before a level may
+              be generated. 
+
+        - High Scores Button:
+            - Launches a window that displays the highscores of the user for each of the five levels at each of the five
+              difficulties. 
+
+        - Level Buttons:
+            - Randomly generates a level of the theme corresponding to the number, with difficulty corresponding to the 
+              current state of the difficulty slider. 
+
+                Level Themes:
+                    (1) - Jungle 
+                    (2) - Mine
+                    (3) - Ice
+                    (4) - Volcano
+                    (5) - Tomb
+
+
+### Game Window:
+
+<p align="center" width="100%">
+    <img width="70%" src="assets/game_window.png" alt="Photo of game primary window">
+</p>
+
+    The previous figure shows the window that the user will be presented with upon the activation of one of the level
+    buttons on the main menu. The resulting window showcases the game in which the player may interact. 
+
+    - HUD elements
+        - In the upper-right hand corner of the level the amount of coins left to find, as well as the players remaining
+          health is displayed. 
+
+    - Controls
+        - To control the main character (Phil) the following commands are available
+                [A] - Left Movement
+                [D] - Right Movement
+                [Space] - Jump
+
+    - Finer details about Game Play mechanics can be found in the "How To Play" window accessible from the Main Menu.
+
+
+### Pause Menu:
+
+<p align="center" width="100%">
+    <img width="40%" src="assets/pause_menu.png" alt="Photo of games main menu.">
+</p>
+
+    The previous figure shows the menu that the user will be prompted with after pressing [p] to open the pause menu 
+    during the game. The pause menu will freeze the game and will open a new window with the following features. 
+
+    - Regenerate Level Button
+        - Completely regenerates the current level, and resets the players score and game state. 
+
+    - Main Menu Button
+        - Exits the current game state and returns to the main menu
+
+    - Continue Button
+        - Returns to the game window with no alterations. The same result can be achieved with pressing the exit on the
+          window bar.
+
+    - Quit: 
+        - Completely exits the game and kills the program. 

@@ -4,31 +4,32 @@ import level_generator
 import random
 from screeninfo import get_monitors
 
+# Get screen sizes
 monitors = get_monitors()
 
 screen_width = monitors[0].width
 screen_height = monitors[0].height - 64
 
-if (screen_height%2) != 0:
+if (screen_height % 2) != 0:
     screen_height -= 1
 
-if (screen_width%2) != 0:
+if (screen_width % 2) != 0:
     screen_width -= 1
 
 max_frames = 60
 theme = 1
 curr_level = 1
 
-# How To Death defaults
+# How To Screen defaults
 ht_width = 600
 ht_height = 450
 
-# Pause Defaults
+# Pause menu defaults
 pause_width = 450
 pause_height = 400
 pause_status = 3
 
-#Score Menu Defaults
+# Score Menu Defaults
 sc_width = 600
 sc_height = 450
 
@@ -63,5 +64,4 @@ wall_jump_horizontal_momentum = 21  # Max wall jump horizontal momentum. MUST BE
 wall_jump_vertical_momentum = 21  # Max wall jump vertical momentum.
 
 levelM = None
-
 

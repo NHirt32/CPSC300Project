@@ -1,9 +1,11 @@
 import pygame
-import enemy #Inherits functionality from enemy
+import enemy  # Inherits functionality from enemy
+
 
 class Walker(enemy.Enemy):
     """The Walker class extends an enemy to give the functionality walkers should have.
     This is mostly just gravity."""
+
     def __init__(self, pos):
         """Constructor for a Walker.
 .
@@ -49,9 +51,9 @@ class Walker(enemy.Enemy):
 
         elif self.edge_detect(group):
             self.move_int *= -1
-            self.move_x(self.move_int, group) # Move slightly to avoid being stuck on the wall
+            self.move_x(self.move_int, group)  # Move slightly to avoid being stuck on the wall
 
-        #If the enemy is moving left and a ledge on left
+        # If the enemy is moving left and a ledge on left
         elif (self.move_int == -1) and self.ledge_left(group):
             self.move_int = 1  # Turn around
             self.move_x(self.move_int, group)  # Move slightly to avoid being stuck on the wall
@@ -111,4 +113,3 @@ class Walker(enemy.Enemy):
                 self.next_direction = self.FALLING_RIGHT
             else:
                 self.next_direction = self.FALLING_LEFT
-

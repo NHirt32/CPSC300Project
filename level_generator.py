@@ -195,7 +195,7 @@ def get_format_tileset(level_num):
     return -1
 
 def get_format(level_num):
-    """get_format() grabs a suitable layout to carve for mazes.
+    """get_format() grabs a suitable layout to carve for mazes. No longer in use with tile-set system.
 
     :param level_num: an integer representing the type of level to generate, the level's theme.
     :returns: a list of lists of characters representing the maze layout to carve."""
