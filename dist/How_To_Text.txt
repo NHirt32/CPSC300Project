@@ -1,0 +1,56 @@
+Welcome to Phil The Candle!
+This window will hopefully provide you with
+the information that you require to learn
+and master the gameplay of "Phil the Candle."
+
+Controls:
+Movement:
+    [A] - Left Movement
+    [D] - Right Movement
+    [Space] - Jump
+
+Game Control:
+    [p] - pause game
+
+Gameplay:
+
+Like many other games in the platforming
+genre, "Phil the Candle!" is fundamentally
+about traversing a level and collecting
+objectives. In this case your primary
+objective is to help Phil find all the coins
+hidden within each dungeon. This will require
+you to traverse the level, by utilizing your
+jumping abilities. But beware many other
+Candles seek the treasure, and others have
+had there flame go out and now stalk the
+depths below.
+
+Don't worry too much however, as Phil is
+a professional. He has mastered the art of
+parkour and is capable of defeating all those
+in his path by jumping upon their head. Unlike
+other Candles who may only move side to side,
+Phil is capable of jumping and wall-jumping.
+To perform a wall jump Phil only needs to
+jump while interacting with a wall midair.
+While Phil may just climb up the same wall
+over and over again, jumping between walls
+will give Phil a temporary speed boost.
+
+Now that we understand how to make Phil move,
+we must understand the environments Phil must
+traverse. Every level in Phil the candle is
+randomly generated, with each level having
+a unique theme, they are jungle, mine, ice,
+volcano, and the ancient tomb. These themes
+do not add much in terms of difficulty and
+may be traversed in any order. For the
+seasoned adventuring candle the difficulty
+of the level may be increased via the main
+menu difficulty slider. This will give Phil
+the chance to find more treasure, but treasure
+is often protect by a shroud of darkness and
+evil.
+
+Have fun, and remember Candles are Cool!
