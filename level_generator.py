@@ -146,7 +146,7 @@ def get_format_tileset(level_num):
     :param level_num: an integer representing the type of level to generate, the level's theme.
     :returns: a list of lists of characters representing the maze layout to carve."""
     if level_num == 1:
-        return [['X' for x in range(7)] for y in range(4)]
+        return [['X' for x in range(10)] for y in range(4)]
 
     elif level_num == 2:
         stair = [['X', 'X', 'X', 'X', '0', '0'],
@@ -169,15 +169,17 @@ def get_format_tileset(level_num):
                   ['0', '0', 'X', 'X', 'X', 'X', 'X', '0', '0'],
                   ['0', '0', 'X', 'X', 'X', 'X', 'X', '0', '0'],
                   ['0', '0', 'X', 'X', 'X', 'X', 'X', '0', '0'],
-                  ['0', '0', 'X', 'X', 'X', 'X', 'X', '0', '0']]
+                  ['0', '0', 'X', 'X', 'X', 'X', 'X', '0', '0'],
+                  ]
         return tunnel
 
     elif level_num == 4:
-        return [['X', 'X', 'X', 'X', 'X', 'X', 'X'],
-                ['X', 'X', 'X', 'X', 'X', 'X', 'X'],
-                ['X', 'X', 'X', 'X', 'X', 'X', 'X'],
-                ['X', 'X', 'X', 'X', 'X', 'X', 'X'],
-                ['X', 'X', 'X', 'X', 'X', 'X', 'X']]
+        return [['X' for x in range(10)] for y in range(5)]
+        # return [['X', 'X', 'X', 'X', 'X', 'X', 'X'],
+        #         ['X', 'X', 'X', 'X', 'X', 'X', 'X'],
+        #         ['X', 'X', 'X', 'X', 'X', 'X', 'X'],
+        #         ['X', 'X', 'X', 'X', 'X', 'X', 'X'],
+        #         ['X', 'X', 'X', 'X', 'X', 'X', 'X']]
 
     elif level_num == 5:
         level5 = [

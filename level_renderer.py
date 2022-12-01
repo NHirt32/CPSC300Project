@@ -45,8 +45,8 @@ class LevelRenderer:
         self.all_tiles = [self.backgrounds, self.solids, self.non_solids, self.objectives, self.enemies, self.players,
                           self.effects]
 
-        for string in level_layout:
-            print(string)
+        # for string in level_layout:
+        #     print(string)
 
         print("\n")
 
